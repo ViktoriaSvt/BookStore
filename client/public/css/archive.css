@@ -1,0 +1,18 @@
+.book-store::after, .book-store::before {
+    content: '';
+    position: absolute;
+    display: block;
+    height: 12px;
+    width: 100%;
+    background: #cb5a5e;
+    background: repeating-linear-gradient(
+      -45deg,
+      #cb5a5e,
+      #6e0202 12px,
+      transparent 10px,
+      transparent 23px
+    );
+    top: 4.7em;
+    left: 0em;
+    
+}

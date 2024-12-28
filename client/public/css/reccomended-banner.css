@@ -1,0 +1,168 @@
+.banner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    background-image: url('');
+    background-color: #000000;
+    background-size: cover;
+    padding-top: 3.5em;
+    margin-top: 3em;
+}
+
+.background-banner {
+    width: 100%;
+    padding: 0 1em;
+    background-size: cover;
+    margin: ;
+
+}
+
+
+.details {
+    background-color: #ffd700;
+    /* Gold base color */
+    color: #a86e01;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    background-image: url('https://img.freepik.com/free-photo/abstract-solid-shining-yellow-gradient-studio-wall-room-background_1258-82661.jpg?size=338&ext=jpg&ga=GA1.1.2113030492.1729296000&semt=ais_hybrid');
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.8);
+    transition: transform 0.3s ease;
+}
+
+.details a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.details:hover {
+    transform: scale(1.05);
+}
+
+
+.details::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 0.8;
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.details:hover::before {
+    left: 100%;
+}
+
+
+.reccomended {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.header h2 i:first-child {
+    transform: scaleX(-1);
+
+}
+
+
+.scrolling-container {
+    width: 100%;              
+    overflow-x: auto;          
+    overflow-y: hidden;     
+    position: relative;
+    white-space: nowrap;     
+}
+
+.container-recc {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: flex-start;
+    animation: scroll-left 60s linear infinite;
+
+}
+
+.scrolling-container::-webkit-scrollbar {
+    width: 8px; 
+    height: 8px; 
+}
+
+.scrolling-container::-webkit-scrollbar-thumb {
+    background-color: #f7bd00;
+    border-radius: 10px; 
+    transition: background-color 0.3s ease;
+}
+
+
+.scrolling-container::-webkit-scrollbar-track {
+    background: #666565;
+    border-radius: 10px;
+}
+
+
+
+.reccomended div img {
+    width: 300px;
+    aspect-ratio: 1/1.5;
+}
+
+.reccomended {
+    padding: 1em;
+    background-image: url('https://bellamediamanagement.com/wp-content/uploads/2024/05/2b.jpg');
+    background-color: white;
+}
+
+.reccomended .details {
+    scale: 0.6;
+}
+
+
+
+
+
+
+
+@media (max-width: 750px) {
+    .reccomended div img {
+        width: 200px;
+    }
+
+    .reccomended div {
+        width: auto;
+    }
+
+    .book-item img {
+        background-size: cover;
+    }
+
+    .header h2 {
+
+       max-width: 800px;
+        top: -2.5rem;
+        left: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .search {
+        scale: 0.8;
+        position: absolute;
+        left: -3em;
+    }
+
+
+}

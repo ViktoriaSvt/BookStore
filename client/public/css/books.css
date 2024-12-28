@@ -1,0 +1,192 @@
+.book-storage .book-list {
+    display: flex;
+    gap: 1em;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+.in-stock {
+    padding: 0.3em;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    border: 1px solid #ccc;
+    flex: 0 1 calc(5vw + 20px);
+    min-width: 12em;
+    max-height: 24em;
+
+}
+
+.in-stock .title {
+    color: rgb(124, 124, 124);
+    text-overflow: ellipsis;
+    font-size: calc(7px + 0.5vw);
+    line-height: 1.2;
+    text-align: center;
+
+}
+
+.in-stock .title a {
+    color: rgb(124, 124, 124);
+    text-decoration: none;
+}
+
+.book-image {
+    min-width: 12em;
+    height: 20em;
+}
+
+.book-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    flex-direction: row;
+}
+
+.search::before {
+    content: "\f002";
+    position: absolute;
+    right: 30%;
+    transform: translateY(10%);
+    font-weight: 800;
+    scale: 2;
+    color: #000000;
+    opacity: 0;
+    transition: 1s ease-in-out;
+    font-family: "Font Awesome 5 Free";
+}
+
+.search::after {
+    content: "\f004";
+    position:absolute;
+    top:7rem;
+    right: calc(29.9vw + 1px);
+    transform: translateY(10%);
+    font-weight: 900;
+    scale: 1;
+    color: #b41313;
+    opacity: 0;
+    transition: 1s ease-in;
+    font-family: "Font Awesome 5 Free";
+}
+
+.search:hover::before {
+    transform: translateX(-120%);
+    animation: flicker 4s linear infinite, track 4s linear infinite;
+}
+.search:hover::after {
+    transform: translateX(-120%);
+    animation: find 4s linear infinite, track 4s linear infinite;
+}
+
+.search input {
+    background-color: #ccc;
+    width: calc(20px + 40vw);
+
+}
+
+@keyframes find {
+    10% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    70% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 0;
+    }
+    95% {
+        opacity: 1;
+    }
+    
+}
+
+@keyframes track {
+
+    40% {
+    
+        transform: translateY(-90%);
+    }
+
+    60% {
+        transform: translateY(-70%);
+        transform: translateX(110%);
+    }
+
+    70% {
+        transform: translateY(-100%);
+    }
+
+    80% {
+        transform: translateY(-100%);
+    }
+
+    90% {
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes flicker {
+    20% {
+        opacity: 0.7;
+    }
+
+    40% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 0.8;
+    }
+
+    70% {
+        opacity: 0.7;
+    }
+
+    75% {
+        opacity: 1;
+        scale: 2;
+    }
+
+    80% {
+        scale: 3;
+    }
+}
+
+@media (max-width: 750px) {
+    .in-stock {
+        border: none;
+        flex: 0 1 calc(44% - 1em); 
+        min-width: 0;
+        max-height: none;
+    }
+    .search {
+        top: -5%;
+        left: 35%;
+        z-index: 300;
+    }
+
+    .search:hover:before, .search:hover::after {
+        animation: none;
+    }
+}

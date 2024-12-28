@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+html {
+    font: 13px/1.5 Lato, Verdana, sans-serif;
+}
+
+.nav-container {
+    position: fixed;
+    bottom: 20px; /* Ensure it's above the screen bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+.navigation {
+    margin: 0;
+    position: relative;
+    width: 400px;
+    height: 70px;
+    background-color: rgba(2, 84, 122, 0.993);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+}
+
+.nav-ul-element {
+    display: flex;
+    width: 350px;
+    justify-content: space-between; /* Spread out the links */
+    padding: 0;
+    margin: 0;
+    list-style: none; /* Remove bullet points */
+}
+
+.nav-ul-element li {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+}
+
+.nav-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none; /* Remove underline */
+    color: #ffffff; /* Default link color */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-link .icon {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.nav-link .text {
+    font-size: 0.75em;
+    opacity: 1;
+}
+
+li.active .nav-link {
+    color: rgb(255, 174, 0); /* Highlight color for active link */
+}
+
+.indicator {
+    position: absolute;
+    bottom: 10px;
+    left: -21.5em;
+    right: 0em;
+    margin: auto;
+    width: 60px;
+    height: 10px;
+    background-color: rgb(255, 174, 0);
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+/* .nav-ul-element li:nth-child(1).active ~ .indicator {
+    transform: translateX(-70);
+}
+.nav-ul-element li:nth-child(2).active ~ .indicator {
+    transform: translateX(0px);
+}
+.nav-ul-element li:nth-child(3).active ~ .indicator {
+    transform: translateX(70px);
+}
+.nav-ul-element li:nth-child(4).active ~ .indicator {
+    transform: translateX(140px);
+}
+.nav-ul-element li:nth-child(5).active ~ .indicator {
+    transform: translateX(200px);
+} */

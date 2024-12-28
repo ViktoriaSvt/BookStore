@@ -1,0 +1,36 @@
+.footer {
+    background-color: #35a1c2;
+    padding: 0.5em;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlnQN9XKq77HKYqZMTxwbQ4iu3MRo0rbOwQELIFvgUU8qDavhC8SlY7zj-rV1p_1zJ87I&usqp=CAU");
+    background-size: cover;
+    position: sticky;
+    bottom: 0;
+}
+
+.footer .contacts {
+    text-align: start;
+    padding: 0 0 0 0;
+    color: #f3f3f3;
+
+}
+
+ .footer-bottom p {
+    text-align: start;
+    padding-bottom: 0.5em;
+    font-size: 12px;
+    color: white;
+    
+ }
+
+.social-media-icons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 2em;
+}
+
+.social-media-icons a {
+    background-color: rgb(248, 248, 248);
+    padding: 1em;
+    border-radius:100%;
+    color: rgb(248, 161, 0);
+}

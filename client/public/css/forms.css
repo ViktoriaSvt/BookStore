@@ -1,0 +1,159 @@
+
+
+
+body, input, form, select, button, textarea {
+    font: inherit;
+}
+
+.form-divider {
+    background-image: url('https://wallpaper.forfun.com/fetch/f4/f4b6dd382b9815ed340d123be37c7cdd.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-color: #eee;
+    padding: 5em;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: contrast(190%);
+    
+}
+
+
+.form {
+    position: relative;
+    flex: 0 1 600px;
+    padding: 2em;
+    border: 1px solid white;
+    border-radius: 0.2em;
+    box-shadow: 0 0 1em 0 rgb(0,0,0,0.1);
+}
+
+.form header  {
+    margin-bottom: 1em;
+    color: aqua;
+}
+
+.form input {
+    margin-top: 0.5em;
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    color: rgb(253, 253, 253);
+}
+
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: #f8f5f5 ;
+}
+
+.form .field {
+    display: flex;
+    flex-direction: column;
+    color: #666;
+    position: relative;
+    padding-top: 0.5em;
+}
+
+.form .field i {
+    display: none;
+    order: -1;
+    position: absolute;
+    top: 0.7em;
+    left: 0.2em;
+    color: rgb(36, 202, 44);
+}
+
+.form .field label {
+   order: -1;
+   position: absolute;
+   top: 0.7em; left: 0;
+   transition: transform 0.3s ease-in-out;
+   line-height: 1em;
+   color: rgb(0, 252, 252);
+}
+
+.form .field input {
+    border: none;
+    border-bottom: 2px solid rgb(119, 133, 153);
+    padding: 1em 0;
+    outline: none;
+ 
+}
+
+.form input[type="submit"] {
+    background-color: rgba(21, 170, 175, 0.863);
+    border-radius:  3em;
+    padding: 1em;
+    margin-top: 1em;
+    color: rgb(255, 255, 255);
+}
+
+.form .field span  {
+ font-size: 10px;
+ color: rgb(175, 212, 212);
+}
+
+.form::after {
+content: "";
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+z-index: -1;
+background-color: rgba(6, 63, 63, 0.534);
+filter: opacity(0.7);
+}
+
+.link-signup {
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 3em;
+}
+
+.link-signup a {
+    margin-left: 0.3em;
+    color: rgb(0, 255, 242);
+    text-decoration: none;
+}
+
+.form .field input::placeholder{
+    color: transparent;
+}
+
+.form .field input:not(:placeholder-shown) ~ label {
+ transform: translateX(1.5em);
+}
+
+.form .field input:not(:placeholder-shown) ~ i {
+   display: block;
+}
+
+.form .field input:focus {
+    border-color: rgb(136, 241, 255);
+}
+
+.form .field input:focus ~ label {
+    color: rgb(229, 253, 253);
+}
+
+.form .field input:required ~ label::after {
+    display: inline-block;
+    content: "*";
+    color: rgb(252, 1, 1);
+}
+
+.form .field input:not(:placeholder-shown) ~ label::after {
+    display: none;
+}
+

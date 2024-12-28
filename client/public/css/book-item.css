@@ -1,0 +1,265 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.book-store {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    position: relative;
+    flex-wrap: wrap;
+    padding: 2em;
+    /* background-image: url('https://www.shutterstock.com/image-vector/library-bookcases-background-interior-bookshop-600nw-2455897043.jpg'); */
+    z-index: -100;
+}
+
+
+
+
+
+.book-item {
+    display: flex;
+    flex: 1 1 49%;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+
+}
+
+.add-section {
+    margin: 0.5em;
+    position: relative;
+    padding: 2.5em;
+}
+
+.add-section h2, .add-section p {
+    padding-left: 20px;
+}
+
+.add-section::before {
+    content: "HUGE DISCOUNTS";
+    padding: 0.5em 1em;
+    max-width: 200px;
+    background-color: #d32e2e;
+    color: rgb(255, 203, 60);
+    font-weight: bold;
+    font-size: 1em;
+    border-radius: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 1em;
+    z-index: 1;
+    animation: discount-shuffle 2s infinite alternate;
+}
+
+@keyframes discount-shuffle {
+    0% {
+        scale: 1.1;
+    }
+
+    100% {
+        transform: translateX(-5%) rotate(-5deg);
+    }
+}
+
+
+.wrapper {
+    margin: 1em;
+    background-color: #eee;
+    background-image: url('https://i0.wp.com/insights.bookbub.com/wp-content/uploads/2022/07/Brilliant_BookBub_Ad_Designs_Promoting_Books_in_a_Series.png?fit=750%2C394&ssl=1');
+    flex: 1 1 50%;
+    height: 300px;
+    border: 5px solid rgb(192, 149, 6);
+    background-position: center;
+}
+
+.wrapper-class h2 {
+   text-align: center;
+}
+
+.book-cover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(70%);
+}
+
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+
+.book-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    background-color: #000000fb;
+}
+
+.book-cover {
+    margin: 1em;
+    width: 150px;
+    height: 200px;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.book-cover:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    pointer-events: none;
+    animation: holographic-glow 2s infinite alternate;
+}
+
+
+@keyframes holographic-glow {
+    0% {
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.book-info {
+    padding: 20px;
+    flex: 1;
+}
+
+
+.book-title {
+    position: relative;
+    font-size: 2em;
+    color: #ffffff;
+    margin: 0;
+}
+
+.book-description {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1em;
+    font-style: italic;
+    color: rgb(255, 255, 255);
+    position: relative;
+}
+
+
+.buy-button {
+    background-color: #ec37c5;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease-in-out;
+    position: relative;
+}
+
+
+
+
+@media (max-width: 450px) {
+    .book-item {
+        flex-direction: column;
+    }
+
+    .book-cover {
+        width: 150px;
+        height: 200px;
+        background-size: cover;
+        margin: 1em;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
+        /* Glow effect */
+    }
+}
+
+@media(min-width: 950px) {
+    .book-item {
+        width: calc(50% - 10px);
+    }
+}
+
+.coin {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #ffd700, #ffcc00, #e6ac00, #c68c00, #ffcc00);
+    background-size: 400% 400%;
+    animation: holographic-gold 5s ease infinite;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.3),
+        inset 0 0 30px rgba(0, 0, 0, 0.4);
+
+    border: 4px solid rgba(255, 255, 255, 0.6);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: -2.7em;
+    right: -2.7em;
+    scale: 0.37;
+}
+
+
+@keyframes holographic-gold {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.coin-value {
+    font-size: 40px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Arial', sans-serif;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.coin::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 196, 0, 0.527);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}

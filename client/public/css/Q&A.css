@@ -1,0 +1,58 @@
+.questions {
+    background-image: url('https://png.pngtree.com/background/20230527/original/pngtree-an-old-bookcase-in-a-library-picture-image_2760144.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+}
+
+.question-list {
+    list-style: none;
+}
+
+.return {
+    border: none;
+
+    position: absolute;
+    margin: 2em;
+    border-radius: 10px;
+    padding: 1em;
+    background-color: rgb(78, 49, 21);
+    color: rgb(248, 120, 0);
+    font-weight: bold;
+}
+
+.return a {
+    text-decoration: none;
+}
+
+.frequently-asked,
+a {
+    text-align: center;
+    display: block;
+    color: aliceblue;
+}
+
+.question-list .question {
+    background-color: orange;
+    margin: 1em;
+    padding: 2em;
+    position: relative;
+    border-radius: 10px;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body:not(.home) .questions-answers {
+    display: none;
+}
+
+.question-list .question:hover {
+    transform: scale(1.05); 
+    background-color: #ffb84d; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+}
+
+
+
