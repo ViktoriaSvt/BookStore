@@ -7,8 +7,12 @@ import ProfileInfo from "./components/profile/Profile"
 import Search from "./components/search/bookList"
 import Details from "./components/details/Details"
 import Register from "./components/register/Register"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AuthContext } from "./contexts/AuthContext"
+import { getSession } from "./api/auth-api"
+
+
+
 function App() {
 
   const [authState, setAuthState] = useState({});
@@ -24,6 +28,30 @@ function App() {
     changeAuthState
   }
 
+  useEffect(() => {
+    const initializeAuthState = async () => {
+      try {
+
+  
+        
+        const response = await getSession();
+        
+
+        
+        if (response) {
+          changeAuthState({
+            _id: response._id,
+            email: response.email,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to initialize authentication:", error);
+      }
+    }
+
+    initializeAuthState();
+  }, []);
+
 
   return (
     <AuthContext.Provider value={contextData}>
@@ -32,7 +60,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={authState.isAuthenticated ? <ProfileInfo /> : <Login />} />
+          <Route path="/profile/:userId" element={contextData.isAuthenticated ? <ProfileInfo /> : <Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
           <Route path="/details/:bookId" element={<Details />} />

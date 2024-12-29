@@ -3,7 +3,8 @@ const { configExpress } = require('./config/configExpress');
 const { configDatabase } = require('./config/configDatabase');
 const { getAllBooks } = require('./services/bookService');
 const bookRouter = require('./routes/bookData');
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/user');
+const cookieParser = require('cookie-parser');
 
 
 
@@ -15,7 +16,7 @@ async function start() {
     await configDatabase();
     configExpress(app)
 
-    
+    app.use(cookieParser())
     app.use("/account", userRouter)
     app.use("/", bookRouter)
    

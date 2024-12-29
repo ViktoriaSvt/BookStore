@@ -11,8 +11,13 @@ function configExpress(app) {
 app.use(cookieParser(secret))  
 app.use(bodyParser.json())
 app.use(urlencoded( {extended: true}));
-app.use(cors());
-// app.use(session());  
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true,               
+};
+
+app.use(cors(corsOptions));
+
 
 
 }

@@ -1,16 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../contexts/AuthContext"
-import { register } from "../api/auth-api";
+import { useAuthContext } from "../contexts/AuthContext";
+import { login } from "../api/auth-api";
 
-export const useRegister = () => {
+export const useLogin = () => {
     const { changeAuthState } = useAuthContext();
     const navigate = useNavigate();
 
 
-const registerHandler = async (email, password) => {
+const loginHandler = async (email, password) => {
     try {
-        const authData = await register(email, password)
-
+        const authData = await login(email, password)
 
         if (authData) {
             changeAuthState({
@@ -21,10 +20,11 @@ const registerHandler = async (email, password) => {
             navigate('/')
         }
     } catch (error) {
-        console.error("Failed to register", error.message);
+        throw new Error(error.message);
+
 
     }
 }
 
-return registerHandler;
+return loginHandler;
 }

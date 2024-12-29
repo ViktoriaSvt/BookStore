@@ -19,6 +19,11 @@ const userSchema = new Schema({
     status: {
         type: String,
         default: 'standart'
+    },
+    description: {
+        type: String,
+        default: "No description to show yet...",
+        maxlength: [500, "Description cannot exceed 500 characters"],
     }
 
 },

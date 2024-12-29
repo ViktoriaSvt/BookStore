@@ -17,7 +17,8 @@ async function requester(method, url, data) {
         method,
         url,
         data,
-        headers
+        headers,
+        withCredentials: true,
     });
 
     return response.data;

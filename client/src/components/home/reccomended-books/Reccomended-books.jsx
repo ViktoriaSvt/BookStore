@@ -2,11 +2,6 @@
 
 export default function Recommended() {
 
-
-
-
-
-
     return (
         <section className="wrapper-class">
             <h2>Recommended for you</h2>

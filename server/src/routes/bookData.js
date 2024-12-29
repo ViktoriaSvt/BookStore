@@ -4,7 +4,6 @@ const { getAllBooks, getBookById } = require("../services/bookService");
 
 
 const router = express.Router();
-console.log("Registering catalog route...");
 
 router.get("/catalog", async (req, res) => {
     try {

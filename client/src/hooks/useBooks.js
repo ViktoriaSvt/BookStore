@@ -33,7 +33,6 @@ export function useGetBookById() {
       try {
 
         const response = await bookApi.getById(bookId);
-        console.log(response);
         setBook(response);
 
       } catch (error) {
