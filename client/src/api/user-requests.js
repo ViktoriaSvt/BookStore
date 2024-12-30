@@ -1,19 +1,14 @@
 
 import * as request from "./requester";
 
-const BASE_URL = "http://localhost:3000/account";
+const BASE_URL = "http://localhost:3000/user";
 
 export async function getUserById(userId) {
-    try {
-
         const user = await request.get(`${BASE_URL}/${userId}`)
-
-        
         return user
-
-    } catch (error) {
-        console.log(error.message, 'something went wrong ')
-    }
-
 }
+
+export const getUserCart = async () => (await request.get(`${BASE_URL}/cart`));
+
+
 

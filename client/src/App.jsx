@@ -64,7 +64,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
           <Route path="/details/:bookId" element={<Details />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={contextData.isAuthenticated ? <Cart /> : <h1>Sign in to use cart</h1>} />
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>

@@ -1,6 +1,6 @@
 const express = require("express");
 const { registerUser, generateToken, logUser, verifyToken } = require("../services/authService");
-const { getUserById } = require("../services/userService");
+const { getUserById, getUser } = require("../services/userService");
 const { default: mongoose } = require("mongoose");
 
 
@@ -10,7 +10,6 @@ const router = express.Router();
 
 
 router.post("/register", async (req, res) => {
-    try {
 
         const data = req.body;
         const user = await registerUser(data);
@@ -29,35 +28,34 @@ router.post("/register", async (req, res) => {
         });
 
 
-    } catch (error) {
-        res.status(500).json({ error: "Failed to register user" });
-    }
+    
 });
 
 router.post("/login", async (req, res) => {
 
     const userData = req.body;
 
-    try {
-        const user = await logUser(userData);
-        const token = generateToken(user);
+    const user = await logUser(userData);
+    const token = generateToken(user);
 
-        res.cookie('accessToken', token, {
-            maxAge: 259200000,
-            httpOnly: true,
-            path: '/'
-        });
+    res.cookie('accessToken', token, {
+        maxAge: 259200000,
+        httpOnly: true,
+        path: '/'
+    });
 
-        res.status(200).json({
-            _id: user._id,
-            email: user.email,
-        });
-
+    res.status(200).json({
+        _id: user._id,
+        email: user.email,
+    });
 
 
-    } catch (error) {
-        throw new Error(error.message);
-    }
+})
+
+router.post("/logout", async (req, res) => {
+
+    res.clearCookie('accessToken', { path: '/' });
+    res.status(200).send('Logged out successfully');
 })
 
 router.get('/session', async (req, res) => {
@@ -68,10 +66,7 @@ router.get('/session', async (req, res) => {
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const userData = verifyToken(token);
-
-    const userId = new mongoose.Types.ObjectId(userData._id);
-    const user = await getUserById(userId);
+    const user = getUser(token, res);
 
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -81,6 +76,7 @@ router.get('/session', async (req, res) => {
 })
 
 router.get('/:userId', async (req, res) => {
+    console.log('inFind');
     const userId = req.params.userId;
 
     if (userId) {

@@ -24,8 +24,11 @@ const userSchema = new Schema({
         type: String,
         default: "No description to show yet...",
         maxlength: [500, "Description cannot exceed 500 characters"],
+    },
+    cartId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Cart'
     }
-
 },
     {
         collation: {

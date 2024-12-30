@@ -1,9 +1,9 @@
 const express = require('express');
 const { configExpress } = require('./config/configExpress');
 const { configDatabase } = require('./config/configDatabase');
-const { getAllBooks } = require('./services/bookService');
-const bookRouter = require('./routes/bookData');
-const userRouter = require('./routes/user');
+const bookRouter = require('./routes/bookDataRoutes');
+const userRouter = require('./routes/userAuthRoutes');
+const cartRouter = require('./routes/cartRoutes')
 const cookieParser = require('cookie-parser');
 
 
@@ -17,8 +17,9 @@ async function start() {
     configExpress(app)
 
     app.use(cookieParser())
-    app.use("/account", userRouter)
-    app.use("/", bookRouter)
+    app.use("/user", userRouter)
+    app.use("/catalog", bookRouter)
+    app.use("/cart", cartRouter)
    
 
     app.listen(PORT, () => {

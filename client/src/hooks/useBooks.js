@@ -7,15 +7,8 @@ export function useGetAllBooks() {
 
   useEffect(() => {
     (async () => {
-      try {
-
-        const response = await bookApi.getAll();
-        setBooks(response);
-
-      } catch (error) {
-
-        console.error('There was an error:', error);
-      }
+      const response = await bookApi.getAll();
+      setBooks(response);
     })();
   }, []);
 
@@ -26,7 +19,7 @@ export function useGetBookById() {
   const [book, setBook] = useState([])
   const { bookId } = useParams();
 
-  
+
 
   useEffect(() => {
     (async () => {

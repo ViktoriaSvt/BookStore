@@ -1,20 +1,24 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/User');
+const { Cart } = require('../models/Cart');
+
 
 
 async function registerUser(userData) {
 
     const hashPass = await bcrypt.hash(userData.password, 10);
 
+    const cart = new Cart;
+    await cart.save();
+
     const user = new User({
         email: userData.email,
-        password: hashPass
+        password: hashPass,
+        cartId: cart._id
     })
 
     await user.save();
-
-
 
     return user;
 
@@ -45,8 +49,6 @@ async function logUser(userData) {
         _id: userData._id,
         email: userData.email
     }
-
-
 
     const token = jwt.sign(playload, 'your-secret-key', { expiresIn: '3d' });
 

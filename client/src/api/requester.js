@@ -7,12 +7,6 @@ async function requester(method, url, data) {
         'Content-Type': 'application/json',
       }
 
-  //  const accessToken = localStorage.getItem('accessToken');
-
-  //  if(accessToken) {
-   //     headers['X-Authorization'] = accessToken;
-   // }
-
     const response = await axios({
         method,
         url,
