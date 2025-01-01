@@ -1,4 +1,18 @@
+
+import { postQuestion } from "../../api/question-requests";
+import { useForm } from "../../hooks/useForm";
+
 export default function FAQ () {
+  const initialValues = {text: ''};
+
+  const submitCallback = async ({text}) => {
+    await postQuestion(text);
+}
+
+const {values, submitHandler, changeHandler} = useForm(initialValues, submitCallback)
+
+
+
 
     return (
 <section className="py-24">
@@ -75,16 +89,18 @@ export default function FAQ () {
       <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4 text-center">
         Can't find your answer? Ask a question!
       </h3>
-      <form className="max-w-lg mx-auto space-y-4" >
+      <form className="max-w-lg mx-auto space-y-4" onSubmit={submitHandler}>
         <label htmlFor="question" className="block text-lg font-medium text-gray-900 dark:text-white">
           Your Question:
         </label>
         <textarea
           id="question"
-          name="question"
+          name="text"
           rows="4"
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
           placeholder="Type your question here..."
+          value={values.text}
+          onChange={changeHandler}
      
         ></textarea>
         <div className="flex justify-center">

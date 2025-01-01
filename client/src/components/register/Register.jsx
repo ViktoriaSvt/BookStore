@@ -1,4 +1,4 @@
-import { useForm } from "../../hooks/useForm";
+import { useAuthForm } from "../../hooks/useAuthForm";
 import { useRegister } from "../../hooks/useRegister";
 
 export default function Register() {
@@ -15,7 +15,7 @@ export default function Register() {
     }
   }
 
-  const { values, changeHandler, submitHandler } = useForm(
+  const { values, changeHandler, submitHandler } = useAuthForm(
     defaultValues, registerHandler
   )
 

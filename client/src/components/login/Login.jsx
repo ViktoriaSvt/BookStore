@@ -1,7 +1,7 @@
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useForm } from "../../hooks/useForm";
+import { useAuthForm} from "../../hooks/useAuthForm";
 import { useLogin } from "../../hooks/useLogin";
 
 export default function Login() {
@@ -21,7 +21,7 @@ export default function Login() {
     }
   }
 
-  const { values, changeHandler, submitHandler, isSubmitting, errors } = useForm(
+  const { values, changeHandler, submitHandler, isSubmitting, errors } = useAuthForm(
     defaultValues, loginhandler
   )
 

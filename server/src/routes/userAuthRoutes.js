@@ -16,6 +16,9 @@ router.post("/register", async (req, res) => {
         const user = await registerUser(data);
         const token = generateToken(user);
 
+        console.log('user prepared');
+        
+
         const existingUser = await User.findOne({ email: user.email });
         
         if (existingUser ) {
@@ -28,7 +31,7 @@ router.post("/register", async (req, res) => {
             path: '/'
         });
 
-
+        console.log('cookie prepared');
         res.status(200).json({
             _id: user._id.toString(),
             email: user.email,

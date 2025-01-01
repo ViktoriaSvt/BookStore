@@ -3,13 +3,14 @@ const { Schema, SchemaTypes: Types, model } = require('mongoose');
 const questionSchema = new Schema({
     text: {
         type: String,
-        reqired: true
+        required: true
     },
     answer: {
         type: String,
-        default: undefined
+        default: null
     }
 })
+
 
 
 const Question = model('Question', questionSchema);

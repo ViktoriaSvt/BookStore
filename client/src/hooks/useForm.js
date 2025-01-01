@@ -1,38 +1,28 @@
+import { useState } from "react";
 
-import { useFormik } from "formik";
-import * as Yup from "yup";
+export function useForm(initialValues, submitCallback) {
+    const [values, setValues] = useState(initialValues);
 
+    const changeHandler = (e) => {
+        setValues(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
 
-export function useForm(defaultValues, submitCallback) {
-    const formik = useFormik({
-      initialValues: defaultValues,
-      validationSchema: Yup.object({
-        email: Yup.string()
-          .email("Invalid email address")
-          .required("Email is required"),
-        password: Yup.string()
-          .min(8, "Password must be at least 8 characters")
-          .required("Password is required"),
-      }),
-      onSubmit: async (values, { setSubmitting }) => {
-        try {
-          await submitCallback(values);
-        } finally {
-          setSubmitting(false);
-        }
-      },
-    });
+        console.log(values);
+        
+    }
 
     const submitHandler = (e) => {
         e.preventDefault();
-        submitCallback(formik.values)
+
+        submitCallback(values);
     }
-  
+
+
     return {
-      values: formik.values,
-      changeHandler: formik.handleChange,
-      submitHandler: submitHandler,
-      isSubmitting: formik.isSubmitting,
-      errors: formik.errors
-    };
-  }
+        values,
+        changeHandler,
+        submitHandler
+    }
+}

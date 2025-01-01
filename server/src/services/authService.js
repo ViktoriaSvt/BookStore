@@ -7,10 +7,15 @@ const { Cart } = require('../models/Cart');
 
 async function registerUser(userData) {
 
+    console.log('registering user');
+    
+
     const hashPass = await bcrypt.hash(userData.password, 10);
 
     const cart = new Cart;
     await cart.save();
+
+    console.log('registering cart for user');
 
     const user = new User({
         email: userData.email,
@@ -20,6 +25,7 @@ async function registerUser(userData) {
 
     await user.save();
 
+    console.log('registered user');
     return user;
 
 

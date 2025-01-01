@@ -34,8 +34,9 @@ const userSchema = new Schema({
         ref: 'Cart'
     },
     questions: {
-         type: Schema.Types.ObjectId,
-        ref: 'Question'
+        type: [Schema.Types.ObjectId], 
+        ref: 'Question',             
+        default: []                  
     }
 },
     {
