@@ -1,42 +1,34 @@
 
-import { useNavigate } from "react-router-dom";
 import { addToCart} from "../../api/cart-requests";
 import { useGetAllBooks } from "../../hooks/useBooks";
+import "react-toastify/dist/ReactToastify.css";
 import BookItem from "./book-item/BookItem";
-import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+
 
 export default function Search() {
   const [books] = useGetAllBooks();
-  const [notification, setNotification] = useState('');
 
   const submitButtonHandler = async (bookId) => {
+    
     await addToCart(bookId);
-    
-    setNotification('Item added to cart');
 
-    console.log(notification);
-    
-    
-    setTimeout(() => {
-      setNotification('');
-    }, 3000);
+    toast.success("Added to cart", {
+      position: "top-right",
+    });
   }
 
 
 
   return (
     <>
+    <ToastContainer />
       <div className="search">
         <form><input type="text" name="search-bar" id="search-bar" placeholder="Search for books..." /></form>
       </div>
 
-      {notification && (
-        <div className="notification">
-          {notification}
-        </div>
-      )}
 
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center mb-40">
         {books.map(currentBook => (
           <BookItem
             key={currentBook._id}

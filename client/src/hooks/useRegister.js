@@ -16,6 +16,7 @@ const registerHandler = async (email, password) => {
             changeAuthState({
                 _id: authData._id,
                 email: authData.email,
+                isAdmin: authData.role == 'admin'
             })
 
             navigate('/')

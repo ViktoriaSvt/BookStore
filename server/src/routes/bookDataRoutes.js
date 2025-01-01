@@ -1,6 +1,5 @@
 const express = require("express");
 const { getAllBooks, getBookById } = require("../services/bookService");
-const { getUserById, getUser } = require("../services/userService");
 
 
 
@@ -19,6 +18,8 @@ router.get("/:bookId", async (req,res) => {
     const bookId = req.params.bookId
     const book = await getBookById(bookId)
 
+
+    
     res.status(200).json(book)
 })
 

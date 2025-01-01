@@ -63,11 +63,16 @@ export default function ProfileInfo() {
                 <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400" />
                 Los Angeles, California
               </div>
+
+
               <div className="mb-2 text-blueGray-600 mt-10">
                 <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400" />Solution Manager - Creative Tim Officer
               </div>
               <div className="mb-2 text-blueGray-600">
                 <i className="fas fa-university mr-2 text-lg text-blueGray-400" />University of Computer Science
+              
+              
+              
               </div>
             </div>
             <div className="mt-10 py-10 border-t border-blueGray-200 text-center">

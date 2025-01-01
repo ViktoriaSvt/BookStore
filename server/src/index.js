@@ -3,6 +3,7 @@ const { configExpress } = require('./config/configExpress');
 const { configDatabase } = require('./config/configDatabase');
 const bookRouter = require('./routes/bookDataRoutes');
 const userRouter = require('./routes/userAuthRoutes');
+const faqRouter = require('./routes/faqRoutes');
 const cartRouter = require('./routes/cartRoutes')
 const cookieParser = require('cookie-parser');
 
@@ -18,6 +19,7 @@ async function start() {
 
     app.use(cookieParser())
     app.use("/user", userRouter)
+    app.use("/faq", faqRouter)
     app.use("/catalog", bookRouter)
     app.use("/cart", cartRouter)
    

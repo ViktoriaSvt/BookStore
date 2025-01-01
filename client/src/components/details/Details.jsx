@@ -9,7 +9,7 @@ export default function Details() {
   return (
     
     <section 
-      className="text-gray-700 body-font overflow-hidden bg-white m-6 relative min-h-screen" 
+      className="text-gray-700 body-font overflow-hidden bg-white m-10 relative min-h-1600" 
       style={{
         backgroundImage: `url(${book.bannerImageUrl})`,
         backgroundSize: 'cover',

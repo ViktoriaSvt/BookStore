@@ -7,24 +7,24 @@ export const useLogin = () => {
     const navigate = useNavigate();
 
 
-const loginHandler = async (email, password) => {
-    try {
+    const loginHandler = async (email, password) => {
         const authData = await login(email, password)
 
         if (authData) {
+
+            console.log(authData);
+            
+
             changeAuthState({
                 _id: authData._id,
                 email: authData.email,
+                isAdmin: authData.role == 'admin'
             })
 
             navigate('/')
         }
-    } catch (error) {
-        throw new Error(error.message);
-
 
     }
-}
 
-return loginHandler;
+    return loginHandler;
 }

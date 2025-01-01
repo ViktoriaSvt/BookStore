@@ -4,6 +4,7 @@ const BASE_URL = "http://localhost:3000/user";
 
 export const register = async (email, password) => {
   const authData = await request.post(`${BASE_URL}/register`, { email, password });
+  
   return authData;
 }
 

@@ -1,7 +1,8 @@
 const express = require("express");
 const { registerUser, generateToken, logUser, verifyToken } = require("../services/authService");
 const { getUserById, getUser } = require("../services/userService");
-const { default: mongoose } = require("mongoose");
+const bcrypt = require('bcrypt');
+const { User } = require("../models/User");
 
 
 
@@ -15,6 +16,12 @@ router.post("/register", async (req, res) => {
         const user = await registerUser(data);
         const token = generateToken(user);
 
+        const existingUser = await User.findOne({ email: user.email });
+        
+        if (existingUser ) {
+            return res.status(200).json({ message: 'Email is already taken.' });
+        }
+
         res.cookie('accessToken', token, {
             maxAge: 259200000,
             httpOnly: true,
@@ -25,6 +32,7 @@ router.post("/register", async (req, res) => {
         res.status(200).json({
             _id: user._id.toString(),
             email: user.email,
+            role: user.role
         });
 
 
@@ -37,6 +45,7 @@ router.post("/login", async (req, res) => {
 
     const user = await logUser(userData);
     const token = generateToken(user);
+    
 
     res.cookie('accessToken', token, {
         maxAge: 259200000,
@@ -44,9 +53,11 @@ router.post("/login", async (req, res) => {
         path: '/'
     });
 
+
     res.status(200).json({
         _id: user._id,
         email: user.email,
+        role: user.role
     });
 
 
@@ -60,13 +71,14 @@ router.post("/logout", async (req, res) => {
 
 router.get('/session', async (req, res) => {
 
+    
     const token = req.cookies.accessToken;
 
     if (!token) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const user = getUser(token, res);
+    const user = await getUser(token, res);
 
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -76,7 +88,6 @@ router.get('/session', async (req, res) => {
 })
 
 router.get('/:userId', async (req, res) => {
-    console.log('inFind');
     const userId = req.params.userId;
 
     if (userId) {

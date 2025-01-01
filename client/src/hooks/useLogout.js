@@ -14,6 +14,7 @@ export function useLogout() {
         changeAuthState({
             _id: '',
             email: '',
+            role: ''
         });
 
     }

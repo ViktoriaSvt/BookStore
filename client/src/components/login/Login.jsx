@@ -1,35 +1,41 @@
-import { useState } from "react";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "../../hooks/useForm";
 import { useLogin } from "../../hooks/useLogin";
 
 export default function Login() {
 
-  const [hasError, setHasError] = useState('');
-
   const login = useLogin();
+
   const defaultValues = { email: '', password: '' };
+
   const loginhandler = async ({ email, password }) => {
     try {
       await login(email, password)
-    } catch (error) {
-      setHasError('Invalid email or password. Please try again')
-    
-      
+    } catch {
+      toast.error("Invalid email or password. Please try again", {
+        position: "top-right",
+      });
+
     }
   }
 
-  const { values, changeHandler, submitHandler } = useForm(
+  const { values, changeHandler, submitHandler, isSubmitting, errors } = useForm(
     defaultValues, loginhandler
   )
+
+
 
 
   return (
 
     <div className="form-divider">
-      <form autoComplete="off"  className="form" onSubmit={submitHandler}>
+      <ToastContainer />
+      <form autoComplete="off" className="form" onSubmit={submitHandler}>
         <header>
           <h1>Login</h1>
-          {hasError && <h2>{hasError}</h2>}
+
         </header>
         <div className="field">
           <input
@@ -39,9 +45,14 @@ export default function Login() {
             placeholder="Email"
             value={values.email}
             onChange={changeHandler}
-            required />
-          <i className="fa-solid fa-circle-check" /><label htmlFor="login-email">Email:</label>
-          <span className="helper info">example: JohnDoe344@gmail.com</span>
+            required
+          />
+          {errors.email ? <i className="fa-solid fa-circle-xmark text-red-500"></i> : <i className="fa-solid fa-circle-check text-green-500" />}
+          <label htmlFor="login-email">Email:</label>
+          {errors.email && (
+            <span className="error text-red-500 text-sm">{errors.email}</span>
+          )}
+
         </div>
         <div className="field">
           <input
@@ -52,11 +63,15 @@ export default function Login() {
             value={values.password}
             onChange={changeHandler}
             required />
-          <i className="fa-solid fa-circle-check" /><label htmlFor="login-password">Password:</label>
-          <span className="helper info">Password must be at least 8 characters long</span>
+          {errors.password ? <i className="fa-solid fa-circle-xmark text-red-500"></i> : <i className="fa-solid fa-circle-check text-green-500" />}
+          <label htmlFor="login-password">Password:</label>
+          {errors.password && (
+            <span className="error text-red-500 text-sm">{errors.password}</span>
+          )}
+
         </div>
         <p className="link-signup">No account?<a href="/register">sign up</a></p>
-        <input type="submit" defaultValue="Submit" />
+        <input type="submit" defaultValue="Submit" disabled={isSubmitting} />
       </form>
     </div>
   );

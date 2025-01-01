@@ -57,8 +57,6 @@ async function logUser(userData) {
     return token;
 }
 
-
-
 function verifyToken(token) {
     try {
         const payload = jwt.verify(token, 'your-secret-key');

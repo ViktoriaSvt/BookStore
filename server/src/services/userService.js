@@ -8,12 +8,7 @@ async function getUserById(id) {
   return user
 }
 
-
 async function getUser(token, res) {
-
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
-}
 
 const userData = verifyToken(token);
 const user = await getUserById(userData._id);

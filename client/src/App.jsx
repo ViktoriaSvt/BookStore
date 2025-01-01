@@ -10,6 +10,8 @@ import Register from "./components/register/Register"
 import { useEffect, useState } from "react"
 import { AuthContext } from "./contexts/AuthContext"
 import { getSession } from "./api/auth-api"
+import FAQ from "./components/questions/FAQ-container"
+import AdminFAQ from "./components/questions/adminFaq"
 
 
 
@@ -24,33 +26,32 @@ function App() {
   const contextData = {
     userId: authState._id,
     email: authState.email,
+    isAdmin: authState.isAdmin,
     isAuthenticated: !!authState.email,
     changeAuthState
   }
 
   useEffect(() => {
     const initializeAuthState = async () => {
-      try {
-
-  
-        
         const response = await getSession();
-        
-
         
         if (response) {
           changeAuthState({
             _id: response._id,
             email: response.email,
+            isAdmin: response.role == 'admin'
           });
         }
-      } catch (error) {
-        console.error("Failed to initialize authentication:", error);
-      }
+
+
     }
 
     initializeAuthState();
+    
   }, []);
+
+
+  
 
 
   return (
@@ -62,9 +63,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={contextData.isAuthenticated ? <ProfileInfo /> : <Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/faq" element={contextData.isAdmin ? <AdminFAQ/> : <FAQ/>} />
           <Route path="/search" element={<Search />} />
           <Route path="/details/:bookId" element={<Details />} />
-          <Route path="/cart" element={contextData.isAuthenticated ? <Cart /> : <h1>Sign in to use cart</h1>} />
+          <Route path="/cart" element={ <Cart /> } />
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>

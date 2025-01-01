@@ -14,7 +14,7 @@ export default function Header() {
         { path: "/", icon: "fa-house" },
         { path: "/search", icon: "fa-magnifying-glass" },
         { path: "/cart", icon: "fa-cart-shopping" },
-        { path: "/wishlist", icon: "fa-heart" },
+        { path: "/faq", icon: "fa-clipboard-question" },
         route
     ];
 

@@ -22,10 +22,13 @@ router.post("/:bookId", async (req, res) => {
             return res.status(404).json({ message: "User or Book not found" });
         }
 
-        const cart = await getCart(user.cartId);
-        console.log(cart);
-        
 
+        if(!user.cartId ) {
+            return res.status(403).json({ message: "Unauthorized action for administrator roles" });
+        }
+
+        const cart = await getCart(user.cartId);
+      
         if (!cart.books.includes(bookId)) {
             cart.books.push(bookId);
         }
@@ -33,7 +36,8 @@ router.post("/:bookId", async (req, res) => {
         await cart.save()
         await user.save();
 
-        res.status(200);
+        res.status(200).json({ message: 'Book added!' });
+
 
 })
 
@@ -42,20 +46,19 @@ router.get("/items", async (req, res) => {
     const token = req.cookies.accessToken;
     const userRef = await getUser(token)
 
-    console.log('referencing: ',userRef);
-    
+    if(userRef.role == "admin") {
+        res.status(403).json({ message: 'Access denied for administrator roles'})
+        return
+    }
+
 
     const user = await userRef.populate('cartId');
 
     const cartRef = user.cartId;
     const cart = await Cart.findById(cartRef)
-    console.log(cart);
+
     
     await cart.populate('books');
-
-    console.log('Populated cart:', cart);
-    
-
 
  res.status(200).json(cart.books)
 })
@@ -69,6 +72,7 @@ router.delete("/remove/:bookId", async (req, res) => {
     console.log(user);
     
     const cart = await getCart(user.cartId)
+
 
     console.log('CART');
     console.log(cart);

@@ -16,6 +16,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        default: 'user'
+    },
     status: {
         type: String,
         default: 'standart'
@@ -28,6 +32,10 @@ const userSchema = new Schema({
     cartId: {
         type: Schema.Types.ObjectId,
         ref: 'Cart'
+    },
+    questions: {
+         type: Schema.Types.ObjectId,
+        ref: 'Question'
     }
 },
     {
