@@ -1,12 +1,16 @@
 
 import { postQuestion } from "../../api/question-requests";
 import { useForm } from "../../hooks/useForm";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function FAQ () {
   const initialValues = {text: ''};
 
   const submitCallback = async ({text}) => {
     await postQuestion(text);
+    toast.success("Question is pending... See your questions in profile page");
+    text = ''
 }
 
 const {values, submitHandler, changeHandler} = useForm(initialValues, submitCallback)
@@ -16,6 +20,7 @@ const {values, submitHandler, changeHandler} = useForm(initialValues, submitCall
 
     return (
 <section className="py-24">
+  <ToastContainer/>
   <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div className="mb-16">
       <h6 className="text-lg text-indigo-600 font-medium text-center mb-2">
