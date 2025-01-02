@@ -3,16 +3,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuthForm} from "../../hooks/useAuthForm";
 import { useLogin } from "../../hooks/useLogin";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-
-  const login = useLogin();
+ const {language} = useAuthContext();
+ 
+  const {loginHandler, translations} = useLogin(language);
 
   const defaultValues = { email: '', password: '' };
 
   const loginhandler = async ({ email, password }) => {
     try {
-      await login(email, password)
+      await loginHandler(email, password)
     } catch {
       toast.error("Invalid email or password. Please try again", {
         position: "top-right",
@@ -34,7 +36,7 @@ export default function Login() {
       <ToastContainer />
       <form autoComplete="off" className="form" onSubmit={submitHandler}>
         <header>
-          <h1>Login</h1>
+          <h1>{translations.header}</h1>
 
         </header>
         <div className="field">
@@ -42,13 +44,13 @@ export default function Login() {
             type="email"
             name="email"
             id="login-email"
-            placeholder="Email"
+            placeholder={translations.emailPlaceholde}
             value={values.email}
             onChange={changeHandler}
             required
           />
           {errors.email ? <i className="fa-solid fa-circle-xmark text-red-500"></i> : <i className="fa-solid fa-circle-check text-green-500" />}
-          <label htmlFor="login-email">Email:</label>
+          <label htmlFor="login-email">{translations.emailLabel}</label>
           {errors.email && (
             <span className="error text-red-500 text-sm">{errors.email}</span>
           )}
@@ -59,18 +61,18 @@ export default function Login() {
             type="password"
             name="password"
             id="login-password"
-            placeholder="Password"
+            placeholder={translations.passwordPlaceholder}
             value={values.password}
             onChange={changeHandler}
             required />
           {errors.password ? <i className="fa-solid fa-circle-xmark text-red-500"></i> : <i className="fa-solid fa-circle-check text-green-500" />}
-          <label htmlFor="login-password">Password:</label>
+          <label htmlFor="login-password">{translations.passwordLabel}</label>
           {errors.password && (
             <span className="error text-red-500 text-sm">{errors.password}</span>
           )}
 
         </div>
-        <p className="link-signup">No account?<a href="/register">sign up</a></p>
+        <p className="link-signup"> {translations.noAccount}<a href="/register">{translations.signUpLink}</a></p>
         <input type="submit" defaultValue="Submit" disabled={isSubmitting} />
       </form>
     </div>

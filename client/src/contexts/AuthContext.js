@@ -8,6 +8,7 @@ export const AuthContext = createContext ({
     email: '',
     isAdmin: false,
     isAuthenticated: false,
+    language: 'en',
     changeAuthState: ( ) => null
 })
 

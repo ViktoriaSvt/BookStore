@@ -1,0 +1,33 @@
+{
+    "en": {
+      "header": "Login",
+      "emailLabel": "Email:",
+      "emailPlaceholder": "Email",
+      "passwordLabel": "Password:",
+      "passwordPlaceholder": "Password",
+      "noAccount": "No account?",
+      "signUpLink": "sign up",
+      "submitBtn": "Submit"
+    },
+    "fr": {
+      "header": "Se connecter",
+      "emailLabel": "Email:",
+      "emailPlaceholder": "Email",
+      "passwordLabel": "Mot de passe:",
+      "passwordPlaceholder": "Mot de passe",
+      "noAccount": "Pas de compte?",
+      "signUpLink": "s'inscrire",
+      "submitBtn": "Soumettre"
+    },
+    "bg": {
+      "header": "Вход",
+      "emailLabel": "Електронна поща:",
+      "emailPlaceholder": "Електронна поща",
+      "passwordLabel": "Парола:",
+      "passwordPlaceholder": "Парола",
+      "noAccount": "Нямате акаунт?",
+      "signUpLink": "регистрация",
+      "submitBtn": "Изпрати"
+    }
+  }
+  

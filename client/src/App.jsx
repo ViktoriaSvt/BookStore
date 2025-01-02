@@ -18,17 +18,25 @@ import AdminFAQ from "./components/questions/adminFaq"
 function App() {
 
   const [authState, setAuthState] = useState({});
+  const [language, setLanguage] = useState(localStorage.getItem("language") || "en");
 
   const changeAuthState = (state) => {
     setAuthState(state)
   }
+
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem("language", lang);
+  };
 
   const contextData = {
     userId: authState._id,
     email: authState.email,
     isAdmin: authState.isAdmin,
     isAuthenticated: !!authState.email,
-    changeAuthState
+    language,
+    changeAuthState,
+    changeLanguage
   }
 
   useEffect(() => {

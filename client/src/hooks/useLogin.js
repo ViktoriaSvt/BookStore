@@ -1,10 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 import { login } from "../api/auth-api";
+import { useEffect, useState } from "react";
+import { getLoginTranslations } from "../api/translation-requests";
 
-export const useLogin = () => {
+export const useLogin = (language) => {
     const { changeAuthState } = useAuthContext();
     const navigate = useNavigate();
+    const translations = useLoginTranslation(language)
+
+    console.log(translations);
+    
 
 
     const loginHandler = async (email, password) => {
@@ -13,7 +19,7 @@ export const useLogin = () => {
         if (authData) {
 
             console.log(authData);
-            
+
 
             changeAuthState({
                 _id: authData._id,
@@ -26,5 +32,19 @@ export const useLogin = () => {
 
     }
 
-    return loginHandler;
+    return { loginHandler, translations};
+}
+
+export const useLoginTranslation = (language) => {
+    const [translations, setTranslations] = useState({});
+
+    useEffect(() => {
+        const fetchTranslation = async () => {
+            const data = await getLoginTranslations(language);
+            setTranslations(data);
+        }
+        fetchTranslation();
+    }, [language])
+
+    return translations;
 }

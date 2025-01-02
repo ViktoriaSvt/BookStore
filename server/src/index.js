@@ -5,6 +5,7 @@ const bookRouter = require('./routes/bookDataRoutes');
 const userRouter = require('./routes/userAuthRoutes');
 const faqRouter = require('./routes/faqRoutes');
 const cartRouter = require('./routes/cartRoutes')
+const languageRouter = require('./routes/translationRoutes')
 const cookieParser = require('cookie-parser');
 
 
@@ -17,8 +18,11 @@ async function start() {
     await configDatabase();
     configExpress(app)
 
+
+
     app.use(cookieParser())
     app.use("/user", userRouter)
+    app.use("/translations", languageRouter)
     app.use("/faq", faqRouter)
     app.use("/catalog", bookRouter)
     app.use("/cart", cartRouter)

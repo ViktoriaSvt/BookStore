@@ -1,0 +1,118 @@
+{
+      "en": {
+        "staticContent": {
+          "header": "Can't find your answer? Ask a question!",
+          "label": "Your Question:",
+          "placeholder": "Type your question here...",
+          "submitButton": "Submit Question"
+        },
+        "questions": [
+          {
+            "question": "How do I update my billing information?",
+            "answer": "To update your billing information, please log into your account and navigate to your account settings. From there, you can change your billing address, payment methods, and other necessary details."
+          },
+          {
+            "question": "Do you offer international shipping?",
+            "answer": "Yes, we offer international shipping to most countries. You can check the shipping options available for your country during checkout."
+          },
+          {
+            "question": "Can I pay with a credit card?",
+            "answer": "Yes, we accept all major credit cards, including Visa, MasterCard, and American Express. You can enter your card details during the checkout process."
+          },
+          {
+            "question": "How do I return an order?",
+            "answer": "To return an order, please visit our returns page and follow the instructions provided. You will need your order number and details of the items you wish to return. Returns are accepted within 30 days of purchase."
+          },
+          {
+            "question": "How long does delivery take?",
+            "answer": "Delivery times vary depending on your location and the shipping method you choose. Standard shipping typically takes 5-7 business days, while expedited shipping can take 2-3 business days."
+          },
+          {
+            "question": "Do you offer shipping to Asia?",
+            "answer": "Yes, we offer shipping to most Asian countries. Shipping times and costs may vary depending on the specific country. You can check the available shipping options during checkout."
+          },
+          {
+            "question": "How can I track my international order?",
+            "answer": "Once your order is shipped, you will receive a tracking number via email. You can use this number on the carrier’s website to track your package in real time."
+          }
+        ]
+      },
+      "fr": {
+        "staticContent": {
+          "header": "Vous n'avez pas trouvé la réponse ? Posez une question !",
+          "label": "Votre Question :",
+          "placeholder": "Tapez votre question ici...",
+          "submitButton": "Soumettre la question"
+        },
+        "questions": [
+          {
+            "question": "Comment mettre à jour mes informations de facturation ?",
+            "answer": "Pour mettre à jour vos informations de facturation, veuillez vous connecter à votre compte et vous rendre dans les paramètres de votre compte. Vous pourrez y modifier votre adresse de facturation, vos méthodes de paiement et d'autres informations nécessaires."
+          },
+          {
+            "question": "Proposez-vous une expédition internationale ?",
+            "answer": "Oui, nous proposons une expédition internationale vers la plupart des pays. Vous pouvez vérifier les options d'expédition disponibles pour votre pays lors de la commande."
+          },
+          {
+            "question": "Puis-je payer avec une carte de crédit ?",
+            "answer": "Oui, nous acceptons toutes les principales cartes de crédit, y compris Visa, MasterCard et American Express. Vous pouvez entrer vos informations de carte lors du paiement."
+          },
+          {
+            "question": "Comment retourner une commande ?",
+            "answer": "Pour retourner une commande, veuillez visiter notre page de retours et suivre les instructions. Vous aurez besoin de votre numéro de commande et des détails des articles que vous souhaitez retourner. Les retours sont acceptés dans les 30 jours suivant l'achat."
+          },
+          {
+            "question": "Combien de temps prend la livraison ?",
+            "answer": "Les délais de livraison varient en fonction de votre emplacement et de la méthode d'expédition choisie. L'expédition standard prend généralement 5 à 7 jours ouvrables, tandis que l'expédition accélérée peut prendre de 2 à 3 jours ouvrables."
+          },
+          {
+            "question": "Proposez-vous l'expédition vers l'Asie ?",
+            "answer": "Oui, nous proposons l'expédition vers la plupart des pays asiatiques. Les délais et frais d'expédition peuvent varier selon le pays spécifique. Vous pouvez vérifier les options d'expédition disponibles lors de la commande."
+          },
+          {
+            "question": "Comment puis-je suivre ma commande internationale ?",
+            "answer": "Une fois que votre commande est expédiée, vous recevrez un numéro de suivi par e-mail. Vous pouvez utiliser ce numéro sur le site du transporteur pour suivre votre colis en temps réel."
+          }
+        ]
+      },
+      "bg": {
+        "staticContent": {
+          "header": "Не можете да намерите отговора? Задайте въпрос!",
+          "label": "Вашият въпрос:",
+          "placeholder": "Напишете вашия въпрос тук...",
+          "submitButton": "Изпратете въпроса"
+        },
+        "questions": [
+          {
+            "question": "Как да актуализирам моята информация за фактуриране?",
+            "answer": "За да актуализирате информацията си за фактуриране, моля, влезте в профила си и отидете в настройките на акаунта. От там можете да промените своята фактурна информация, начините на плащане и други необходими данни."
+          },
+          {
+            "question": "Предлагате ли международна доставка?",
+            "answer": "Да, ние предлагаме международна доставка към повечето държави. Можете да проверите наличните опции за доставка за вашата страна по време на процеса на поръчка."
+          },
+          {
+            "question": "Мога ли да платя с кредитна карта?",
+            "answer": "Да, ние приемаме всички основни кредитни карти, включително Visa, MasterCard и American Express. Можете да въведете данните на картата си по време на процеса на поръчка."
+          },
+          {
+            "question": "Как да върна поръчка?",
+            "answer": "За да върнете поръчка, моля, посетете нашата страница за връщане и следвайте инструкциите. Ще ви трябва номер на поръчката и информация за артикулите, които искате да върнете. Връщанията се приемат в рамките на 30 дни от датата на покупката."
+          },
+          {
+            "question": "Колко време отнема доставката?",
+            "answer": "Времето за доставка зависи от вашето местоположение и метода на доставка, който изберете. Стандартната доставка обикновено отнема 5-7 работни дни, докато експресната доставка може да отнеме 2-3 работни дни."
+          },
+          {
+            "question": "Предлагате ли доставка към Азия?",
+            "answer": "Да, ние предлагаме доставка към повечето азиатски държави. Времето и разходите за доставка могат да варират в зависимост от конкретната страна. Можете да проверите наличните опции по време на поръчката."
+          },
+          {
+            "question": "Как да проследя моята международна поръчка?",
+            "answer": "След като поръчката ви бъде изпратена, ще получите номер за проследяване по имейл. Можете да използвате този номер на сайта на куриерската фирма, за да проследите пратката си в реално време."
+          }
+        ]
+      }
+    }
+  
+  

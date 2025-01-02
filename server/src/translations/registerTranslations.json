@@ -1,0 +1,45 @@
+{
+    "en": {
+      "header": "Register",
+      "emailLabel": "Email:",
+      "emailPlaceholder": "Email",
+      "passwordLabel": "Password:",
+      "passwordPlaceholder": "Password",
+      "repeatPasswordLabel": "Repeat password:",
+      "repeatPasswordPlaceholder": "Repeat password",
+      "infoEmail": "example: JohnDoe344@gmail.com",
+      "infoPassword": "Password must be at least 8 characters long",
+      "alreadyHaveAccount": "Already have an account?",
+      "loginLink": "Login",
+      "submitBtn": "Submit"
+    },
+    "fr": {
+      "header": "S'inscrire",
+      "emailLabel": "Email:",
+      "emailPlaceholder": "Email",
+      "passwordLabel": "Mot de passe:",
+      "passwordPlaceholder": "Mot de passe",
+      "repeatPasswordLabel": "Répétez le mot de passe:",
+      "repeatPasswordPlaceholder": "Répétez le mot de passe",
+      "infoEmail": "exemple: JohnDoe344@gmail.com",
+      "infoPassword": "Le mot de passe doit contenir au moins 8 caractères",
+      "alreadyHaveAccount": "Vous avez déjà un compte?",
+      "loginLink": "Se connecter",
+      "submitBtn": "Soumettre"
+    },
+    "bg": {
+      "header": "Регистрация",
+      "emailLabel": "Електронна поща:",
+      "emailPlaceholder": "Електронна поща",
+      "passwordLabel": "Парола:",
+      "passwordPlaceholder": "Парола",
+      "repeatPasswordLabel": "Повторете паролата:",
+      "repeatPasswordPlaceholder": "Повторете паролата",
+      "infoEmail": "пример: JohnDoe344@gmail.com",
+      "infoPassword": "Паролата трябва да e поне 8 знака",
+      "alreadyHaveAccount": "Вече имате акаунт?",
+      "loginLink": "Вход",
+      "submitBtn": "Изпрати"
+    }
+  }
+  

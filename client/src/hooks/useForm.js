@@ -9,8 +9,6 @@ export function useForm(initialValues, submitCallback) {
             [e.target.name]: e.target.value
         }));
 
-        console.log(values);
-
     }
 
     const submitHandler = async (e) => {
