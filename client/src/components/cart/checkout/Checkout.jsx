@@ -25,18 +25,14 @@ const PaymentForm = ({ totalAmount }) => {
             card: elements.getElement(CardElement),
         });
 
-        console.log('payment created succesfully!');
-
-
         if (error) {
             console.error(error);
             console.log('in first error');
 
             setIsProcessing(false);
         } else {
-            console.log('requesting payment...!');
             const response = await createPurchase(paymentMethod, totalAmount)
-            console.log('requesting succesful...!', response);
+
             try {
                 if (response) {
                     console.log("Payment successful!");
@@ -55,27 +51,29 @@ const PaymentForm = ({ totalAmount }) => {
         <div className="mt-6 border-t pt-6">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">Payment Information</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="shadow-lg p-6 rounded-lg bg-white">
-                    <div className="bg-gray-100 p-4 rounded-lg">
-                        <CardElement />
-                    </div>
-                </div>
+    <div className="shadow-lg p-6 rounded-lg bg-white">
+        <div className="bg-gray-100 p-4 rounded-lg ">
+            <CardElement />
+        </div>
+    </div>
 
-                <div className="flex justify-between items-center">
-                    <span className="text-xl font-semibold text-gray-800">
-                        Total: ${totalAmount.toFixed(2)}
-                    </span>
 
-                    <button
-                        type="submit"
-                        disabled={isProcessing}
-                        className={`px-6 py-3 text-white font-semibold rounded-lg transition-colors ${isProcessing ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
-                            }`}
-                    >
-                        {isProcessing ? "Processing..." : "Pay Now"}
-                    </button>
-                </div>
-            </form>
+    <div className="flex justify-between items-center px-4 py-2">
+        <span className="text-xl font-semibold text-gray-800">
+            Total: ${totalAmount.toFixed(2)}
+        </span>
+
+        <button
+            type="submit"
+            disabled={isProcessing}
+            className={`px-6 py-3 text-white font-semibold rounded-lg transition-colors ${isProcessing ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+                }`}
+        >
+            {isProcessing ? "Processing..." : "Pay Now"}
+        </button>
+    </div>
+</form>
+
         </div>
     );
 };

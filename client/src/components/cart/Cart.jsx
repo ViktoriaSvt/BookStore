@@ -19,18 +19,18 @@ export default function Cart() {
   useEffect(() => {
     const total = books.reduce((sum, book) => sum + book.price, 0);
     setTotalAmount(total);
-}, [books]);
+  }, [books]);
 
-const openModal = () => setIsModalOpen(true);
+  const openModal = () => setIsModalOpen(true);
 
-  // Function to close the modal
+
   const closeModal = () => setIsModalOpen(false);
 
 
   console.log(totalAmount);
-  
 
 
+ //TODO: use cache to optimise cart flow during heavy loads (redis)
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg m-20">
@@ -62,10 +62,10 @@ const openModal = () => setIsModalOpen(true);
         </tbody>
       </table>
 
-        {/* Checkout Button */}
-        {books.length > 0 && (
-        <div className="mt-4 flex justify-between items-center">
-          <span className="text-xl font-semibold text-gray-800">
+
+      {books.length > 0 && (
+        <div className="mt-4 flex justify-between items-center p-6" >
+          <span className="text-xl font-semibold text-gray-800 ">
             Total: ${totalAmount.toFixed(2)}
           </span>
           <button
@@ -77,7 +77,6 @@ const openModal = () => setIsModalOpen(true);
         </div>
       )}
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">

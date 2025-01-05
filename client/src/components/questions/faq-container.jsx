@@ -19,6 +19,7 @@ export default function FAQ() {
   console.log('main trans', translations);
 
   useEffect(() => {
+
     (async () => {
       try {
         setIsLoading(true);
@@ -33,6 +34,8 @@ export default function FAQ() {
   }, [language]);
 
   const questions = translations?.questions || [];
+  const staticContents = translations?.staticContent || [];
+
 
   return (
     <section className="py-24">
@@ -86,18 +89,18 @@ export default function FAQ() {
 
         <div className="mt-16">
           <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4 text-center">
-            {/* {translations.staticContent.header} */}
+            {staticContents.header}
           </h3>
           <form className="max-w-lg mx-auto space-y-4" onSubmit={submitHandler}>
             <label htmlFor="question" className="block text-lg font-medium text-gray-900 dark:text-white">
-              {/* {translations.staticContent.label} */}
+              {staticContents.label}
             </label>
             <textarea
               id="question"
               name="text"
               rows="4"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              // placeholder=  {translations.staticContent.placeholder}
+              placeholder=  {staticContents.placeholder}
               value={values.text}
               onChange={changeHandler}
             ></textarea>
@@ -106,7 +109,7 @@ export default function FAQ() {
                 type="submit"
                 className="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
               >
-                {/* {translations.staticContent.submitButton} */}
+                {staticContents.submitButton}
               </button>
             </div>
           </form>

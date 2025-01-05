@@ -10,6 +10,12 @@ export const addToCart = async(bookId) => await request.post(`${BASE_URL}/${book
 
 export const createBook = async (data) => await request.post(BASE_URL , data);
 
+export const getBooksBySearch = async (searchQuery) => {
+    
+    const result = await request.post(`${BASE_URL}/search?query=${searchQuery.params}`)
+    return result
+}
+
 export const deleteGame = async (bookId) => await request.del(`${BASE_URL}/${bookId}`)
 
 

@@ -12,8 +12,9 @@ export function useGetAllBooks() {
     })();
   }, []);
 
-  return [books]
+  return [books, setBooks]
 }
+
 
 export function useGetBookById() {
   const [book, setBook] = useState([])
