@@ -7,14 +7,8 @@ const router = express.Router();
 
 router.get('/faq', (req, res) => {
 
-    console.log('working on it....');
- 
-    
-    
     const targetLanguage = req.query.lang || 'en';
 
-    
-    
     const faqContent = faqTranslations[targetLanguage] || faqTranslations['en'];
     console.log(faqContent);
     
@@ -27,8 +21,6 @@ router.get('/login', (req, res) => {
     const loginContent = loginTranslations[targetLanguage] || loginTranslations['en'];
     res.json(loginContent);
 });
-
-
 
 router.get('/register', (req, res) => {
     const targetLanguage = req.query.lang || 'en';

@@ -13,6 +13,7 @@ export default function Search() {
 
   const detailsHandler = async (bookId) => {
 
+    console.log('in handler');
     await addToCart(bookId);
 
     toast.success("Added to cart", {

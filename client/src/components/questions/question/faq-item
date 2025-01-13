@@ -1,5 +1,10 @@
 import { useState } from "react";
 
 
-export default function FAQItem ({ header, text }) {
+export default function Question ({ 
+    question,
+    submitCallback
+ }) {
+
+    
 }

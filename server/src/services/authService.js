@@ -36,13 +36,17 @@ async function logUser(userData) {
     const user = await User.findOne({ email: userData.email }).lean();
 
     if (!user) {
-        throw new Error("Invalid email.");
+        console.log("Invalid email.");
+        return null;
     }
+
+    
 
     const isValidPass = await bcrypt.compare(userData.password, user.password);
 
     if (!isValidPass) {
-        throw new Error("Invalid password.");
+        console.log("Invalid password.");
+        return null;
     }
 
     return user

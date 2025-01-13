@@ -14,7 +14,6 @@ const userData = verifyToken(token);
 const user = await getUserById(userData._id);
 
 return user;
-
 }
 
 async function getCart(cartId) {

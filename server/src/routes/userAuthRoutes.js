@@ -47,6 +47,11 @@ router.post("/login", async (req, res) => {
     const userData = req.body;
 
     const user = await logUser(userData);
+
+    if (!user) {
+        return res.status(400).json({ message: "Invalid email or password." });
+    }
+    
     const token = generateToken(user);
     
 
@@ -98,11 +103,6 @@ router.get('/:userId', async (req, res) => {
 
         res.status(200).json(user);
     }
-
-
-
-
-
 
 })
 

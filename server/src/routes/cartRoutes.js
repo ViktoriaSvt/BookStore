@@ -38,6 +38,9 @@ router.post('/payment', async (req, res) => {
 
 router.post("/:bookId", async (req, res) => {
 
+    console.log('in current process...');
+    
+
     const bookId = req.params.bookId;
     const token = req.cookies.accessToken;
 
@@ -62,6 +65,8 @@ router.post("/:bookId", async (req, res) => {
 
     await cart.save()
     await user.save();
+
+    console.log('in cart', cart);
 
     res.status(200).json({ message: 'Book added!' });
 
@@ -90,26 +95,6 @@ router.get("/items", async (req, res) => {
     res.status(200).json(cart.books)
 })
 
-router.post('/payment', async (req, res) => {
-    const { paymentMethodId, amount } = req.body
-
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: amount * 100,
-        currency: "usd",
-        payment_method: paymentMethodId,
-        confirmation_method: "manual",
-        confirm: true,
-    });
-
-    if (paymentIntent.status === "requires_action" || paymentIntent.status === "requires_source_action") {
-        return res.status(200).send({
-            requiresAction: true,
-            paymentIntentClientSecret: paymentIntent.client_secret,
-        });
-    }
-
-    res.status(200).send({ success: true });
-})
 
 router.delete("/remove/:bookId", async (req, res) => {
     const token = req.cookies.accessToken;

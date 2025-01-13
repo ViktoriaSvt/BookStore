@@ -1,6 +1,6 @@
 import { ToastContainer } from "react-toastify";
 import { useForm } from "../../hooks/useForm";
-import { useGetQuestions } from "../../hooks/useGetQuestions";
+import {  usePostQuestions } from "../../hooks/useGetQuestions";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { getFaqTranslations } from "../../api/translation-requests";
@@ -13,8 +13,8 @@ export default function FAQ() {
   const initialValues = { text: '' };
 
   const { language } = useAuthContext();
-  const { submitCallback } = useGetQuestions();
-  
+  const { submitCallback } = usePostQuestions();
+
   const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
   console.log('main trans', translations);
 
@@ -100,7 +100,7 @@ export default function FAQ() {
               name="text"
               rows="4"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              placeholder=  {staticContents.placeholder}
+              placeholder={staticContents.placeholder}
               value={values.text}
               onChange={changeHandler}
             ></textarea>

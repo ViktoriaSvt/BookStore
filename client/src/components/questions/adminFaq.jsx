@@ -1,25 +1,44 @@
 import { useState } from 'react';
+import { useGetAllQuestions } from '../../hooks/useGetQuestions';
+import { useForm } from '../../hooks/useForm';
+import { answerQuestion } from '../../api/question-requests';
 
 export default function AdminFAQ () {
 
   const [isAnswerModalOpen, setAnswerModalOpen] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   
-  const questions = [
-    { id: 1, user: 'User1', question: 'How do I reset my password?', status: 'pending' },
-    { id: 2, user: 'User2', question: 'How do I update my billing info?', status: 'answered' },
-    { id: 3, user: 'User3', question: 'How can I contact customer support?', status: 'pending' },
-  ];
+  const questions = useGetAllQuestions();
+
+  console.log(questions);
+  
+
+  const submitCallback = async () => {
+    console.log('in submitCallback');
+
+    console.log(values.answer);
+    console.log(selectedQuestion._id);
+    
+    
+    
+    await answerQuestion(values.answer, selectedQuestion._id )
+    setAnswerModalOpen(false);
+
+    console.log('out of submitCallback');
+    
+  };
+
+
+    const initialValues = { answer: ''}
+   const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
 
   const handleAnswerClick = (question) => {
     setSelectedQuestion(question);
     setAnswerModalOpen(true);
   };
 
-  const handleSubmitAnswer = () => {
-    // Logic to submit the answer goes here.
-    setAnswerModalOpen(false);
-  };
+ 
+
 
   return (
     <section className="py-24">
@@ -46,9 +65,9 @@ export default function AdminFAQ () {
             </thead>
             <tbody>
               {questions.map((question) => (
-                <tr key={question.id} className="border-b border-gray-200">
-                  <td className="py-3 px-6 text-sm text-gray-900">{question.user}</td>
-                  <td className="py-3 px-6 text-sm text-gray-900">{question.question}</td>
+                <tr key={question._id} className="border-b border-gray-200">
+                  <td className="py-3 px-6 text-sm text-gray-900">{question.creatorId}</td>
+                  <td className="py-3 px-6 text-sm text-gray-900">{question.text}</td>
                   <td className="py-3 px-6 text-sm text-gray-900">
                     <span className={`px-3 py-1 text-sm font-medium rounded-full ${question.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
                       {question.status}
@@ -83,13 +102,16 @@ export default function AdminFAQ () {
             <div className="bg-white rounded-lg p-8 max-w-lg w-full">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Answer Question</h3>
               <div>
-                <p className="text-lg text-gray-700 mb-4">Question from {selectedQuestion.user}: </p>
-                <p className="text-md text-gray-900 mb-6">{selectedQuestion.question}</p>
+         
+                <p className="text-md text-gray-900 mb-6">{selectedQuestion.text}</p>
 
                 <label htmlFor="answer" className="block text-gray-900 text-sm mb-2">Your Answer:</label>
                 <textarea
                   id="answer"
+                  name="answer"
                   rows="4"
+                  value={values.answer}
+                  onChange={changeHandler}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-600"
                   placeholder="Type your answer here..."
                 ></textarea>
@@ -102,7 +124,7 @@ export default function AdminFAQ () {
                     Cancel
                   </button>
                   <button
-                    onClick={handleSubmitAnswer}
+                    onClick={submitHandler}
                     className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-md"
                   >
                     Submit Answer

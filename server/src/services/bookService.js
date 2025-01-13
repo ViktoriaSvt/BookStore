@@ -4,7 +4,11 @@ const { Client } = require('@elastic/elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
 
 async function getAllBooks() {
+    console.log('retrieving books');
+    
     const books = await Book.find().lean();
+
+    console.log('books:', books);
     return books
 }
 

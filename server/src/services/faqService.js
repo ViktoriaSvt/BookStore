@@ -1,24 +1,34 @@
-const { Question } = require("../models/Question")
+const { Question } = require("../models/Question");
+const { getUser } = require("./userService");
 
 
-async function postQuestion(text) {
+async function postQuestion(text, creatorId) {
 
-    console.log('creating question');
-    console.log('with text', text);
-    
-    
-    
-const question = new Question ({
-    text
-})
+    const question = new Question({
+        text,
+        creatorId
+    })
 
-console.log('saving... question');
+    await question.save()
 
-await question.save()
-
-console.log('returning... question', question);
-return question
+    return question
 
 }
 
-module.exports = {postQuestion}
+async function postAnswer(text, questionId) {
+
+    const question =await Question.findById(questionId);
+    question.answer = text;
+    question.status = 'answered'
+
+    question.save()
+    return question;
+}
+
+async function getAllUnanswered() {
+    const questions = await Question.find({});
+    return questions;
+}
+
+
+module.exports = { postQuestion , postAnswer, getAllUnanswered}

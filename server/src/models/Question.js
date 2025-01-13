@@ -8,6 +8,15 @@ const questionSchema = new Schema({
     answer: {
         type: String,
         default: null
+    },
+    status: {
+        type: String,
+        default: 'pending'
+    },
+    creatorId: {
+        type: Types.ObjectId,
+        ref: 'User',
+        default: undefined
     }
 })
 
