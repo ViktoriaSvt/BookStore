@@ -51,7 +51,6 @@ export default function FAQ() {
           </h2>
         </div>
 
-        {/* Only render FAQ content when translations.questions is available */}
         {questions.length > 0 ? (
           <div className="accordion-group">
             {questions.map((item, index) => (

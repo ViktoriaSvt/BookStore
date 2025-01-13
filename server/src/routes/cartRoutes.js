@@ -78,6 +78,10 @@ router.get("/items", async (req, res) => {
     const token = req.cookies.accessToken;
     const userRef = await getUser(token)
 
+    if (!userRef) {
+        return res.status(401).json({ message: 'No user found or not authenticated.' });
+      }
+
     if (userRef.role == "admin") {
         res.status(403).json({ message: 'Access denied for administrator roles' })
         return
@@ -85,6 +89,7 @@ router.get("/items", async (req, res) => {
 
 
     const user = await userRef.populate('cartId');
+
 
     const cartRef = user.cartId;
     const cart = await Cart.findById(cartRef)

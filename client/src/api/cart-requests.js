@@ -7,7 +7,6 @@ export const addToCart = async (bookId) => await request.post(`${BASE_URL}/${boo
 
 export const getCartItems = async () => {
     const responce = await request.get(`${BASE_URL}/items`)
-
     return responce
 }
 

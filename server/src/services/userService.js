@@ -11,9 +11,16 @@ async function getUserById(id) {
 async function getUser(token, res) {
 
 const userData = verifyToken(token);
-const user = await getUserById(userData._id);
 
-return user;
+console.log('userdata' , userData);
+
+
+if(userData !== undefined) {
+  const user = await getUserById(userData._id);
+  return user;
+}
+
+return null;
 }
 
 async function getCart(cartId) {

@@ -51,8 +51,7 @@ export default function AdminFAQ () {
             User Questions
           </h2>
         </div>
-
-        {/* Table for Questions */}
+        
         <div className="overflow-x-auto bg-white shadow rounded-lg">
           <table className="min-w-full table-auto">
             <thead>

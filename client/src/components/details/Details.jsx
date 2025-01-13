@@ -9,7 +9,7 @@ export default function Details() {
   return (
     
     <section 
-      className="text-gray-700 body-font overflow-hidden bg-white m-10 relative min-h-1600" 
+      className="text-gray-700 body-font overflow-hidden bg-white m-10 relative min-h-1600 pb-20" 
       style={{
         backgroundImage: `url(${book.bannerImageUrl})`,
         backgroundSize: 'cover',
@@ -19,16 +19,16 @@ export default function Details() {
     >
       
 
-      <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-0"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-0 "></div>
 
-      <div className="container px-5 py-24 mx-auto relative z-10">
+      <div className="container px-5 py-24 mx-auto relative z-10 ">
        
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
   
           <div className="lg:w-1/2 max-w-[400px] max-h-[500px]">
             <img
               alt="ecommerce"
-              className="object-cover object-center rounded border border-gray-200"
+              className="object-cover object-center rounded border border-gray-200 min-w-[300px]"
               src={book.coverImageUrl}
             />
           </div>

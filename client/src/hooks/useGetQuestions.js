@@ -9,7 +9,7 @@ export function usePostQuestions() {
 
     const submitCallback = async ({ text }) => {
         await postQuestion(text);
-        toast.success("Question is pending... Check for answers in profile page");
+        toast.success("Check inbox in 1-2 buisness days");
     }
 
     return { submitCallback }

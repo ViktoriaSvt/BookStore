@@ -3,14 +3,16 @@ import { getUserById } from "../../api/user-requests";
 import { useParams } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../contexts/AuthContext";
+import AddBookModal from "./addBook/AddBook";
 
 export default function ProfileInfo() {
-
   const { language, changeLanguage } = useAuthContext();
-
   const { userId } = useParams();
   const [user, setUser] = useState({});
-  const clickHandler = useLogout()
+  const [isEditing, setIsEditing] = useState(false);
+  const [updatedUserData, setUpdatedUserData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const clickHandler = useLogout();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -18,7 +20,7 @@ export default function ProfileInfo() {
         try {
           const userData = await getUserById(userId);
           setUser(userData);
-
+          setUpdatedUserData(userData); // Initialize the editable fields
         } catch (error) {
           console.error('Error fetching user:', error);
         }
@@ -28,12 +30,41 @@ export default function ProfileInfo() {
     fetchUser();
   }, [userId]);
 
-  
   const handleLanguageChange = (e) => {
     const newLanguage = e.target.value;
     changeLanguage(newLanguage);
   };
 
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    setIsEditing(false);
+    // Here you can add the logic to save the updated data, e.g., an API request
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setUpdatedUserData(user); // Reset to original user data if cancel is clicked
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle the modal open/close
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div>
@@ -44,7 +75,7 @@ export default function ProfileInfo() {
               <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                   <div className="relative">
-                    <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none -mt-16" />
+                    <img alt="profile" src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none -mt-16" />
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
@@ -61,46 +92,104 @@ export default function ProfileInfo() {
                   </div>
                 </div>
               </div>
+
+              {/* Profile Info Section */}
               <div className="text-center mt-12">
                 <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-                  {user.username}
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="username"
+                      value={updatedUserData.username}
+                      onChange={handleInputChange}
+                      className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 border-b-2 border-blueGray-400 focus:outline-none"
+                    />
+                  ) : (
+                    user.username
+                  )}
                 </h3>
+
+                {/* Location Field */}
                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400" />
-                  Los Angeles, California
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="location"
+                      value={updatedUserData.location}
+                      onChange={handleInputChange}
+                      className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 border-b-2 border-blueGray-400 focus:outline-none"
+                    />
+                  ) : (
+                    "Los Angeles, California"
+                  )}
                 </div>
 
-                <select value={language} onChange={handleLanguageChange}>
-                  <option value="en">English</option>
-                  <option value="fr">French</option>
-                  <option value="bg">Bulgarian</option>
-                </select>
-
-
-                <div className="mb-2 text-blueGray-600 mt-10">
-                  <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400" />Solution Manager - Creative Tim Officer
+                {/* Language Selector */}
+                <div className="mt-6 mb-10">
+                  <select value={language} onChange={handleLanguageChange} className="border px-4 py-2 rounded-lg">
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                    <option value="bg">Bulgarian</option>
+                  </select>
                 </div>
-                <div className="mb-2 text-blueGray-600">
-                  <i className="fas fa-university mr-2 text-lg text-blueGray-400" />University of Computer Science
 
-
-
-                </div>
+                {/* Edit Profile Button */}
+                {!isEditing ? (
+                  <button
+                    onClick={handleEditClick}
+                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out"
+                  >
+                    Edit Profile
+                  </button>
+                ) : (
+                  <div className="flex justify-center gap-4 mt-6">
+                    <button
+                      onClick={handleSaveClick}
+                      className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out"
+                    >
+                      Save Changes
+                    </button>
+                    <button
+                      onClick={handleCancelClick}
+                      className="bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300 ease-in-out"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
               </div>
-              <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-                <div className="flex flex-wrap justify-center">
-                  <div className="w-full lg:w-9/12 px-4">
-                    <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                      {user.description}
-                    </p>
-                    <a href="#pablo" className="font-normal text-pink-500">Show more</a>
+
+              {/* Books Section */}
+              <div className="mt-10 text-center">
+                <h3 className="text-2xl font-semibold text-blueGray-700">Books Added</h3>
+                <div className="flex justify-center mt-6 gap-6">
+                  <div
+                    className="w-40 h-40 bg-gray-200 rounded-lg flex justify-center items-center cursor-pointer hover:bg-gray-300 transition-all ease-in-out"
+                    onClick={openModal}
+                  >
+                    <i className="fas fa-plus text-3xl text-gray-500" />
+                  </div>
+                  <div className="w-40 h-40 bg-gray-100 rounded-lg shadow-lg">
+                    <div className="flex justify-center items-center h-full">
+                      <span className="text-blueGray-500">Book 1</span>
+                    </div>
+                  </div>
+                  <div className="w-40 h-40 bg-gray-100 rounded-lg shadow-lg">
+                    <div className="flex justify-center items-center h-full">
+                      <span className="text-blueGray-500">Book 2</span>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Modal for Adding Book */}
+              <AddBookModal isOpen={isModalOpen} closeModal={closeModal} />
+
               {/* Logout Button */}
-              <div className="text-center mb-10">
+              <div className="text-center mt-10">
                 <button
-                  className="bg-red-500 text-white font-bold py-2 px-4 rounded-full hover:bg-red-700"
+                  className="bg-red-500 text-white font-bold py-2 px-4 rounded-full hover:bg-red-700 transition duration-300 ease-in-out"
                   onClick={clickHandler}
                 >
                   Log Out
@@ -111,7 +200,5 @@ export default function ProfileInfo() {
         </div>
       </section>
     </div>
-
-
   );
 }

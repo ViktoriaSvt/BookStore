@@ -25,7 +25,7 @@ export default function Cart() {
 
   return (
     <div className="relative overflow-x-auto shadow-lg rounded-lg bg-white dark:bg-gray-800 m-10 p-8">
-      {/* Table Header */}
+
       <table className="w-full text-sm text-left rtl:text-right text-gray-1000 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -46,15 +46,19 @@ export default function Cart() {
             />
           )) : (
             <tr>
-              <td colSpan="4" className="text-center py-4 text-lg font-semibold text-gray-600">
-                No items in cart
-              </td>
-            </tr>
+            <td colSpan="4" className="text-center py-4 text-lg font-semibold text-gray-600">
+              <div className="mb-2 flex justify-center">
+                <i className="fa-solid fa-circle-question text-gray-400 text-5xl mb-4"></i>
+              </div>
+              No items in cart
+            </td>
+          </tr>
+          
           )}
         </tbody>
       </table>
 
-      {/* Checkout Section */}
+
       {books.length > 0 && (
         <div className="mt-6 flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-sm">
           <span className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -69,7 +73,7 @@ export default function Cart() {
         </div>
       )}
 
-      {/* Modal for Payment */}
+
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full">
