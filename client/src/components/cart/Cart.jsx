@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react";
 import { removeItem } from "../../api/cart-requests";
-import { useGetCart } from "../../hooks/useGetCart";
+
 import Item from "./item/Item";
 import StripePayment from "./checkout/Checkout";
+import { useGetCart, useGetTotalPrice } from "../../hooks/useCart";
 
 export default function Cart() {
   const [refresh, setRefresh] = useState(false);
-  const [totalAmount, setTotalAmount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const books = useGetCart(refresh);
+  const totalAmount = useGetTotalPrice(books);
 
   const removeButtonHandler = async (bookId) => {
     await removeItem(bookId);
     setRefresh(prev => !prev);
   };
-
-  useEffect(() => {
-    const total = books.reduce((sum, book) => sum + book.price, 0);
-    setTotalAmount(total);
-  }, [books]);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);

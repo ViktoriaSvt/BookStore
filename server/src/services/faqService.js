@@ -20,6 +20,7 @@ async function postAnswer(text, questionId) {
     const question =await Question.findById(questionId);
     question.answer = text;
     question.status = 'answered'
+    
 
     question.save()
     return question;

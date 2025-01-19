@@ -16,9 +16,6 @@ router.post("/register", async (req, res) => {
         const user = await registerUser(data);
         const token = generateToken(user);
 
-        console.log('user prepared');
-        
-
         const existingUser = await User.findOne({ email: user.email });
         
         if (existingUser ) {
@@ -78,7 +75,6 @@ router.post("/logout", async (req, res) => {
 })
 
 router.get('/session', async (req, res) => {
-
     
     const token = req.cookies.accessToken;
 
@@ -105,6 +101,9 @@ router.get('/:userId', async (req, res) => {
     }
 
 })
+
+
+
 
 
 

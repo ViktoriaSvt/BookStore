@@ -7,15 +7,10 @@ const { Cart } = require('../models/Cart');
 
 async function registerUser(userData) {
 
-    console.log('registering user');
-    
-
     const hashPass = await bcrypt.hash(userData.password, 10);
 
     const cart = new Cart;
     await cart.save();
-
-    console.log('registering cart for user');
 
     const user = new User({
         email: userData.email,
@@ -39,8 +34,6 @@ async function logUser(userData) {
         console.log("Invalid email.");
         return null;
     }
-
-    
 
     const isValidPass = await bcrypt.compare(userData.password, user.password);
 
@@ -70,9 +63,9 @@ async function logUser(userData) {
 function verifyToken(token) {
     try {
         const payload = jwt.verify(token, 'your-secret-key');
-        return payload; // Returns the decoded payload if the token is valid
+        return payload; 
     } catch (error) {
-        console.error("Token verification failed:", error.message);
+        console.log("Token verification failed:", error.message);
       
     }
 }

@@ -1,18 +1,19 @@
-import axios from 'axios';
+
+import axiosInstance from '../axiosConfig/axiosInstance';
 
 
 async function requester(method, url, data) {
 
-     let headers = {
-        'Content-Type': 'application/json',
-      }
+    //  let headers = {
+    //     'Content-Type': 'application/json',
+    //   }
 
-    const response = await axios({
+    const response = await axiosInstance({
         method,
         url,
         data,
-        headers,
-        withCredentials: true,
+        // headers,
+        // withCredentials: true,
     });
 
     return response.data;

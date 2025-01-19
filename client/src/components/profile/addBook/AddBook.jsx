@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useForm } from "../../../hooks/useForm";
+import { createBook } from "../../../api/book-requests";
 
 const AddBookModal = ({ isOpen, closeModal }) => {
-  const [formData, setFormData] = useState({
+
+  const defaultValues = {
     title: "",
     genre: "",
     author: "",
@@ -10,32 +13,26 @@ const AddBookModal = ({ isOpen, closeModal }) => {
     year: "",
     price: "",
     description: "",
-    inStock: 0, // New field for stock quantity
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    inStock: 0,
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const submitCallback = async () => {
+
     try {
-      // You would typically send the form data to the server here
-      // Example:
-      // await api.createBook(formData);
 
-      console.log("Book data submitted: ", formData);
+      await createBook(values)
+      console.log("Book data submitted: ", values);
 
-      // Close the modal after submitting
+      values = defaultValues;
       closeModal();
     } catch (error) {
       console.error("Error adding book:", error);
     }
   };
+
+  let { values, changeHandler, submitHandler } = useForm(defaultValues, submitCallback)
+ 
+
 
   if (!isOpen) return null;
 
@@ -43,7 +40,7 @@ const AddBookModal = ({ isOpen, closeModal }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-8 rounded-lg w-1/3">
         <h2 className="text-xl font-semibold mb-4">Add a New Book</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submitHandler}>
           <div className="mb-4">
             <label htmlFor="title" className="block text-sm font-bold mb-2">
               Title
@@ -52,8 +49,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
               type="text"
               id="title"
               name="title"
-              value={formData.title}
-              onChange={handleInputChange}
+              value={values.title}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
               required
             />
@@ -67,8 +64,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
               type="text"
               id="author"
               name="author"
-              value={formData.author}
-              onChange={handleInputChange}
+              value={values.author}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
               required
             />
@@ -82,8 +79,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
               type="text"
               id="genre"
               name="genre"
-              value={formData.genre}
-              onChange={handleInputChange}
+              value={values.genre}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
               required
             />
@@ -96,8 +93,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
             <textarea
               id="description"
               name="description"
-              value={formData.description}
-              onChange={handleInputChange}
+              value={values.description}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
               rows="4"
               required
@@ -112,8 +109,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
               type="text"
               id="bannerImageUrl"
               name="bannerImageUrl"
-              value={formData.bannerImageUrl}
-              onChange={handleInputChange}
+              value={values.bannerImageUrl}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
             />
           </div>
@@ -126,8 +123,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
               type="text"
               id="coverImageUrl"
               name="coverImageUrl"
-              value={formData.coverImageUrl}
-              onChange={handleInputChange}
+              value={values.coverImageUrl}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
             />
           </div>
@@ -140,8 +137,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
               type="number"
               id="year"
               name="year"
-              value={formData.year}
-              onChange={handleInputChange}
+              value={values.year}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
               min="2000"
               max="2100"
@@ -157,8 +154,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
               type="number"
               id="price"
               name="price"
-              value={formData.price}
-              onChange={handleInputChange}
+              value={values.price}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
               min="0"
               required
@@ -173,8 +170,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
               type="number"
               id="inStock"
               name="inStock"
-              value={formData.inStock}
-              onChange={handleInputChange}
+              value={values.inStock}
+              onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
               min="0"
               required

@@ -12,9 +12,6 @@ async function getUser(token, res) {
 
 const userData = verifyToken(token);
 
-console.log('userdata' , userData);
-
-
 if(userData !== undefined) {
   const user = await getUserById(userData._id);
   return user;

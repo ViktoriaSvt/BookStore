@@ -36,7 +36,7 @@ const bookSchema = new Schema({
     description: {
         type:String,
         required: true,
-        maxLength: 1000
+        maxLength: 10000
     },
     creatorId: {
         type: Types.ObjectId,

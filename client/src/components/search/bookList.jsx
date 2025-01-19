@@ -25,6 +25,7 @@ export default function Search() {
 
     if( searchQuery.params != '') {
       const responce = await getBooksBySearch(searchQuery)
+      
       setBooks(responce)
     }
 

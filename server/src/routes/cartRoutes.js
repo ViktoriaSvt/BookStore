@@ -3,6 +3,7 @@ const express = require("express");
 const { getUser, getCart } = require("../services/userService");
 const { getBookById } = require("../services/bookService");
 const { Cart } = require("../models/Cart");
+const redis = require("../config/redis");
 const stripe = require('stripe')('sk_test_51QcrYKJdrx2Bl88huhlvnfqPxrqBmfo9BM6wxg0mlYJugCMEpw9CHlspF8I9tTEzL0gq9NeWcFTNCEoLgDjMTbfu00idvkIYJK');
 
 
@@ -14,6 +15,9 @@ const returnUrl = "http://localhost:5173/cart";
 
 router.post('/payment', async (req, res) => {
     const { paymentMethodId, amount } = req.body
+    const token = req.cookies.accessToken;
+    const user = getUser(token)
+    const userId = user._id
 
     const paymentIntent = await stripe.paymentIntents.create({
         amount: amount * 100,
@@ -31,15 +35,14 @@ router.post('/payment', async (req, res) => {
         });
     }
 
+    await PaymentModel.create({ userId, amount, paymentIntentId: paymentIntent.id });
+
 
     res.status(200).send({ success: true });
 })
 
 
 router.post("/:bookId", async (req, res) => {
-
-    console.log('in current process...');
-    
 
     const bookId = req.params.bookId;
     const token = req.cookies.accessToken;
@@ -66,8 +69,6 @@ router.post("/:bookId", async (req, res) => {
     await cart.save()
     await user.save();
 
-    console.log('in cart', cart);
-
     res.status(200).json({ message: 'Book added!' });
 
 
@@ -80,7 +81,7 @@ router.get("/items", async (req, res) => {
 
     if (!userRef) {
         return res.status(401).json({ message: 'No user found or not authenticated.' });
-      }
+    }
 
     if (userRef.role == "admin") {
         res.status(403).json({ message: 'Access denied for administrator roles' })
@@ -91,29 +92,35 @@ router.get("/items", async (req, res) => {
     const user = await userRef.populate('cartId');
 
 
-    const cartRef = user.cartId;
-    const cart = await Cart.findById(cartRef)
+    const cartRefId = user.cartId;
+
+    const cachedCart = await redis.get(`cart:${cartRefId}`)
+
+    if (cachedCart) {
+
+        return res.status(200).json(JSON.parse(cachedCart))
+        
+        
+    } else {
+        const cart = await Cart.findById(cartRefId).populate('books');
+
+        redis.setex(`cart:${cartRefId}`, 3600, JSON.stringify(cart.books));
+
+        
+        res.status(200).json(cart.books)
+
+    }
 
 
-    await cart.populate('books');
-
-    res.status(200).json(cart.books)
 })
-
 
 router.delete("/remove/:bookId", async (req, res) => {
     const token = req.cookies.accessToken;
     const user = await getUser(token, res);
     const { bookId } = req.params
 
-    console.log('USER');
-    console.log(user);
-
     const cart = await getCart(user.cartId)
 
-
-    console.log('CART');
-    console.log(cart);
 
     const index = cart.books.indexOf(bookId);
     if (index !== -1) {

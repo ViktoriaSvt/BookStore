@@ -20,7 +20,7 @@ export default function ProfileInfo() {
         try {
           const userData = await getUserById(userId);
           setUser(userData);
-          setUpdatedUserData(userData); // Initialize the editable fields
+          setUpdatedUserData(userData);
         } catch (error) {
           console.error('Error fetching user:', error);
         }
@@ -41,12 +41,11 @@ export default function ProfileInfo() {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    // Here you can add the logic to save the updated data, e.g., an API request
   };
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    setUpdatedUserData(user); // Reset to original user data if cancel is clicked
+    setUpdatedUserData(user);
   };
 
   const handleInputChange = (e) => {
@@ -57,7 +56,6 @@ export default function ProfileInfo() {
     }));
   };
 
-  // Handle the modal open/close
   const openModal = () => {
     setIsModalOpen(true);
   };

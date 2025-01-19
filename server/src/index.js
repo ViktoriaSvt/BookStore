@@ -1,6 +1,6 @@
 const express = require('express');
-const { configExpress } = require('./config/configExpress');
-const { configDatabase } = require('./config/configDatabase');
+const { configExpress } = require('./config/express');
+const { configDatabase } = require('./config/database');
 const bookRouter = require('./routes/bookDataRoutes');
 const userRouter = require('./routes/userAuthRoutes');
 const faqRouter = require('./routes/faqRoutes');

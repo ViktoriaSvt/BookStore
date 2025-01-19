@@ -4,11 +4,8 @@ const { Client } = require('@elastic/elasticsearch');
 const client = new Client({ node: 'http://localhost:9200' });
 
 async function getAllBooks() {
-    console.log('retrieving books');
-    
-    const books = await Book.find().lean();
 
-    console.log('books:', books);
+    const books = await Book.find().lean();
     return books
 }
 
@@ -17,7 +14,7 @@ async function getBookById(id) {
     return book
 }
 
-async function createBook(data) {
+async function createBook(data, userId) {
 
     const bookData = {
         title: data.title,
@@ -28,7 +25,7 @@ async function createBook(data) {
         year: data.year,
         price: data.price,
         description: data.description,
-        creatorId: null
+        creatorId: userId
     };
 
     const book = await Book.create(bookData)
