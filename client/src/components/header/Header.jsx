@@ -6,14 +6,15 @@ import { useAuthContext } from '../../contexts/AuthContext';
 export default function Header() {
 
     const [activeIndex, setActiveIndex] = useState(0);
-    const { userId } = useAuthContext();
+    const { userId, isAdmin } = useAuthContext();
 
-    const route = userId ? { path: `/profile/${userId}`, icon: "fa-user" } : { path: `/login`, icon: "fa-user" } 
+    const route = userId ? { path: `/profile/${userId}`, icon: "fa-user" } : { path: `/login`, icon: "fa-user" }
+    const route2 = isAdmin ?  { path: `/tracker`, icon: "fa-user" } : { path: "/cart", icon: "fa-cart-shopping" } 
 
     const navItems = [
         { path: "/", icon: "fa-house" },
         { path: "/search", icon: "fa-magnifying-glass" },
-        { path: "/cart", icon: "fa-cart-shopping" },
+        route2,
         { path: "/faq", icon: "fa-clipboard-question" },
         route
     ];
@@ -33,7 +34,7 @@ export default function Header() {
                             </div>
                             <h2>Sweetopia</h2>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>

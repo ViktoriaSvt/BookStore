@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { removeItem } from "../../api/cart-requests";
 
+import { removeItem } from "../../api/cart-requests";
 import Item from "./item/Item";
 import StripePayment from "./checkout/Checkout";
 import { useGetCart, useGetTotalPrice } from "../../hooks/useCart";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function Cart() {
   const [refresh, setRefresh] = useState(false);
@@ -82,6 +83,7 @@ export default function Cart() {
                 &times;
               </button>
             </div>
+            <ToastContainer />
             <StripePayment totalAmount={totalAmount} />
           </div>
         </div>

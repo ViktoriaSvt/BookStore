@@ -10,29 +10,19 @@ export default function AdminFAQ () {
   
   const questions = useGetAllQuestions();
 
-  console.log(questions);
-  
-
   const submitCallback = async () => {
-    console.log('in submitCallback');
-
-    console.log(values.answer);
-    console.log(selectedQuestion._id);
-    
-    
+ 
     
     await answerQuestion(values.answer, selectedQuestion._id )
     setAnswerModalOpen(false);
 
-    console.log('out of submitCallback');
-    
   };
 
 
     const initialValues = { answer: ''}
    const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
 
-  const handleAnswerClick = (question) => {
+   const handleAnswerClick = (question) => {
     setSelectedQuestion(question);
     setAnswerModalOpen(true);
   };

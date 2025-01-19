@@ -20,7 +20,6 @@ async function registerUser(userData) {
 
     await user.save();
 
-    console.log('registered user');
     return user;
 
 

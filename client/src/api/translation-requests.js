@@ -10,11 +10,11 @@ export const getLoginTranslations = async (language) => {
 
 export const getFaqTranslations = async (language) => {
 
-  console.log('fetching');
+
   
   const responce = await request.get(`${BASE_URL}/faq?lang=${language}`);
 
-  console.log('resp', responce);
+
   
   return responce;
 }

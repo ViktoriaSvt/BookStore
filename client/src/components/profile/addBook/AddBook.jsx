@@ -18,21 +18,14 @@ const AddBookModal = ({ isOpen, closeModal }) => {
 
   const submitCallback = async () => {
 
-    try {
-
-      await createBook(values)
-      console.log("Book data submitted: ", values);
-
+      await createBook(values) 
       values = defaultValues;
       closeModal();
-    } catch (error) {
-      console.error("Error adding book:", error);
-    }
+  
   };
 
   let { values, changeHandler, submitHandler } = useForm(defaultValues, submitCallback)
  
-
 
   if (!isOpen) return null;
 

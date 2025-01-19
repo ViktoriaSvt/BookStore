@@ -12,6 +12,7 @@ import { AuthContext } from "./contexts/AuthContext"
 import { getSession } from "./api/auth-api"
 import FAQ from "./components/questions/FAQ-container"
 import AdminFAQ from "./components/questions/adminFaq"
+import AdminDashboard from "./components/adminDashboard/AdminDashboard"
 
 
 
@@ -75,7 +76,9 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/details/:bookId" element={<Details />} />
           <Route path="/cart" element={ <Cart /> } />
+          <Route path="/tracker" element={ <AdminDashboard /> } />
         </Routes>
+
       </BrowserRouter>
     </AuthContext.Provider>
   )

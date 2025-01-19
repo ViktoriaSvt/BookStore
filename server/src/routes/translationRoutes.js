@@ -10,8 +10,6 @@ router.get('/faq', (req, res) => {
     const targetLanguage = req.query.lang || 'en';
 
     const faqContent = faqTranslations[targetLanguage] || faqTranslations['en'];
-    console.log(faqContent);
-    
 
     res.json(faqContent);
 });

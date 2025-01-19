@@ -1,13 +1,13 @@
 import { ToastContainer } from "react-toastify";
 import { useForm } from "../../hooks/useForm";
-import {  usePostQuestions } from "../../hooks/useGetQuestions";
+import { usePostQuestions } from "../../hooks/useGetQuestions";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { getFaqTranslations } from "../../api/translation-requests";
-import Spinner from "../spinner/Spinner";
+
 
 export default function FAQ() {
-  const [isLoading, setIsLoading] = useState(true);
+
   const [translations, setTranslations] = useState({});
 
   const initialValues = { text: '' };
@@ -16,19 +16,17 @@ export default function FAQ() {
   const { submitCallback } = usePostQuestions();
 
   const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
-  console.log('main trans', translations);
+
 
   useEffect(() => {
 
     (async () => {
       try {
-        setIsLoading(true);
+
         const data = await getFaqTranslations(language);
         setTranslations(data);
       } catch (error) {
         console.error("Error fetching translations:", error);
-      } finally {
-        setIsLoading(false);
       }
     })();
   }, [language]);
@@ -39,7 +37,7 @@ export default function FAQ() {
 
   return (
     <section className="py-24">
-      {isLoading && <Spinner />}
+
       <ToastContainer />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16">
@@ -81,9 +79,7 @@ export default function FAQ() {
             ))}
           </div>
         ) : (
-          !isLoading && (
-            <div className="text-center text-lg text-gray-600">No questions available.</div>
-          )
+          <div className="text-center text-lg text-gray-600">No questions available.</div>
         )}
 
         <div className="mt-16">

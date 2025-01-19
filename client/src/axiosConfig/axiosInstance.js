@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000', 
+  baseURL: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 
 
 axiosInstance.interceptors.response.use(
-  response => response, 
+  response => response,
   error => {
     if (error.response) {
 

@@ -9,17 +9,11 @@ export const useLogin = (language) => {
     const navigate = useNavigate();
     const translations = useLoginTranslation(language)
 
-    console.log(translations);
-    
-
 
     const loginHandler = async (email, password) => {
         const authData = await login(email, password)
 
         if (authData) {
-
-            console.log(authData);
-
 
             changeAuthState({
                 _id: authData._id,

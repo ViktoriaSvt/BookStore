@@ -12,8 +12,6 @@ export default function Search() {
   const [books, setBooks] = useGetAllBooks();
 
   const detailsHandler = async (bookId) => {
-
-    console.log('in handler');
     await addToCart(bookId);
 
     toast.success("Added to cart", {
@@ -22,10 +20,9 @@ export default function Search() {
   }
 
   const searchCallback = async (searchQuery) => {
-
-    if( searchQuery.params != '') {
+    if (searchQuery.params != '') {
       const responce = await getBooksBySearch(searchQuery)
-      
+
       setBooks(responce)
     }
 

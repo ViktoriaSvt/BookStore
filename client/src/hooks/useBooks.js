@@ -20,9 +20,6 @@ export function useGetBookById() {
   const [book, setBook] = useState([])
   const { bookId } = useParams();
 
-  console.log('current bookid ', bookId);
-
-
   useEffect(() => {
     (async () => {
       try {

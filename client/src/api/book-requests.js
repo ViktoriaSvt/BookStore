@@ -8,7 +8,7 @@ export const getById = async (bookId) => await request.get(`${BASE_URL}/${bookId
 
 export const addToCart = async (bookId) => {
     const responce = await request.post(`${BASE_URL}/${bookId}`)
-    console.log(responce);
+
     
 
     if (responce.status == 403) {
