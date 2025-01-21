@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 import { getLoginTranslations } from "../api/translation-requests";
 
 export const useLogin = (language) => {
+
     const { changeAuthState } = useAuthContext();
+
     const navigate = useNavigate();
-    const translations = useLoginTranslation(language)
+    const translations = useLoginTranslator(language)
 
-
-    const loginHandler = async (email, password) => {
+    const loginCallback = async (email, password) => {
         const authData = await login(email, password)
 
         if (authData) {
-
             changeAuthState({
                 _id: authData._id,
                 email: authData.email,
@@ -26,10 +26,10 @@ export const useLogin = (language) => {
 
     }
 
-    return { loginHandler, translations};
+    return { loginCallback, translations};
 }
 
-export const useLoginTranslation = (language) => {
+export const useLoginTranslator = (language) => {
     const [translations, setTranslations] = useState({});
 
     useEffect(() => {

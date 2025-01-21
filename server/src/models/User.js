@@ -12,6 +12,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    profilePicture: {
+        type:String,
+        default: 'https://icon-library.com/images/user-icon-jpg/user-icon-jpg-28.jpg'
+    },
     password: {
         type: String,
         required: true

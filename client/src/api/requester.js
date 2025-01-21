@@ -4,19 +4,18 @@ import axiosInstance from '../axiosConfig/axiosInstance';
 
 async function requester(method, url, data) {
 
-    //  let headers = {
-    //     'Content-Type': 'application/json',
-    //   }
+    try {
+        const response = await axiosInstance({
+            method,
+            url,
+            data,
+        });
 
-    const response = await axiosInstance({
-        method,
-        url,
-        data,
-        // headers,
-        // withCredentials: true,
-    });
+        return response.data;
+    } catch {
+        console.error("error handled.")
+    }
 
-    return response.data;
 }
 
 export const get = (url, data) => requester('GET', url, data);

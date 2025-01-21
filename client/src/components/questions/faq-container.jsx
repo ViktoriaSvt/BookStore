@@ -2,34 +2,19 @@ import { ToastContainer } from "react-toastify";
 import { useForm } from "../../hooks/useForm";
 import { usePostQuestions } from "../../hooks/useGetQuestions";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useEffect, useState } from "react";
-import { getFaqTranslations } from "../../api/translation-requests";
+
+import { useGetLang } from "../../hooks/useTranslator";
 
 
 export default function FAQ() {
 
-  const [translations, setTranslations] = useState({});
-
   const initialValues = { text: '' };
 
   const { language } = useAuthContext();
+  const  translations = useGetLang(language);
   const { submitCallback } = usePostQuestions();
 
   const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
-
-
-  useEffect(() => {
-
-    (async () => {
-      try {
-
-        const data = await getFaqTranslations(language);
-        setTranslations(data);
-      } catch (error) {
-        console.error("Error fetching translations:", error);
-      }
-    })();
-  }, [language]);
 
   const questions = translations?.questions || [];
   const staticContents = translations?.staticContent || [];

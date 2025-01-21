@@ -20,6 +20,7 @@
     "ioredis": "^5.4.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.0",
+    "node-cron": "^3.0.3",
     "stripe": "^17.5.0"
   },
   "devDependencies": {

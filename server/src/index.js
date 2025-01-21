@@ -9,6 +9,7 @@ const cartRouter = require('./routes/cartRoutes')
 const languageRouter = require('./routes/translationRoutes')
 const cookieParser = require('cookie-parser');
 const { trackFailedRequest } = require('./services/trackingService');
+const { validateAuth }  = require('./middleware/authValidator')
 
 
 
@@ -20,13 +21,10 @@ async function start() {
     await configDatabase();
     configExpress(app)
 
-
-
     app.use(cookieParser())
-    
+    app.use(validateAuth)
 
      
-
     app.use("/user", userRouter)
     app.use("/translations", languageRouter)
     app.use("/faq", faqRouter)
@@ -34,10 +32,11 @@ async function start() {
     app.use("/cart", cartRouter)
     app.use("/stateTracker", stateTrackerRouter)
 
+
+
     app.use((err, req, res, next) => {
       const errorType = err.status || 'UnknownError';
 
-      
       if (errorType >= 500) {
           trackFailedRequest(errorType);
       }

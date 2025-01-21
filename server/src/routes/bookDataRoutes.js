@@ -2,6 +2,8 @@ const express = require("express");
 const { Client } = require('@elastic/elasticsearch');
 const { getAllBooks, getBookById, createBook } = require("../services/bookService");
 const { getUser } = require("../services/userService");
+const { trackSlowQuery } = require("../services/trackingService");
+const { trackPerformance } = require("../middleware/tracker");
 
 
 
@@ -12,7 +14,7 @@ const client = new Client({
     node: 'http://localhost:9200',
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/",trackPerformance('fetchCart'), async (req, res, next) => {
     const books = await getAllBooks();
 
     if (!books) {

@@ -12,7 +12,7 @@ export function useGetAllBooks() {
     })();
   }, []);
 
-  return [books, setBooks]
+  return [ books, setBooks ]
 }
 
 

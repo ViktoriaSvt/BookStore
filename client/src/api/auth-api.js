@@ -2,9 +2,8 @@ import * as request from "./requester";
 
 const BASE_URL = "http://localhost:3000/user";
 
-export const register = async (email, password) => {
-  const authData = await request.post(`${BASE_URL}/register`, { email, password });
-  
+export const register = async (email, password, rePass) => {
+  const authData = await request.post(`${BASE_URL}/register`, { email, password, rePass });
   return authData;
 }
 

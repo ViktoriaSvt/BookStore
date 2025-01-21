@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getFaqTranslations } from "../api/translation-requests";
 import { getQuestions, postQuestion } from "../api/question-requests";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
@@ -17,7 +16,6 @@ export function usePostQuestions() {
 
 export function useGetAllQuestions() {
   const [questions, setQuestions] = useState([]);
-
 
   useEffect(()=> {
     (async ()=> {

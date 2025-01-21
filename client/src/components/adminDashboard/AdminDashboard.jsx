@@ -6,66 +6,64 @@ import { useEffect, useState } from 'react';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const AdminDashboard = () => {
+
   const [chartData, setChartData] = useState({
-    labels: [],  // Error types
+    labels: [],
     datasets: [
       {
         label: 'Failed Requests',
         data: [],
-        backgroundColor: 'rgba(255, 99, 132, 0.8)', // Red for failed requests
-        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(199, 13, 0, 0.8)', 
+        borderColor: 'rgb(189, 33, 6)',
         borderWidth: 1,
       },
       {
         label: 'Slow Query Runtimes',
         data: [],
-        backgroundColor: 'rgba(54, 162, 235, 0.8)', // Blue for slow queries
-        borderColor: 'rgb(54, 162, 235)',
+        backgroundColor: 'rgba(0, 150, 250, 0.8)', 
+        borderColor: 'rgb(0, 183, 255)',
         borderWidth: 1,
       },
     ],
   });
 
   const fetchTrackingData = async () => {
-    try {
-      const data = await getTrackingData();
+
+    const data = await getTrackingData();
+
+    const labels = [...new Set([
+      ...data.requestFails.map(item => item.errorType),
+      ...data.querySlowLoading.map(item => item.errorType),
+    ])];
 
 
-      const labels = [...new Set([
-        ...data.requestFails.map(item => item.errorType),
-        ...data.querySlowLoading.map(item => item.errorType),
-      ])];  
+    const requestFails = labels.map(errorType =>
+      data.requestFails.find(item => item.errorType === errorType)?.count || 0
+    );
+    const querySlowLoading = labels.map(errorType =>
+      data.querySlowLoading.find(item => item.errorType === errorType)?.count || 0
+    );
 
+    setChartData({
+      labels,
+      datasets: [
+        {
+          label: 'Failed Requests',
+          data: requestFails,
+          backgroundColor: 'rgba(255, 99, 132, 0.8)',
+          borderColor: 'rgb(255, 99, 132)',
+          borderWidth: 1,
+        },
+        {
+          label: 'Slow Query Runtimes',
+          data: querySlowLoading,
+          backgroundColor: 'rgba(54, 162, 235, 0.8)',
+          borderColor: 'rgb(54, 162, 235)',
+          borderWidth: 1,
+        },
+      ],
+    });
 
-      const requestFails = labels.map(errorType => 
-        data.requestFails.find(item => item.errorType === errorType)?.count || 0
-      );
-      const querySlowLoading = labels.map(errorType => 
-        data.querySlowLoading.find(item => item.errorType === errorType)?.count || 0
-      );
-
-      setChartData({
-        labels,
-        datasets: [
-          {
-            label: 'Failed Requests',
-            data: requestFails,
-            backgroundColor: 'rgba(255, 99, 132, 0.8)',
-            borderColor: 'rgb(255, 99, 132)',
-            borderWidth: 1,
-          },
-          {
-            label: 'Slow Query Runtimes',
-            data: querySlowLoading,
-            backgroundColor: 'rgba(54, 162, 235, 0.8)',
-            borderColor: 'rgb(54, 162, 235)',
-            borderWidth: 1,
-          },
-        ],
-      });
-    } catch (error) {
-      console.error('Error fetching tracking data:', error);
-    }
   };
 
   useEffect(() => {

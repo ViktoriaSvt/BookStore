@@ -8,14 +8,14 @@ import { useAuthContext } from "../../contexts/AuthContext";
 export default function Login() {
  const {language} = useAuthContext();
  
-  const {loginHandler, translations} = useLogin(language);
+  const {loginCallback, translations} = useLogin(language);
 
-  const defaultValues = { email: '', password: '' };
+  const defaultValues = { email: '', password: '', rePass: '' };
 
-  const loginhandler = async ({ email, password }) => {
+  const loginHandler = async ({ email, password }) => {
     
     try {
-      await loginHandler(email, password)
+      await loginCallback(email, password)
     } catch {
       toast.error("Invalid email or password. Please try again", {
         position: "top-right",
@@ -25,10 +25,8 @@ export default function Login() {
   }
 
   const { values, changeHandler, submitHandler, isSubmitting, errors } = useAuthForm(
-    defaultValues, loginhandler
+    defaultValues, loginHandler
   )
-
-
 
 
   return (

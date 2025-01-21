@@ -11,7 +11,7 @@ import { getBooksBySearch } from "../../api/book-requests";
 export default function Search() {
   const [books, setBooks] = useGetAllBooks();
 
-  const detailsHandler = async (bookId) => {
+  const submitToCartHandler = async (bookId) => {
     await addToCart(bookId);
 
     toast.success("Added to cart", {
@@ -22,10 +22,8 @@ export default function Search() {
   const searchCallback = async (searchQuery) => {
     if (searchQuery.params != '') {
       const responce = await getBooksBySearch(searchQuery)
-
       setBooks(responce)
     }
-
   }
 
   const { values, changeHandler, submitHandler } = useForm({ params: '' }, searchCallback)
@@ -55,7 +53,7 @@ export default function Search() {
           <BookItem
             key={currentBook.title}
             book={currentBook}
-            submitHandler={() => detailsHandler(currentBook._id)}
+            submitHandler={() => submitToCartHandler(currentBook._id)}
           />
         ))}
       </div>

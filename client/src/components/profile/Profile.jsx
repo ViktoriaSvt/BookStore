@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import { getUserById } from "../../api/user-requests";
+import { getUserById, updateProfile } from "../../api/user-requests";
 import { useParams } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../contexts/AuthContext";
 import AddBookModal from "./addBook/AddBook";
+import { useForm } from "../../hooks/useForm";
 
 export default function ProfileInfo() {
-  const { language, changeLanguage } = useAuthContext();
+  const { language, changeLanguage, isAdmin } = useAuthContext();
   const { userId } = useParams();
+
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
-  const [updatedUserData, setUpdatedUserData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const initialValues = { username: '', description: '' };
+
   const clickHandler = useLogout();
 
   useEffect(() => {
@@ -20,7 +24,6 @@ export default function ProfileInfo() {
         try {
           const userData = await getUserById(userId);
           setUser(userData);
-          setUpdatedUserData(userData);
         } catch (error) {
           console.error('Error fetching user:', error);
         }
@@ -29,6 +32,7 @@ export default function ProfileInfo() {
 
     fetchUser();
   }, [userId]);
+
 
   const handleLanguageChange = (e) => {
     const newLanguage = e.target.value;
@@ -39,22 +43,17 @@ export default function ProfileInfo() {
     setIsEditing(true);
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
+    await updateProfile(values)
     setIsEditing(false);
+
   };
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    setUpdatedUserData(user);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const { values, changeHandler, submitHandler } = useForm(initialValues, handleSaveClick)
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -73,7 +72,7 @@ export default function ProfileInfo() {
               <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                   <div className="relative">
-                    <img alt="profile" src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none -mt-16" />
+                    <img alt="profile" src={user.profilePicture} className="shadow-xl rounded-full h-auto align-middle border-none -mt-16" />
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
@@ -91,15 +90,15 @@ export default function ProfileInfo() {
                 </div>
               </div>
 
-              {/* Profile Info Section */}
+
               <div className="text-center mt-12">
                 <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
                   {isEditing ? (
                     <input
                       type="text"
                       name="username"
-                      value={updatedUserData.username}
-                      onChange={handleInputChange}
+                      value={values.username}
+                      onChange={changeHandler}
                       className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 border-b-2 border-blueGray-400 focus:outline-none"
                     />
                   ) : (
@@ -107,23 +106,23 @@ export default function ProfileInfo() {
                   )}
                 </h3>
 
-                {/* Location Field */}
+
                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400" />
                   {isEditing ? (
                     <input
                       type="text"
-                      name="location"
-                      value={updatedUserData.location}
-                      onChange={handleInputChange}
+                      name="description"
+                      value={values.description}
+                      onChange={changeHandler}
                       className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 border-b-2 border-blueGray-400 focus:outline-none"
                     />
                   ) : (
-                    "Los Angeles, California"
+                    <span>{user.description}</span>
                   )}
                 </div>
 
-                {/* Language Selector */}
+
                 <div className="mt-6 mb-10">
                   <select value={language} onChange={handleLanguageChange} className="border px-4 py-2 rounded-lg">
                     <option value="en">English</option>
@@ -132,18 +131,18 @@ export default function ProfileInfo() {
                   </select>
                 </div>
 
-                {/* Edit Profile Button */}
+
                 {!isEditing ? (
                   <button
                     onClick={handleEditClick}
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out"
+                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full hover:bg-red-700 transition duration-300 ease-in-out"
                   >
                     Edit Profile
                   </button>
                 ) : (
                   <div className="flex justify-center gap-4 mt-6">
                     <button
-                      onClick={handleSaveClick}
+                      onClick={submitHandler}
                       className="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out"
                     >
                       Save Changes
@@ -158,34 +157,27 @@ export default function ProfileInfo() {
                 )}
               </div>
 
-              {/* Books Section */}
-              <div className="mt-10 text-center">
-                <h3 className="text-2xl font-semibold text-blueGray-700">Books Added</h3>
-                <div className="flex justify-center mt-6 gap-6">
-                  <div
-                    className="w-40 h-40 bg-gray-200 rounded-lg flex justify-center items-center cursor-pointer hover:bg-gray-300 transition-all ease-in-out"
-                    onClick={openModal}
-                  >
-                    <i className="fas fa-plus text-3xl text-gray-500" />
-                  </div>
-                  <div className="w-40 h-40 bg-gray-100 rounded-lg shadow-lg">
-                    <div className="flex justify-center items-center h-full">
-                      <span className="text-blueGray-500">Book 1</span>
+              {isAdmin &&
+
+                < div className="mt-10 text-center">
+                  <h3 className="text-2xl font-semibold text-blueGray-700">Generate Stock</h3>
+                  <div className="flex justify-center mt-6 gap-6">
+                    <div
+                      className="w-40 h-40 bg-gray-200 rounded-lg flex justify-center items-center cursor-pointer hover:bg-gray-300 transition-all ease-in-out"
+                      onClick={openModal}
+                    >
+                      <i className="fas fa-plus text-3xl text-gray-500" />
                     </div>
-                  </div>
-                  <div className="w-40 h-40 bg-gray-100 rounded-lg shadow-lg">
-                    <div className="flex justify-center items-center h-full">
-                      <span className="text-blueGray-500">Book 2</span>
-                    </div>
+
                   </div>
                 </div>
-              </div>
+              }
 
-              {/* Modal for Adding Book */}
+
               <AddBookModal isOpen={isModalOpen} closeModal={closeModal} />
 
-              {/* Logout Button */}
-              <div className="text-center mt-10">
+
+              <div className="text-center mt-3 mb-10">
                 <button
                   className="bg-red-500 text-white font-bold py-2 px-4 rounded-full hover:bg-red-700 transition duration-300 ease-in-out"
                   onClick={clickHandler}
@@ -196,7 +188,7 @@ export default function ProfileInfo() {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 }

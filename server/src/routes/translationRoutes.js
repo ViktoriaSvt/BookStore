@@ -6,11 +6,8 @@ const faqTranslations = require("../translations/faqTranslations.json")
 const router = express.Router();
 
 router.get('/faq', (req, res) => {
-
     const targetLanguage = req.query.lang || 'en';
-
     const faqContent = faqTranslations[targetLanguage] || faqTranslations['en'];
-
     res.json(faqContent);
 });
 
@@ -25,5 +22,6 @@ router.get('/register', (req, res) => {
     const registerContent = registerTranslations[targetLanguage] || registerTranslations['en'];
     res.json(registerContent);
 });
+
 
 module.exports = router;

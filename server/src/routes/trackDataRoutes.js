@@ -1,6 +1,16 @@
 const express = require("express");
-const { getTrackingData } = require("../services/trackingService");
+const { getTrackingData, trackSlowQuery } = require("../services/trackingService");
+const { trackPerformance } = require("../middleware/tracker");
 
+
+const simulateDelay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+const paymentQueryWithDelay = async () => {
+    const start = performance.now();
+    await simulateDelay(300); // Simulate a slow query (300ms)
+    const duration = performance.now() - start;
+    await trackSlowQuery('paymentProcessing', duration, { simulated: true });
+};
 
 const router = express.Router();
 
@@ -9,11 +19,20 @@ router.get('/state', async (req, res) => {
     res.json(data);
 });
 
-router.get("/test-error", (req, res, next ) => {
+router.get("/test-error",  (req, res, next ) => {
     const error = new Error("Simulated error!");
-    error.status = 543; 
+    error.status = 500; 
     next(error);
   });
+
+  router.get("/test-slow-payment",trackPerformance('fetchCart'), async (req, res, next ) => {
+    await  paymentQueryWithDelay()
+    const error = new Error("Simulated error!");
+    error.status = 500; 
+    next(error);
+  });
+
+  
 
 
 

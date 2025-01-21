@@ -3,6 +3,7 @@ const { registerUser, generateToken, logUser, verifyToken } = require("../servic
 const { getUserById, getUser } = require("../services/userService");
 const bcrypt = require('bcrypt');
 const { User } = require("../models/User");
+const { syncCartsBatch } = require("../util/batchSynch");
 
 
 
@@ -13,22 +14,24 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
 
         const data = req.body;
-        const user = await registerUser(data);
-        const token = generateToken(user);
 
-        const existingUser = await User.findOne({ email: user.email });
+        const existingUser = await User.findOne({ email: data.email });
         
         if (existingUser ) {
+            console.log('email taken!!');
             return res.status(200).json({ message: 'Email is already taken.' });
         }
 
+        const user = await registerUser(data);
+        const token = generateToken(user);
+
+    
         res.cookie('accessToken', token, {
             maxAge: 259200000,
             httpOnly: true,
             path: '/'
         });
 
-        console.log('cookie prepared');
         res.status(200).json({
             _id: user._id.toString(),
             email: user.email,
@@ -41,6 +44,9 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
 
+    console.log('in login!');
+    
+
     const userData = req.body;
 
     const user = await logUser(userData);
@@ -48,6 +54,8 @@ router.post("/login", async (req, res) => {
     if (!user) {
         return res.status(400).json({ message: "Invalid email or password." });
     }
+
+    console.log('in user!', user);
     
     const token = generateToken(user);
     
@@ -69,6 +77,7 @@ router.post("/login", async (req, res) => {
 })
 
 router.post("/logout", async (req, res) => {
+    await syncCartsBatch();
 
     res.clearCookie('accessToken', { path: '/' });
     res.status(200).send('Logged out successfully');
@@ -101,6 +110,25 @@ router.get('/:userId', async (req, res) => {
     }
 
 })
+
+router.post ('/updateProfile', async (req,res) => {
+    const { values } = req.body
+    const token = req.cookies.accessToken;
+
+    const user = await getUser(token);
+
+
+
+        user.username = values.username;
+        user.description = values.description;
+
+        user.save()
+    
+
+
+ 
+
+}) 
 
 
 

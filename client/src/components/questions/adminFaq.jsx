@@ -3,31 +3,26 @@ import { useGetAllQuestions } from '../../hooks/useGetQuestions';
 import { useForm } from '../../hooks/useForm';
 import { answerQuestion } from '../../api/question-requests';
 
-export default function AdminFAQ () {
+export default function AdminFAQ() {
 
   const [isAnswerModalOpen, setAnswerModalOpen] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
-  
+
   const questions = useGetAllQuestions();
 
   const submitCallback = async () => {
- 
-    
-    await answerQuestion(values.answer, selectedQuestion._id )
+    await answerQuestion(values.answer, selectedQuestion._id)
     setAnswerModalOpen(false);
-
   };
 
 
-    const initialValues = { answer: ''}
-   const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
+  const initialValues = { answer: '' }
+  const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
 
-   const handleAnswerClick = (question) => {
+  const handleAnswerClick = (question) => {
     setSelectedQuestion(question);
     setAnswerModalOpen(true);
   };
-
- 
 
 
   return (
@@ -41,7 +36,7 @@ export default function AdminFAQ () {
             User Questions
           </h2>
         </div>
-        
+
         <div className="overflow-x-auto bg-white shadow rounded-lg">
           <table className="min-w-full table-auto">
             <thead>
@@ -91,7 +86,7 @@ export default function AdminFAQ () {
             <div className="bg-white rounded-lg p-8 max-w-lg w-full">
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Answer Question</h3>
               <div>
-         
+
                 <p className="text-md text-gray-900 mb-6">{selectedQuestion.text}</p>
 
                 <label htmlFor="answer" className="block text-gray-900 text-sm mb-2">Your Answer:</label>
