@@ -17,10 +17,10 @@ async function postQuestion(text, creatorId) {
 
 async function postAnswer(text, questionId) {
 
-    const question =await Question.findById(questionId);
+    const question = await Question.findById(questionId);
     question.answer = text;
     question.status = 'answered'
-    
+
 
     question.save()
     return question;
@@ -31,5 +31,20 @@ async function getAllUnanswered() {
     return questions;
 }
 
+async function fetchQuestions(userId) {
 
-module.exports = { postQuestion , postAnswer, getAllUnanswered}
+    if (userId != '67755bb67cd7c68743fc6e7d') {
+        const questions = await Question.find({
+            creatorId: userId,
+            answer: { $ne: null }
+        })
+
+        return questions
+    }
+
+    return null
+
+}
+
+
+module.exports = { postQuestion, postAnswer, getAllUnanswered, fetchQuestions }

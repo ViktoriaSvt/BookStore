@@ -13,3 +13,7 @@ export const getQuestions = async () => {
 export const answerQuestion = async (questionId, text) => {
   return await request.post(`${BASE_URL}/${questionId}`, { text });
 };
+
+export const getUserQuestions = async (userId) => {
+  return await request.get(`${BASE_URL}/${userId}/questions`)
+}

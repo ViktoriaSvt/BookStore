@@ -68,7 +68,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchTrackingData();
-    const interval = setInterval(fetchTrackingData, 60000); // Fetch data every minute
+    const interval = setInterval(fetchTrackingData, 60000);
     return () => clearInterval(interval);
   }, []);
 

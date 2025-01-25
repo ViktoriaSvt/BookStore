@@ -7,8 +7,6 @@ const validateAuth = (req, res, next) => {
 
     if (!token) {
         req.user = null
-        console.log(req.user);
-
         return next()
     }
 
@@ -18,8 +16,6 @@ const validateAuth = (req, res, next) => {
         req.user = null;
     }
 
-
-    console.log(req.user);
 
     next()
 }

@@ -7,21 +7,13 @@ export default function Details() {
 
   const [book] = useGetBookById();
 
-  console.log('book', book);
-  
-
-  const submitToCartHandler = async ( bookId) => {
-
-    console.log('id',bookId);
-    
+  const submitToCartHandler = async ( bookId) => { 
     await addToCart(bookId);
 
     toast.success("Added to cart", {
       position: "top-right",
     });
   }
-
-
 
   return (
 

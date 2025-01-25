@@ -14,7 +14,7 @@ const client = new Client({
     node: 'http://localhost:9200',
 });
 
-router.get("/",trackPerformance('fetchCart'), async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     const books = await getAllBooks();
 
     if (!books) {
@@ -56,7 +56,7 @@ router.post('/create', async (req, res) => {
 
 })
 
-router.post("/search", async (req, res) => {
+router.post("/search",trackPerformance('searchEngine'), async (req, res) => {
 
     const myQuery = req.query.query;
 

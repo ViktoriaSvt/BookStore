@@ -13,3 +13,5 @@ export const updateProfile = async (values) => {
 export const getUserCart = async () => {
   return await request.get(`${BASE_URL}/cart`);
 };
+
+

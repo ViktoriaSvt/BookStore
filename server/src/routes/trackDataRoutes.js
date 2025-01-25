@@ -7,7 +7,7 @@ const simulateDelay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const paymentQueryWithDelay = async () => {
     const start = performance.now();
-    await simulateDelay(300); // Simulate a slow query (300ms)
+    await simulateDelay(300); 
     const duration = performance.now() - start;
     await trackSlowQuery('paymentProcessing', duration, { simulated: true });
 };
@@ -25,7 +25,7 @@ router.get("/test-error",  (req, res, next ) => {
     next(error);
   });
 
-  router.get("/test-slow-payment",trackPerformance('fetchCart'), async (req, res, next ) => {
+  router.get("/test-slow-request",trackPerformance('fetchCart'), async (req, res, next ) => {
     await  paymentQueryWithDelay()
     const error = new Error("Simulated error!");
     error.status = 500; 

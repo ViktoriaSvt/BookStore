@@ -1,12 +1,14 @@
 
 const express = require("express");
-const { getUser, getCart } = require("../services/userService");
+const { getUser, getUserById } = require("../services/userService");
 const { getBookById } = require("../services/bookService");
 const { Cart } = require("../models/Cart");
 const redis = require("../config/redis");
 const { PaymentModel } = require("../models/PaymentModel");
 const { updatedCarts } = require("../util/batchSynch");
 const { trackSlowQuery } = require("../services/trackingService");
+const { trackPerformance } = require("../middleware/tracker");
+const { updateCartInDb, getCartBooksFromDb } = require("../services/cartService");
 const stripe = require('stripe')('sk_test_51QcrYKJdrx2Bl88huhlvnfqPxrqBmfo9BM6wxg0mlYJugCMEpw9CHlspF8I9tTEzL0gq9NeWcFTNCEoLgDjMTbfu00idvkIYJK');
 
 
@@ -14,7 +16,7 @@ const router = express.Router();
 const returnUrl = "http://localhost:5173/cart";
 
 
-router.post('/payment', async (req, res, next) => {
+router.post('/payment', trackPerformance('orderProcessing'), async (req, res, next) => {
 
     const start = performance.now();
 
@@ -57,7 +59,7 @@ router.post('/payment', async (req, res, next) => {
             await PaymentModel.create({ userId, amount, paymentIntentId: paymentIntent.id, paymentStatus: "denied" });
 
             const error = new Error("Payment failed. Authentication or payment method issue.");
-            error.status = 402; // Payment required
+            error.status = 402;
             return next(error);
         }
 
@@ -87,15 +89,13 @@ router.post('/payment', async (req, res, next) => {
     }
 })
 
+router.post("/:bookId", trackPerformance('addToCart'), async (req, res, next) => {
 
-router.post("/:bookId", async (req, res, next) => {
-
-    const start = performance.now();
 
     const bookId = req.params.bookId;
-    const token = req.cookies.accessToken;
+    const userId = req.user._id
 
-    const user = await getUser(token);
+    const user = await getUserById(userId);
     const book = await getBookById(bookId);
 
 
@@ -114,91 +114,113 @@ router.post("/:bookId", async (req, res, next) => {
     }
 
     const cartKey = `cart:${user.cartId}`
-    let cartBooks = JSON.parse(await redis.get(cartKey)) || [];
+    let cartBooks = [];
 
+    if (redis.connected) {
+        const cachedCart = await redis.get(cartKey);
 
-    if (!cartBooks.some(cartBook => cartBook._id.toString() === book._id.toString())) {
-        cartBooks.push(book);
-        await redis.setex(cartKey, 3600, JSON.stringify(cartBooks))
+        if (cachedCart) {
+            console.log('in cache');
+            cartBooks = JSON.parse(cachedCart);
 
-        updatedCarts.add(user.cartId);
+            if (!cartBooks.some(cartBook => cartBook._id.toString() === book._id.toString())) {
+                cartBooks.push(book);
+                await redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
+                updatedCarts.add(user.cartId);
+            }
+        } else {
+            cartBooks = await updateCartInDb(userId, book);
 
+            await redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
+            updatedCarts.add(user.cartId);
+        }
+    } else {
+        cartBooks = await updateCartInDb(userId, book);
     }
-
-    const duration = performance.now() - start;
-    await trackSlowQuery('cartUpdate', duration, { userId: user._id, bookId });
-
 
     res.status(200).json({ message: 'Book added!' });
 
 })
 
-router.get("/items", async (req, res, next) => {
+router.get("/items", trackPerformance('fetchCart'), async (req, res, next) => {
 
-    // const token = req.cookies.accessToken;
-    // const userRef = await getUser(token)
-    console.log('PROBLEM');
-    
-    const userRef = req.user
+    const userId = req.user._id;
+    const user = await getUserById(userId)
 
-    console.log(userRef);
-    
-
-    if (!userRef) {
+    if (!user) {
         const error = new Error("User not found or not authenticated.");
         error.status = 401
         return next(error);
     }
 
-    if (userRef.role == "admin") {
+    if (user.role == "admin") {
         const error = new Error("Access denied for admin roles.");
         error.status = 403
         return next(error);
     }
 
+    const cartId = user.cartId;
+    const cartKey = `cart:${cartId}`;
+    let cartBooks = null
 
-    const cartKey = `cart:${userRef.cartId}`;
-    let cartBooks = await redis.get(cartKey);
+    if (redis.connected) {
+        cartBooks = await redis.get(cartKey);
 
+        if (cartBooks) {
+            return res.status(200).json(JSON.parse(cartBooks));
+        }
 
-    if (cartBooks) {
-
-        return res.status(200).json(JSON.parse(cartBooks));
+        cartBooks = await getCartBooksFromDb(cartId)
+        redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
+    } else {
+        cartBooks = await getCartBooksFromDb(cartId)
     }
 
-
-
-    const cart = await Cart.findById(userRef.cartId).populate('books');
-    cartBooks = cart.books.map(book => book._id.toString());
-    redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
-
-    res.status(200).json(cart.books)
+    res.status(200).json(cartBooks)
 
 })
 
 router.delete("/remove/:bookId", async (req, res, next) => {
     const { bookId } = req.params;
-    const token = req.cookies.accessToken;
+    const userId = req.user._id;
 
-    const user = await getUser(token);
+    const user = await getUserById(userId);
     const cartKey = `cart:${user.cartId}`;
 
-    const cachedCart = await redis.get(cartKey);
+    if (redis.connected) {
+        let cartBooks = await redis.get(cartKey);
 
-    if (cachedCart) {
-        let cartBooks = JSON.parse(cachedCart)
+        if (cartBooks) {
 
-        cartBooks = cartBooks.filter(book => book._id.toString() !== bookId);
-        await redis.setex(cartKey, 3600, JSON.stringify(cartBooks))
+            cartBooks = JSON.parse(cartBooks);
+            cartBooks = cartBooks.filter(book => book._id.toString() !== bookId);
+            await redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
 
-        updatedCarts.add(user.cartId);
-
+            updatedCarts.add(user.cartId);
+            return res.status(200).send({ message: "Book removed from cart" });
+        }
     }
 
+    const cart = await Cart.findById(user.cartId); 
 
 
-    res.status(200).send({ message: "Book removed from cart" });
-})
+    if (!cart) {
+        return res.status(404).send({ message: "Cart not found" });
+    }
+
+    cart.books = cart.books.filter(book => book._id.toString() !== bookId);
+
+    await cart.save();
+
+    if (redis.connected) {
+        await redis.setex(cartKey, 3600, JSON.stringify(cart.books));
+    }
+
+    return res.status(200).send({ message: "Book removed from cart" });
+});
+
+
+
 
 
 

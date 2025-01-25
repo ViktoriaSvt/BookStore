@@ -23,6 +23,11 @@ router.post("/register", async (req, res) => {
         }
 
         const user = await registerUser(data);
+
+        if(!user) {
+            return res.status(200).json({ message: "Invalid email or password." });
+        }
+
         const token = generateToken(user);
 
     
@@ -44,18 +49,13 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
 
-    console.log('in login!');
-    
-
     const userData = req.body;
-
+    
     const user = await logUser(userData);
 
     if (!user) {
         return res.status(400).json({ message: "Invalid email or password." });
     }
-
-    console.log('in user!', user);
     
     const token = generateToken(user);
     
@@ -124,10 +124,6 @@ router.post ('/updateProfile', async (req,res) => {
 
         user.save()
     
-
-
- 
-
 }) 
 
 

@@ -1,37 +1,31 @@
-import { useEffect, useState } from "react";
-import { getUserById, updateProfile } from "../../api/user-requests";
+import { useState } from "react";
+import { updateProfile } from "../../api/user-requests";
 import { useParams } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../contexts/AuthContext";
 import AddBookModal from "./addBook/AddBook";
 import { useForm } from "../../hooks/useForm";
+import { useGetMail, useGetUser } from "../../hooks/useuserHooks";
+
 
 export default function ProfileInfo() {
   const { language, changeLanguage, isAdmin } = useAuthContext();
   const { userId } = useParams();
 
-  const [user, setUser] = useState({});
+  const [user] = useGetUser(userId);
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [questions] = useGetMail(userId)
+  const [showQuestions, setShowQuestions] = useState(false)
 
   const initialValues = { username: '', description: '' };
 
   const clickHandler = useLogout();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (userId) {
-        try {
-          const userData = await getUserById(userId);
-          setUser(userData);
-        } catch (error) {
-          console.error('Error fetching user:', error);
-        }
-      }
-    };
+  const handleMailboxClick = () => {
+    setShowQuestions(true)
+  }
 
-    fetchUser();
-  }, [userId]);
 
 
   const handleLanguageChange = (e) => {
@@ -72,7 +66,11 @@ export default function ProfileInfo() {
               <div className="flex flex-wrap justify-center">
                 <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                   <div className="relative">
-                    <img alt="profile" src={user.profilePicture} className="shadow-xl rounded-full h-auto align-middle border-none -mt-16" />
+                    <img
+                      alt="profile"
+                      src={user.profilePicture}
+                      className="shadow-xl rounded-full h-auto align-middle border-none -mt-16"
+                    />
                   </div>
                 </div>
                 <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
@@ -80,15 +78,54 @@ export default function ProfileInfo() {
                 </div>
                 <div className="w-full lg:w-4/12 px-4 lg:order-1">
                   <div className="flex justify-center py-4 lg:pt-4 pt-8">
-                    <div className="mr-4 p-3 text-center">
-                      <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span><span className="text-sm text-blueGray-400">Photos</span>
-                    </div>
-                    <div className="lg:mr-4 p-3 text-center">
-                      <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89</span><span className="text-sm text-blueGray-400">Comments</span>
-                    </div>
+                    {/* Mailbox button with a notification dot */}
+                    <button
+                      onClick={handleMailboxClick}
+                      className="relative bg-transparent border-none cursor-pointer"
+                    >
+                      <i className="fa-solid fa-envelope-open-text text-3xl text-blueGray-600" />
+                      {/* Notification Dot */}
+                      { questions.length > 0 && (<span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full" />)}
+                    </button>
                   </div>
                 </div>
               </div>
+
+
+
+              <div className="relative mt-6">
+
+                {showQuestions && (
+                  <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+                    <div className="relative bg-white p-8 rounded-lg max-w-lg w-full">
+
+                      <button
+                        onClick={() => setShowQuestions(false)} 
+                        className="absolute top-2 right-2 text-xl font-bold text-gray-500"
+                      >
+                        &times; 
+                      </button>
+
+                      <h2 className="text-2xl font-semibold text-center mb-4">Your Questions</h2>
+                      {questions.length === 0 ? (
+                        <p className="text-center text-gray-500">No questions available.</p>
+                      ) : (
+                        <div className="space-y-4">
+                          {questions.map((question) => (
+                            <div key={question._id} className="border-b pb-4">
+                              <h1 className="font-medium text-blueGray-700">{question.text}</h1>
+                              <p className="text-blueGray-500 mt-2">{question.answer }</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+         
+
+              </div>
+
 
 
               <div className="text-center mt-12">
@@ -105,8 +142,6 @@ export default function ProfileInfo() {
                     user.username
                   )}
                 </h3>
-
-
                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400" />
                   {isEditing ? (
@@ -122,15 +157,17 @@ export default function ProfileInfo() {
                   )}
                 </div>
 
-
                 <div className="mt-6 mb-10">
-                  <select value={language} onChange={handleLanguageChange} className="border px-4 py-2 rounded-lg">
+                  <select
+                    value={language}
+                    onChange={handleLanguageChange}
+                    className="border px-4 py-2 rounded-lg"
+                  >
                     <option value="en">English</option>
                     <option value="fr">French</option>
                     <option value="bg">Bulgarian</option>
                   </select>
                 </div>
-
 
                 {!isEditing ? (
                   <button
@@ -157,9 +194,8 @@ export default function ProfileInfo() {
                 )}
               </div>
 
-              {isAdmin &&
-
-                < div className="mt-10 text-center">
+              {isAdmin && (
+                <div className="mt-10 text-center">
                   <h3 className="text-2xl font-semibold text-blueGray-700">Generate Stock</h3>
                   <div className="flex justify-center mt-6 gap-6">
                     <div
@@ -168,14 +204,11 @@ export default function ProfileInfo() {
                     >
                       <i className="fas fa-plus text-3xl text-gray-500" />
                     </div>
-
                   </div>
                 </div>
-              }
-
+              )}
 
               <AddBookModal isOpen={isModalOpen} closeModal={closeModal} />
-
 
               <div className="text-center mt-3 mb-10">
                 <button
@@ -188,7 +221,9 @@ export default function ProfileInfo() {
             </div>
           </div>
         </div>
-      </section >
-    </div >
+      </section>
+    </div>
   );
+
+
 }

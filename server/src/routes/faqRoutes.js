@@ -1,5 +1,5 @@
 const express = require("express");
-const { postQuestion, getAllUnanswered, postAnswer } = require("../services/faqService");
+const { postQuestion, getAllUnanswered, postAnswer, fetchQuestions } = require("../services/faqService");
 const { getUser } = require("../services/userService");
 const { text } = require("body-parser");
 
@@ -37,6 +37,14 @@ router.post('/:questionId', async (req, res) => {
     await postAnswer(id, text);
 
     res.status(200).json({ message: 'successful' })
+})
+
+router.get('/:userId/questions', async (req, res) => {
+    const userId = req.user._id
+ 
+    const userQuestions = await fetchQuestions(userId)
+
+    res.status(200).json(userQuestions)
 })
 
 

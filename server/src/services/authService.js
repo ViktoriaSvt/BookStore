@@ -7,6 +7,7 @@ const { Cart } = require('../models/Cart');
 
 async function registerUser(userData) {
 
+
     const hashPass = await bcrypt.hash(userData.password, 10);
 
     const cart = new Cart;
@@ -30,15 +31,13 @@ async function logUser(userData) {
     const user = await User.findOne({ email: userData.email }).lean();
 
     if (!user) {
-        console.log("Invalid email.");
-        return null;
+        return null
     }
 
     const isValidPass = await bcrypt.compare(userData.password, user.password);
 
     if (!isValidPass) {
-        console.log("Invalid password.");
-        return null;
+       return null
     }
 
     return user
@@ -55,7 +54,6 @@ async function logUser(userData) {
     const token = jwt.sign(playload, 'your-secret-key', { expiresIn: '3d' });
 
   
-
     return token;
 }
 
