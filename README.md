@@ -15,12 +15,12 @@ As a user, you can freely browse through the website, but certain features are r
 #### Browsing Books
 You have access to explore books through a **search bar** powered by **Elasticsearch (ES)** for efficient querying.
 
-![Browsing Books](doc/images/cart.png)
+![Browsing Books](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/cart.png)
 
 #### Login and User-Friendly Validation
 The login form supports **user-friendly validation**, displaying proper messages and guiding you smoothly through the process.
 
-![Login Validation](doc/images/validation.png)
+![Login Validation](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/validation.png)
 
 #### Cart Access
 Once logged in, you will have access to your cart, where you can add or remove items at will.
@@ -29,12 +29,13 @@ Once logged in, you will have access to your cart, where you can add or remove i
 #### Interactive Messages
 Adding items to your cart will trigger **interactive messages** to ensure you’re always up to date with the status of your cart.
 
-![Cart Access](doc/images/addToCart.png)
+![Cart Access](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/addToCart.png)
 
 #### Checkout Process
 When you're ready, you can proceed to checkout. We’ve integrated **Stripe** for a secure payment process, ensuring smooth transactions.
 
-![Checkout UI](doc/images/payment.png)
+![Checkout UI](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/payment.png)
+
 
 #### FAQ Page
 If you have any questions, you can visit the **FAQ page**, where we provide answers to commonly asked questions.
@@ -48,12 +49,14 @@ Don’t worry if you’re not fluent in English. We offer **multi-language suppo
 #### Questions to Admin
 If your questions aren’t answered in the FAQ section, feel free to send them directly to an **Administrator**. You’ll be notified once the admin resolves the issue, and it will be stored in the **Mail Tab** under your profile.
 
-![Mail Tab UI](doc/images/mail.png)
+
+![Mail Tab UI](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/mail.png)
 
 #### Profile Customization
 You can customize your **username** and **description** for a more personalized touch.
 
-![Profile Customization](doc/images/account.png)
+
+![Profile Customization](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/account.png)
 
 ---
 
@@ -64,20 +67,21 @@ Admins have more extensive privileges to manage the website and ensure smooth op
 #### Managing Questions
 Admins have a dedicated interface for managing questions sent by users, ensuring timely and relevant responses.
 
-![Admin Question Management UI](doc/images/faq_admin.png)
+![Admin Question Management UI](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/faq_admin.png)
 
 #### Monitoring Server Issues
-Admins can closely monitor server performance and availability to ensure the website remains operational. For more technical details about how the server handles heavy traffic, please check the **[Server README](./server/README.md)**.
+Admins can closely monitor server performance and availability to ensure the website remains operational. For more technical details about how that happens , please check the [Server README](./server/README.md).
 
-![Server Status UI](doc/images/troubleshoot.png)
+![Server Status UI](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/troubleshoot.png)
 
 #### Adding New Inventory
 Admins can easily add new books to the inventory, ensuring that the bookstore is always up to date with fresh titles.
 
-![Add Inventory](doc/images/add_stock.png)
+![Add Inventory](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/add_stock.png)
 
 #### Top Picks and Recommendations
 The homepage displays **recommendations** and **top picks** that users can browse, making the site even more engaging for everyone.
 
-![Top Picks](doc/images/Home_page.png)
-![Top Picks](doc/images/Home_page2.png)
+![Top Picks](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/Home_page.png)
+
+![Top Picks(https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/Home_page2.png)
