@@ -43,7 +43,7 @@ If you have any questions, you can visit the **FAQ page**, where we provide answ
 #### Multi-Language Support
 Don’t worry if you’re not fluent in English. We offer **multi-language support**, which can be changed in your profile.
 
-![FAQ Page](doc/images/faq.png)
+![FAQ Page](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/faq.png)
 
 #### Questions to Admin
 If your questions aren’t answered in the FAQ section, feel free to send them directly to an **Administrator**. You’ll be notified once the admin resolves the issue, and it will be stored in the **Mail Tab** under your profile.
