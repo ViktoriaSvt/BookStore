@@ -26,14 +26,14 @@ export default function ProfileInfo() {
     setShowQuestions(true)
   }
 
-
-
   const handleLanguageChange = (e) => {
     const newLanguage = e.target.value;
     changeLanguage(newLanguage);
   };
 
   const handleEditClick = () => {
+    values.username= user.username;
+    values.description = user.description
     setIsEditing(true);
   };
 

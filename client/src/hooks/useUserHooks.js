@@ -32,12 +32,16 @@ export function useGetMail(userId) {
     const fetchQuestions = async () => {
       if (userId) {
         const userQuestions = await getUserQuestions(userId)
-        setQuestions(userQuestions)
+
+        if(userQuestions) {
+          setQuestions(userQuestions)
+        }
+       
       }
     };
 
     fetchQuestions();
   }, [userId]);
-
+  
   return [questions]
 }

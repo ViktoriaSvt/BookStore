@@ -13,7 +13,8 @@ async function requester(method, url, data) {
 
         return response.data;
     } catch {
-        console.error("error handled.")
+        
+        return "denied";
     }
 
 }

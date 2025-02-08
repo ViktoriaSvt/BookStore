@@ -8,11 +8,17 @@ export default function Details() {
   const [book] = useGetBookById();
 
   const submitToCartHandler = async ( bookId) => { 
-    await addToCart(bookId);
+    const response = await addToCart(bookId);
 
-    toast.success("Added to cart", {
-      position: "top-right",
-    });
+    if(response){
+      toast.success("Added to cart", {
+        position: "top-right",
+      });
+    } else {
+      toast.error("please login first.", {
+        position: "top-right",
+      });
+    }
   }
 
   return (

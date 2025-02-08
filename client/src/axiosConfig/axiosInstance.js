@@ -23,7 +23,8 @@ axiosInstance.interceptors.response.use(
     } else {
       console.error("Network error:", error.message);
     }
-    return Promise.reject(error);
+ 
+    return 'denied';
   }
 );
 

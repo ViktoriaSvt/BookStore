@@ -6,16 +6,16 @@ import { useRegister } from "../../hooks/useRegister";
 export default function Register() {
   const { language } = useAuthContext();
 
-  const {registerCallback, translations } = useRegister(language);
+  const { registerCallback, translations } = useRegister(language);
 
   const defaultValues = { email: '', password: '', rePass: '' };
 
   const submitCallback = async ({ email, password, rePass }) => {
 
-      if(password == rePass) {
-        await registerCallback(email, password, rePass)
-      }
-  
+    if (password == rePass) {
+      await registerCallback(email, password, rePass)
+    }
+
   }
 
   const { values, changeHandler, submitHandler, isSubmitting, errors } = useAuthForm(
@@ -25,7 +25,7 @@ export default function Register() {
   return (
 
     <div className="form-divider">
-      <form className="form" onSubmit={submitHandler}>
+      <form role="registerForm" className="form" onSubmit={submitHandler}>
         <header>
           <h1>{translations.header}</h1>
         </header>
@@ -73,7 +73,10 @@ export default function Register() {
           {errors.rePass ? <i className="fa-solid fa-circle-xmark text-red-500"></i> : <i className="fa-solid fa-circle-check text-green-500" />}
           <label htmlFor="login-password">{translations.repaetPasswordLabel}</label>
           {errors.rePass && (
-            <span className="error text-red-500 text-sm">{errors.rePass}</span>
+            <span className="error text-red-500 text-sm" data-testid="error-rePass">
+              {errors.rePass}
+            </span>
+
           )}
         </div>
         <p className="link-signup">{translations.alreadyHaveAccount}<a href="/login">{translations.loginLink}</a></p>

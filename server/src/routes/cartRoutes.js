@@ -5,7 +5,6 @@ const { getBookById } = require("../services/bookService");
 const { Cart } = require("../models/Cart");
 const redis = require("../config/redis");
 const { PaymentModel } = require("../models/PaymentModel");
-const { updatedCarts } = require("../util/batchSynch");
 const { trackSlowQuery } = require("../services/trackingService");
 const { trackPerformance } = require("../middleware/tracker");
 const { updateCartInDb, getCartBooksFromDb } = require("../services/cartService");
@@ -14,6 +13,7 @@ const stripe = require('stripe')('sk_test_51QcrYKJdrx2Bl88huhlvnfqPxrqBmfo9BM6wx
 
 const router = express.Router();
 const returnUrl = "http://localhost:5173/cart";
+
 
 
 router.post('/payment', trackPerformance('orderProcessing'), async (req, res, next) => {
@@ -93,9 +93,13 @@ router.post("/:bookId", trackPerformance('addToCart'), async (req, res, next) =>
 
 
     const bookId = req.params.bookId;
-    const userId = req.user._id
+    const userRef = req.user;
+    let user = null;
 
-    const user = await getUserById(userId);
+    if (userRef) {
+        user = await getUserById(userRef._id)
+    };
+
     const book = await getBookById(bookId);
 
 
@@ -117,6 +121,8 @@ router.post("/:bookId", trackPerformance('addToCart'), async (req, res, next) =>
     let cartBooks = [];
 
     if (redis.connected) {
+        await redis.watch(cartKey);
+
         const cachedCart = await redis.get(cartKey);
 
         if (cachedCart) {
@@ -125,17 +131,19 @@ router.post("/:bookId", trackPerformance('addToCart'), async (req, res, next) =>
 
             if (!cartBooks.some(cartBook => cartBook._id.toString() === book._id.toString())) {
                 cartBooks.push(book);
-                await redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
+                await redis.multi()
+                    .set(cartKey, JSON.stringify(cartBooks))
+                    .exec(); //
                 updatedCarts.add(user.cartId);
             }
         } else {
-            cartBooks = await updateCartInDb(userId, book);
+            cartBooks = await updateCartInDb(user._id, book);
 
-            await redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
+            await redis.set(cartKey, JSON.stringify(cartBooks));
             updatedCarts.add(user.cartId);
         }
     } else {
-        cartBooks = await updateCartInDb(userId, book);
+        cartBooks = await updateCartInDb(user._id, book);
     }
 
     res.status(200).json({ message: 'Book added!' });
@@ -144,8 +152,12 @@ router.post("/:bookId", trackPerformance('addToCart'), async (req, res, next) =>
 
 router.get("/items", trackPerformance('fetchCart'), async (req, res, next) => {
 
-    const userId = req.user._id;
-    const user = await getUserById(userId)
+    const userRef = req.user;
+    let user = null;
+
+    if (userRef) {
+        user = await getUserById(userRef._id)
+    };
 
     if (!user) {
         const error = new Error("User not found or not authenticated.");
@@ -171,7 +183,7 @@ router.get("/items", trackPerformance('fetchCart'), async (req, res, next) => {
         }
 
         cartBooks = await getCartBooksFromDb(cartId)
-        redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
+        await redis.set(cartKey, JSON.stringify(cartBooks));
     } else {
         cartBooks = await getCartBooksFromDb(cartId)
     }
@@ -182,9 +194,13 @@ router.get("/items", trackPerformance('fetchCart'), async (req, res, next) => {
 
 router.delete("/remove/:bookId", async (req, res, next) => {
     const { bookId } = req.params;
-    const userId = req.user._id;
+    const userRef = req.user;
+    let user = null;
 
-    const user = await getUserById(userId);
+    if (userRef) {
+        user = await getUserById(userRef._id)
+    };
+
     const cartKey = `cart:${user.cartId}`;
 
     if (redis.connected) {
@@ -194,15 +210,14 @@ router.delete("/remove/:bookId", async (req, res, next) => {
 
             cartBooks = JSON.parse(cartBooks);
             cartBooks = cartBooks.filter(book => book._id.toString() !== bookId);
-            await redis.setex(cartKey, 3600, JSON.stringify(cartBooks));
+            await redis.set(cartKey, JSON.stringify(cartBooks));
 
             updatedCarts.add(user.cartId);
             return res.status(200).send({ message: "Book removed from cart" });
         }
     }
 
-    const cart = await Cart.findById(user.cartId); 
-
+    const cart = await Cart.findById(user.cartId);
 
     if (!cart) {
         return res.status(404).send({ message: "Cart not found" });
@@ -213,7 +228,7 @@ router.delete("/remove/:bookId", async (req, res, next) => {
     await cart.save();
 
     if (redis.connected) {
-        await redis.setex(cartKey, 3600, JSON.stringify(cart.books));
+        await redis.set(cartKey, JSON.stringify(cart.books));
     }
 
     return res.status(200).send({ message: "Book removed from cart" });

@@ -1,6 +1,7 @@
 const express = require('express');
 const { configExpress } = require('./config/express');
 const { configDatabase } = require('./config/database');
+require('./config/eventHandler');
 const bookRouter = require('./routes/bookDataRoutes');
 const userRouter = require('./routes/userAuthRoutes');
 const faqRouter = require('./routes/faqRoutes');
@@ -10,6 +11,8 @@ const languageRouter = require('./routes/translationRoutes')
 const cookieParser = require('cookie-parser');
 const { trackFailedRequest } = require('./services/trackingService');
 const { validateAuth }  = require('./middleware/authValidator')
+
+
 
 
 
@@ -43,6 +46,7 @@ async function start() {
       next(err);
     });
 
+    
     
     app.use((err, req, res, next) => {
       console.error('An error occurred:', err); 

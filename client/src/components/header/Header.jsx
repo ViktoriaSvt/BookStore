@@ -31,9 +31,9 @@ export default function Header() {
                         <div className="brand">
 
                             <div className="logo">
-                                <img src="https://img.freepik.com/premium-vector/orange-logo_121531-38.jpg" alt="Logo" />
+                                <img src="https://www.logoground.com/uploads8/dv8y202028152020-03-124814582Logoground%201%20Maret%202020-49-01.jpg" alt="Logo" />
                             </div>
-                            <h2>Sweetopia</h2>
+                            <h2 className="brandName"> SkyTales Publishing </h2>
                         </div>
 
                     </div>

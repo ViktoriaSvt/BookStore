@@ -7,20 +7,40 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const AdminDashboard = () => {
 
-  const [chartData, setChartData] = useState({
+  const [chartRequestData, setChartRequestData] = useState({
     labels: [],
     datasets: [
       {
         label: 'Failed Requests',
         data: [],
-        backgroundColor: 'rgba(199, 13, 0, 0.8)', 
+        backgroundColor: 'rgba(199, 13, 0, 0.8)',
         borderColor: 'rgb(189, 33, 6)',
         borderWidth: 1,
       },
       {
         label: 'Slow Query Runtimes',
         data: [],
-        backgroundColor: 'rgba(0, 150, 250, 0.8)', 
+        backgroundColor: 'rgba(0, 150, 250, 0.8)',
+        borderColor: 'rgb(0, 183, 255)',
+        borderWidth: 1,
+      },
+    ],
+  });
+
+  const [chartQueryData, setChartQueryData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: 'Failed Requests',
+        data: [],
+        backgroundColor: 'rgba(199, 13, 0, 0.8)',
+        borderColor: 'rgb(189, 33, 6)',
+        borderWidth: 1,
+      },
+      {
+        label: 'Slow Query Runtimes',
+        data: [],
+        backgroundColor: 'rgba(0, 150, 250, 0.8)',
         borderColor: 'rgb(0, 183, 255)',
         borderWidth: 1,
       },
@@ -44,7 +64,7 @@ const AdminDashboard = () => {
       data.querySlowLoading.find(item => item.errorType === errorType)?.count || 0
     );
 
-    setChartData({
+    setChartRequestData({
       labels,
       datasets: [
         {
@@ -53,7 +73,13 @@ const AdminDashboard = () => {
           backgroundColor: 'rgba(255, 99, 132, 0.8)',
           borderColor: 'rgb(255, 99, 132)',
           borderWidth: 1,
-        },
+        }
+      ],
+    });
+
+    setChartQueryData({
+      labels,
+      datasets: [
         {
           label: 'Slow Query Runtimes',
           data: querySlowLoading,
@@ -79,18 +105,18 @@ const AdminDashboard = () => {
           Admin Dashboard - Request Failures and Slow Queries
         </h2>
         <Bar
-          data={chartData}
+          data={chartRequestData}
           options={{
             responsive: true,
             plugins: {
               title: {
                 display: true,
-                text: 'Error Type Breakdown',
+                text: 'Server issues breakdown',
               },
               tooltip: {
                 callbacks: {
                   label: (tooltipItem) =>
-                    `${tooltipItem.dataset.label}: ${tooltipItem.raw}`, // Customize tooltip to show label and value
+                    `${tooltipItem.dataset.label}: ${tooltipItem.raw}`,
                 },
               },
             },
@@ -99,6 +125,42 @@ const AdminDashboard = () => {
                 title: {
                   display: true,
                   text: 'Error Type',
+                },
+                barPercentage: 0.5,
+                categoryPercentage: 0.5,
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Count',
+                },
+                beginAtZero: true,
+              },
+            },
+          }}
+        />
+
+        
+
+        <Bar
+          data={chartQueryData}
+          options={{
+            responsive: true,
+            plugins: {
+            
+              tooltip: {
+                callbacks: {
+                  label: (tooltipItem) =>
+                    `${tooltipItem.dataset.label}: ${tooltipItem.raw}`, // Customize tooltip to show label and value
+                },
+              },
+            },
+
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Query Type',
                 },
                 barPercentage: 0.5,
                 categoryPercentage: 0.5,

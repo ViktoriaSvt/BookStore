@@ -12,11 +12,21 @@ export default function Search() {
   const [books, setBooks] = useGetAllBooks();
 
   const submitToCartHandler = async (bookId) => {
-    await addToCart(bookId);
+    const response = await addToCart(bookId);
+    console.log(response);
 
-    toast.success("Added to cart", {
-      position: "top-right",
-    });
+    if(response){
+      toast.success("Added to cart", {
+        position: "top-right",
+      });
+    } else {
+      toast.error("please login first.", {
+        position: "top-right",
+      });
+    }
+    
+
+    
   }
 
   const searchCallback = async (searchQuery) => {
@@ -34,7 +44,7 @@ export default function Search() {
     <>
       <ToastContainer />
       <div className="search">
-        <form action="/search" method="get" onSubmit={submitHandler}>
+        <form role="form" action="/search" method="get" onSubmit={submitHandler}>
           <input
             type="text"
             className="rounded-[30px]"
@@ -51,7 +61,7 @@ export default function Search() {
       <div className="flex flex-wrap justify-center mb-40">
         {books.map(currentBook => (
           <BookItem
-            key={currentBook.title}
+            key={currentBook._id}
             book={currentBook}
             submitHandler={() => submitToCartHandler(currentBook._id)}
           />

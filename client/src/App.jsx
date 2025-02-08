@@ -4,15 +4,16 @@ import Home from "./components/home/Home"
 import Login from "./components/login/Login"
 import Cart from "./components/cart/Cart"
 import ProfileInfo from "./components/profile/Profile"
-import Search from "./components/search/bookList"
 import Details from "./components/details/Details"
 import Register from "./components/register/Register"
 import { useEffect, useState } from "react"
 import { AuthContext } from "./contexts/AuthContext"
 import { getSession } from "./api/auth-api"
-import FAQ from "./components/questions/FAQ-container"
+
 import AdminFAQ from "./components/questions/adminFaq"
 import AdminDashboard from "./components/adminDashboard/AdminDashboard"
+import Search from "./components/search/BookList"
+import FAQ from "./components/questions/faq-container"
 
 
 

@@ -12,6 +12,7 @@ export default function BookItem({
                     className="rounded-[30px] p-8  object-contain min-w-[200px] max-w-[300px] max-h-[300px]"
                     src={book.coverImageUrl}
                     alt="product image"
+                    data-testid="book-cover-image"
                 />
             </Link>
             <div className="px-5 pb-5">
