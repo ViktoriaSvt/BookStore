@@ -67,7 +67,7 @@ Admins have more extensive privileges to manage the website and ensure smooth op
 #### Managing Questions
 Admins have a dedicated interface for managing questions sent by users, ensuring timely and relevant responses.
 
-![Admin Question Management UI](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/faq_admin.png)
+![Admin Question Management UI](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/faqAdmin.png)
 
 #### Monitoring Server Issues
 Admins can closely monitor server performance and availability to ensure the website remains operational. For more technical details about how that happens , please check the [Server README](./server/README.md).
@@ -77,11 +77,11 @@ Admins can closely monitor server performance and availability to ensure the web
 #### Adding New Inventory
 Admins can easily add new books to the inventory, ensuring that the bookstore is always up to date with fresh titles.
 
-![Add Inventory](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/add_stock.png)
+![Add Inventory](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/addStock.png)
 
 #### Top Picks and Recommendations
 The homepage displays **recommendations** and **top picks** that users can browse, making the site even more engaging for everyone.
 
-![Top Picks](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/Home_page.png)
+![Top Picks](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/homePage.png)
 
-![Top Picks(https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/Home_page2.png)
+![Top Picks](https://github.com/Viktoria12345123/BookStore/raw/main/docs/images/homePage2.png)
