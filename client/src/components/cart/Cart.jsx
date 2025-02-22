@@ -13,12 +13,21 @@ export default function Cart() {
   const totalAmount = useGetTotalPrice(books);
 
   const removeButtonHandler = async (bookId) => {
+    
     await removeItem(bookId);
     setRefresh(prev => !prev);
   };
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+
+  const closeModal = () => {
+    setRefresh(prev => !prev);
+    setIsModalOpen(false);
+    
+  }
+
+  console.log('in cart', books);
+  
 
   return (
     <div className="relative overflow-x-auto shadow-lg rounded-lg bg-white dark:bg-gray-800 m-10 p-8">
@@ -37,9 +46,9 @@ export default function Cart() {
         <tbody>
           {books.length > 0 ? books.map(book => (
             <Item
-              key={book._id}
+              key={book.bookId}
               book={book}
-              removeButtonHandler={() => removeButtonHandler(book._id)}
+              removeButtonHandler={() => removeButtonHandler(book.bookId)}
             />
           )) : (
             <tr>
@@ -84,7 +93,7 @@ export default function Cart() {
               </button>
             </div>
             <ToastContainer />
-            <StripePayment totalAmount={totalAmount} />
+            <StripePayment totalAmount={totalAmount} books={books}/>
           </div>
         </div>
       )}

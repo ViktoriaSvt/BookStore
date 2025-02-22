@@ -9,6 +9,14 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+axiosInstance.interceptors.request.use((config) => {
+  let token = localStorage.getItem("jwtToken");
+
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
+  return config;
+});
 
 axiosInstance.interceptors.response.use(
   response => response,
@@ -17,6 +25,9 @@ axiosInstance.interceptors.response.use(
 
       if (error.response.status === 403) {
         console.error("Unauthorized action for administrator roles!");
+      } else if (error.response.status === 402) {
+        console.error("Payment failed")
+        return Promise.reject({ ...error, customMessage: error.message });
       } else {
         console.error("Error:", error.response.data.message || "Unknown error");
       }
@@ -24,7 +35,6 @@ axiosInstance.interceptors.response.use(
       console.error("Network error:", error.message);
     }
  
-    return 'denied';
   }
 );
 

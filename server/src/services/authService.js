@@ -43,7 +43,6 @@ async function logUser(userData) {
     return user
 }
 
-
  function generateToken(userData) {
 
     const playload = {

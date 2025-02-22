@@ -18,6 +18,7 @@ export function useGetCart(refresh) {
     return books
 }
 
+
 export function useGetTotalPrice(books) {
     const [totalAmount, setTotalAmount] = useState(0);
 

@@ -6,24 +6,24 @@ import { toast } from "react-toastify";
 
 export function usePostQuestions() {
 
-    const submitCallback = async ({ text }) => {
-        await postQuestion(text);
-        toast.success("Check inbox in 1-2 buisness days");
-    }
+  const submitCallback = async ({ text }) => {
+    await postQuestion(text);
+    toast.success("Check inbox in 1-2 buisness days");
+  }
 
-    return { submitCallback }
+  return { submitCallback }
 }
 
-export function useGetAllQuestions() {
+export function useGetAllQuestions(refresh) {
   const [questions, setQuestions] = useState([]);
 
-  useEffect(()=> {
-    (async ()=> {
-        const data = await getQuestions();
-        setQuestions(data)
+  useEffect(() => {
+    (async () => {
+      const data = await getQuestions();
+      setQuestions(data)
     })()
-  }, [])
- 
-    return questions
+  }, [refresh])
+
+  return questions
 }
 

@@ -12,12 +12,18 @@ export default function ProfileInfo() {
   const { language, changeLanguage, isAdmin } = useAuthContext();
   const { userId } = useParams();
 
+  console.log(userId);
+  
+
   const [user] = useGetUser(userId);
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [questions] = useGetMail(userId)
+  let [questions] = useGetMail(userId)
   const [showQuestions, setShowQuestions] = useState(false)
 
+
+  console.log(questions);
+  
   const initialValues = { username: '', description: '' };
 
   const clickHandler = useLogout();
@@ -56,6 +62,8 @@ export default function ProfileInfo() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+   questions = questions || [];
 
   return (
     <div>

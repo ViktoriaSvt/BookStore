@@ -3,13 +3,26 @@ import axiosInstance from '../axiosConfig/axiosInstance';
 
 
 async function requester(method, url, data) {
+    let eTag = localStorage.getItem('bookETag');
 
     try {
         const response = await axiosInstance({
             method,
             url,
             data,
+            headers: {
+                'If-None-Match': eTag || '', 
+              },
         });
+
+        console.log( 'MY RESPONSE', response);
+        console.log(response.headers['etag']);
+        
+        
+
+        if (response.headers['etag']) {
+            localStorage.setItem('bookETag', response.headers['etag']);
+          }
 
         return response.data;
     } catch {

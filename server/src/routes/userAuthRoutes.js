@@ -83,7 +83,6 @@ router.post("/logout", async (req, res) => {
 })
 
 router.get('/session', async (req, res) => {
-
     const token = req.cookies.accessToken;
 
     if (!token) {

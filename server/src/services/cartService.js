@@ -27,7 +27,7 @@ async function updateCartInDb(userId, book) {
   const dbCart = await Cart.findById(user.cartId);
   let cartBooks = dbCart ? dbCart.books : [];
 
-  if (!cartBooks.some(cartBook => cartBook._id.toString() === book._id.toString())) {
+  if (!cartBooks.some(cartBook => cartBook.id.toString() === book.id.toString())) {
       cartBooks.push(book);
 
       await Cart.findByIdAndUpdate(user.cartId, { books: cartBooks }, { new: true });

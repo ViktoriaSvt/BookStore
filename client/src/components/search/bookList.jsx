@@ -10,11 +10,12 @@ import { getBooksBySearch } from "../../api/book-requests";
 
 export default function Search() {
   const [books, setBooks] = useGetAllBooks();
+  
 
   const submitToCartHandler = async (bookId) => {
-    const response = await addToCart(bookId);
-    console.log(response);
 
+    const response = await addToCart(bookId);
+    
     if(response){
       toast.success("Added to cart", {
         position: "top-right",
@@ -24,20 +25,16 @@ export default function Search() {
         position: "top-right",
       });
     }
-    
-
-    
   }
 
   const searchCallback = async (searchQuery) => {
-    if (searchQuery.params != '') {
-      const responce = await getBooksBySearch(searchQuery)
-      setBooks(responce)
+    if (searchQuery.params != null) {
+      const response = await getBooksBySearch(searchQuery)
+      setBooks(response)
     }
   }
 
   const { values, changeHandler, submitHandler } = useForm({ params: '' }, searchCallback)
-
 
 
   return (
@@ -61,9 +58,9 @@ export default function Search() {
       <div className="flex flex-wrap justify-center mb-40">
         {books.map(currentBook => (
           <BookItem
-            key={currentBook._id}
+            key={currentBook.id}
             book={currentBook}
-            submitHandler={() => submitToCartHandler(currentBook._id)}
+            submitHandler={() => submitToCartHandler(currentBook.id)}
           />
         ))}
       </div>

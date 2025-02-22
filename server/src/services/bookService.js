@@ -34,10 +34,11 @@ async function createBook(data, userId) {
     return book
 }
 
+
 async function addBookToElasticsearch(book) {
     await client.index({
         index: 'books',
-        id: book._id.toString(),
+        id: book.id.toString(),
         body: {
             title: book.title,
             author: book.author,

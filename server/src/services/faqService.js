@@ -21,7 +21,6 @@ async function postAnswer(text, questionId) {
     question.answer = text;
     question.status = 'answered'
 
-
     question.save()
     return question;
 }

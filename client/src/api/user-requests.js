@@ -1,9 +1,10 @@
 import * as request from "./requester";
 
 const BASE_URL = "http://localhost:3000/user";
+const BASE_URL_SPRING = "http://localhost:8080/users";
 
 export const getUserById = async (userId) => {
-  return await request.get(`${BASE_URL}/${userId}`);
+  return await request.get(`${BASE_URL_SPRING}/${userId}`);
 };
 
 export const updateProfile = async (values) => {

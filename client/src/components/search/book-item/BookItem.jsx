@@ -7,7 +7,7 @@ export default function BookItem({
 
     return (
         <div className="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700 m-2 ">
-            <Link to={`/details/${book._id}`}>
+            <Link to={`/details/${book.id}`}>
                 <img
                     className="rounded-[30px] p-8  object-contain min-w-[200px] max-w-[300px] max-h-[300px]"
                     src={book.coverImageUrl}
@@ -16,7 +16,7 @@ export default function BookItem({
                 />
             </Link>
             <div className="px-5 pb-5">
-                <Link to={`/details/${book._id}`}>
+                <Link to={`/details/${book.id}`}>
                     <h3 className="text-gray-900 font-semibold text-xl tracking-tight dark:text-white">{book.title}</h3>
                 </Link>
                 <div className="flex items-center mt-2.5 mb-5"></div>

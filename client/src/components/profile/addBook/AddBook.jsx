@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import { useForm } from "../../../hooks/useForm";
 import { createBook } from "../../../api/book-requests";
 
@@ -13,7 +13,7 @@ const AddBookModal = ({ isOpen, closeModal }) => {
     year: "",
     price: "",
     description: "",
-    inStock: 0,
+    quantity: "",
   };
 
   const submitCallback = async () => {
@@ -159,8 +159,8 @@ const AddBookModal = ({ isOpen, closeModal }) => {
             <input
               type="number"
               id="inStock"
-              name="inStock"
-              value={values.inStock}
+              name="quantity"
+              value={values.quantity}
               onChange={changeHandler}
               className="w-full px-4 py-2 border rounded"
               min="0"

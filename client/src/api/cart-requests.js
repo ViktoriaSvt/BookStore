@@ -1,24 +1,27 @@
 import * as request from "./requester";
 
 const BASE_URL = 'http://localhost:3000/cart';
+const BASE_URL_SPRING = 'http://localhost:8080/cart';
+const BASE_URL_SPRING_STRIPE = 'http://localhost:8080/payment';
 
-export const addToCart = async (bookId) => {
-    return await request.post(`${BASE_URL}/${bookId}`);
+export const addToCart = async (id) => {
+    console.log(id);
+    return await request.put(`${BASE_URL_SPRING}/add/${id}`);
 };
 
 export const getCartItems = async () => {
-    return await request.get(`${BASE_URL}/items`);
+    return await request.get(`${BASE_URL_SPRING}/items`);
 };
 
-export const removeItem = async (bookId) => {
-    return await request.del(`${BASE_URL}/remove/${bookId}`);
+export const removeItem = async (id) => {
+    return await request.del(`${BASE_URL_SPRING}/remove/${id}`);
 };
 
-export const createPurchase = async (paymentMethod, totalAmount) => {
-
-    const response = await request.post(`${BASE_URL}/payment`, {
+export const createPurchase = async (paymentMethod, totalAmount, books) => {
+    const response = await request.post(`${BASE_URL_SPRING_STRIPE}`, {
         paymentMethodId: paymentMethod.id,
         amount: totalAmount,
+        books:books
     });
 
     return response

@@ -44,16 +44,23 @@ function App() {
   useEffect(() => {
     const initializeAuthState = async () => {
         const response = await getSession();
+
+        console.log("session", response);
+        console.log(response.role == 'ADMIN');
+        
+        
         
         if (response) {
           changeAuthState({
-            _id: response._id,
+            _id: response.id,
             email: response.email,
-            isAdmin: response.role == 'admin'
+            isAdmin: response.role == 'ADMIN'
           });
         }
 
 
+        console.log(authState);
+        
     }
 
     initializeAuthState();

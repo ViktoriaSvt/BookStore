@@ -7,11 +7,13 @@ export default function AdminFAQ() {
 
   const [isAnswerModalOpen, setAnswerModalOpen] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [refresh, setRefresh] = useState(false);
 
-  const questions = useGetAllQuestions();
+  const questions = useGetAllQuestions(refresh);
 
   const submitCallback = async () => {
-    await answerQuestion(values.answer, selectedQuestion._id)
+    await answerQuestion(values.answer, selectedQuestion.id)
+    setRefresh(prev => !prev);
     setAnswerModalOpen(false);
   };
 
@@ -58,7 +60,7 @@ export default function AdminFAQ() {
                     </span>
                   </td>
                   <td className="py-3 px-6 text-sm">
-                    {question.status === 'pending' ? (
+                    {question.status === "PENDING"? (
                       <button
                         onClick={() => handleAnswerClick(question)}
                         className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-md"

@@ -13,6 +13,8 @@ export function useGetUser(userId) {
       if (userId) {
 
         const userData = await getUserById(userId);
+        console.log(userData);
+        
         setUser(userData);
 
       }

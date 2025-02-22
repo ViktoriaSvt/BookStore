@@ -11,14 +11,18 @@ export const useLogin = (language) => {
     const navigate = useNavigate();
     const translations = useLoginTranslator(language)
 
+
     const loginCallback = async (email, password) => {
         const authData = await login(email, password)
 
+        console.log(authData);
+        
+
         if (authData) {
             changeAuthState({
-                _id: authData._id,
+                _id: authData.id,
                 email: authData.email,
-                isAdmin: authData.role == 'admin'
+                isAdmin: authData.role.trim().toUpperCase() === 'ADMIN'
             })
 
             navigate('/')

@@ -18,8 +18,6 @@ const returnUrl = "http://localhost:5173/cart";
 
 router.post('/payment', trackPerformance('orderProcessing'), async (req, res, next) => {
 
-    const start = performance.now();
-
     const { paymentMethodId, amount } = req.body
     const token = req.cookies.accessToken;
     const user = await getUser(token)
@@ -42,10 +40,7 @@ router.post('/payment', trackPerformance('orderProcessing'), async (req, res, ne
             automatic_payment_methods: { enabled: true },
             return_url: returnUrl
         });
-
-        const duration = performance.now() - start;
-        await trackSlowQuery('paymenntProcessing', duration, { userId, amount })
-
+        
         if (paymentIntent.status === "requires_action" || paymentIntent.status === "requires_source_action") {
             await PaymentModel.create({ userId, amount, paymentIntentId: paymentIntent.id, paymentStatus: "denied" });
 
@@ -129,7 +124,7 @@ router.post("/:bookId", trackPerformance('addToCart'), async (req, res, next) =>
             console.log('in cache');
             cartBooks = JSON.parse(cachedCart);
 
-            if (!cartBooks.some(cartBook => cartBook._id.toString() === book._id.toString())) {
+            if (!cartBooks.some(cartBook => cartBook.id.toString() === book.id.toString())) {
                 cartBooks.push(book);
                 await redis.multi()
                     .set(cartKey, JSON.stringify(cartBooks))
@@ -209,7 +204,7 @@ router.delete("/remove/:bookId", async (req, res, next) => {
         if (cartBooks) {
 
             cartBooks = JSON.parse(cartBooks);
-            cartBooks = cartBooks.filter(book => book._id.toString() !== bookId);
+            cartBooks = cartBooks.filter(book => book.id.toString() !== bookId);
             await redis.set(cartKey, JSON.stringify(cartBooks));
 
             updatedCarts.add(user.cartId);
@@ -223,7 +218,7 @@ router.delete("/remove/:bookId", async (req, res, next) => {
         return res.status(404).send({ message: "Cart not found" });
     }
 
-    cart.books = cart.books.filter(book => book._id.toString() !== bookId);
+    cart.books = cart.books.filter(book => book.id.toString() !== bookId);
 
     await cart.save();
 

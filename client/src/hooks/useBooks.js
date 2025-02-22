@@ -6,9 +6,12 @@ import { useParams } from "react-router-dom";
 export function useGetAllBooks() {
   const [books, setBooks] = useState([])
 
+
+  
   useEffect(() => {
     (async () => {
       const response = await bookApi.getAll();
+      console.log("reponse",response);
       setBooks(response);
     })();
   }, []);
