@@ -1,6 +1,6 @@
 # Website Documentation
 
-Welcome to **SkyTales** – your go-to bookstore! Whether you're a regular user or an admin, we’ve designed this website to be user-friendly and efficient. If you're looking for more technical details on how the server optimizes heavy traffic, please refer to the **[Java Server README](./java-server/README.md)** and **[JS Server README](./js-server/README.md)**.
+Welcome to **SkyTales** – your go-to bookstore! Whether you're a regular user or an admin, we’ve designed this website to be user-friendly and efficient. If you're looking for more technical details on how the server optimizes heavy traffic, please refer to the **[Java Server README](https://github.com/Viktoria12345123/MS-server/blob/main/README.md)** and **[JS Server README](./js-server/README.md)**.
 
 ---
 
