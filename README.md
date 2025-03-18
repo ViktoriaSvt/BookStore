@@ -1,8 +1,18 @@
 # Website Documentation
 
-Welcome to **SkyTales** – your go-to bookstore! Whether you're a regular user or an admin, we’ve designed this website to be user-friendly and efficient. If you're looking for more technical details on how the server optimizes heavy traffic, please refer to the **[Server README](./server/README.md)**.
+Welcome to **SkyTales** – your go-to bookstore! Whether you're a regular user or an admin, we’ve designed this website to be user-friendly and efficient. If you're looking for more technical details on how the server optimizes heavy traffic, please refer to the **[Java Server README](./java-server/README.md)** and **[JS Server README](./js-server/README.md)**.
 
 ---
+
+### Frontend Tech Stack
+
+- **JavaScript**: ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=white)
+- **React**: ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)
+- **CSS & Styling**: ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white), ![CSS](https://img.shields.io/badge/CSS-1572B6?style=flat&logo=css3&logoColor=white)
+- **Charting Library**: ![Chart.js](https://img.shields.io/badge/Chart.js-F3B1A1?style=flat&logo=chartjs&logoColor=white)
+- **HTTP Client**: ![Axios](https://img.shields.io/badge/Axios-5A29E8?style=flat&logo=axios&logoColor=white)
+- **Markup**: ![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white)
+
 
 ## User Roles
 
