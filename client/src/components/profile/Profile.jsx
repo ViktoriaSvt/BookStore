@@ -6,24 +6,21 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import AddBookModal from "./addBook/AddBook";
 import { useForm } from "../../hooks/useForm";
 import { useGetMail, useGetUser } from "../../hooks/useuserHooks";
+import { useGetOrders } from "../../hooks/usePayment";
+import OrderHistory from "./order_history/OrderHistory";
 
 
 export default function ProfileInfo() {
   const { language, changeLanguage, isAdmin } = useAuthContext();
   const { userId } = useParams();
 
-  console.log(userId);
-  
-
   const [user] = useGetUser(userId);
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   let [questions] = useGetMail(userId)
+  let orders = useGetOrders(userId)
   const [showQuestions, setShowQuestions] = useState(false)
 
-
-  console.log(questions);
-  
   const initialValues = { username: '', description: '' };
 
   const clickHandler = useLogout();
@@ -38,7 +35,7 @@ export default function ProfileInfo() {
   };
 
   const handleEditClick = () => {
-    values.username= user.username;
+    values.username = user.username;
     values.description = user.description
     setIsEditing(true);
   };
@@ -63,7 +60,11 @@ export default function ProfileInfo() {
     setIsModalOpen(false);
   };
 
-   questions = questions || [];
+  questions = questions || [];
+  orders = orders || [];
+
+
+
 
   return (
     <div>
@@ -93,25 +94,22 @@ export default function ProfileInfo() {
                     >
                       <i className="fa-solid fa-envelope-open-text text-3xl text-blueGray-600" />
                       {/* Notification Dot */}
-                      { questions.length > 0 && (<span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full" />)}
+                      {questions.length > 0 && (<span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full" />)}
                     </button>
                   </div>
                 </div>
               </div>
 
-
-
               <div className="relative mt-6">
-
                 {showQuestions && (
                   <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex justify-center items-center">
                     <div className="relative bg-white p-8 rounded-lg max-w-lg w-full">
 
                       <button
-                        onClick={() => setShowQuestions(false)} 
+                        onClick={() => setShowQuestions(false)}
                         className="absolute top-2 right-2 text-xl font-bold text-gray-500"
                       >
-                        &times; 
+                        &times;
                       </button>
 
                       <h2 className="text-2xl font-semibold text-center mb-4">Your Questions</h2>
@@ -122,7 +120,7 @@ export default function ProfileInfo() {
                           {questions.map((question) => (
                             <div key={question._id} className="border-b pb-4">
                               <h1 className="font-medium text-blueGray-700">{question.text}</h1>
-                              <p className="text-blueGray-500 mt-2">{question.answer }</p>
+                              <p className="text-blueGray-500 mt-2">{question.answer}</p>
                             </div>
                           ))}
                         </div>
@@ -130,11 +128,8 @@ export default function ProfileInfo() {
                     </div>
                   </div>
                 )}
-         
-
+                
               </div>
-
-
 
               <div className="text-center mt-12">
                 <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
@@ -226,6 +221,21 @@ export default function ProfileInfo() {
                   Log Out
                 </button>
               </div>
+
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="flex-grow h-[2px] bg-gray-300"></div>
+                  <h2 className="px-4 text-lg font-semibold text-gray-700">Recent Orders</h2>
+                  <div className="flex-grow h-[2px] bg-gray-300"></div>
+                </div>
+
+                <div className="flex flex-wrap justify-center gap-4">
+                  {!isAdmin && orders.map((order) => (
+                    <OrderHistory key={order.id} order={order} className="w-[150px] h-[200px]" />
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

@@ -9,9 +9,13 @@ export function useGetCart(refresh) {
         (async () => {
             const data = await getCartItems();
 
-            if (data) {
+            if(data === 'denied') {
+                setBooks([])
+            } else {
                 setBooks(data);
             }
+
+        
         })()
     }, [refresh])
 

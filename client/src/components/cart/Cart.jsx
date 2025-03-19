@@ -26,8 +26,6 @@ export default function Cart() {
     
   }
 
-  console.log('in cart', books);
-  
 
   return (
     <div className="relative overflow-x-auto shadow-lg rounded-lg bg-white dark:bg-gray-800 m-10 p-8">
@@ -39,6 +37,7 @@ export default function Cart() {
               <span className="sr-only">Image</span>
             </th>
             <th scope="col" className="px-6 py-4">Product</th>
+           
             <th scope="col" className="px-6 py-4">Price</th>
             <th scope="col" className="px-6 py-4">Action</th>
           </tr>

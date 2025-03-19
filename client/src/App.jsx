@@ -14,6 +14,8 @@ import AdminFAQ from "./components/questions/adminFaq"
 import AdminDashboard from "./components/adminDashboard/AdminDashboard"
 import Search from "./components/search/BookList"
 import FAQ from "./components/questions/faq-container"
+import TermsAndConditions from "./components/static/TermsAndConditions"
+import AboutUs from "./components/static/AboutUs"
 
 
 
@@ -44,11 +46,6 @@ function App() {
   useEffect(() => {
     const initializeAuthState = async () => {
         const response = await getSession();
-
-        console.log("session", response);
-        console.log(response.role == 'ADMIN');
-        
-        
         
         if (response) {
           changeAuthState({
@@ -57,19 +54,12 @@ function App() {
             isAdmin: response.role == 'ADMIN'
           });
         }
-
-
-        console.log(authState);
         
     }
 
     initializeAuthState();
     
   }, []);
-
-
-  
-
 
   return (
     <AuthContext.Provider value={contextData}>
@@ -84,6 +74,8 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/details/:bookId" element={<Details />} />
           <Route path="/cart" element={ <Cart /> } />
+          <Route path="/terms-and-conditions" element={ <TermsAndConditions /> } />
+          <Route path="/about-us" element={ <AboutUs /> } />
           <Route path="/tracker" element={ <AdminDashboard /> } />
         </Routes>
 

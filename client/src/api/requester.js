@@ -6,30 +6,25 @@ async function requester(method, url, data) {
     let eTag = localStorage.getItem('bookETag');
 
     try {
-        const response = await axiosInstance({
-            method,
-            url,
-            data,
-            headers: {
-                'If-None-Match': eTag || '', 
-              },
-        });
+      const response = await axiosInstance({
+          method,
+          url,
+          data,
+          headers: {
+              'If-None-Match': eTag || '', 
+          },
+      });
 
-        console.log( 'MY RESPONSE', response);
-        console.log(response.headers['etag']);
-        
-        
+      if (response?.headers?.etag) {
+          localStorage.setItem('bookETag', response.headers['etag']);
+      }
 
-        if (response.headers['etag']) {
-            localStorage.setItem('bookETag', response.headers['etag']);
-          }
+      return response?.data
 
-        return response.data;
-    } catch {
-        
-        return "denied";
-    }
-
+  } catch (error) {
+      console.error(`❌ Request failed: ${method} ${url}`, error);
+      return []; 
+  }
 }
 
 export const get = (url, data) => requester('GET', url, data);

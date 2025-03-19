@@ -23,14 +23,13 @@ axiosInstance.interceptors.response.use(
   error => {
     if (error.response) {
 
-      if (error.response.status === 403) {
-        console.error("Unauthorized action for administrator roles!");
+      if (error.response.status === 403 || error.response.status === 401) {
+        console.error("Unauthorized action!");
       } else if (error.response.status === 402) {
         console.error("Payment failed")
-        return Promise.reject({ ...error, customMessage: error.message });
       } else {
-        console.error("Error:", error.response.data.message || "Unknown error");
-      }
+        console.error("Error:", error.response  || error.message|| "Unknown error");
+      }  
     } else {
       console.error("Network error:", error.message);
     }

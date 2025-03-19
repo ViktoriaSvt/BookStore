@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; 
     padding: 1em;
     background-image: url('');
     background-color: #000000;
@@ -11,6 +11,12 @@
     margin-top: 3em;
 }
 
+.book-details {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center;     /* Centers vertically */
+    height: 100%;            /* Ensures the container takes full height of its parent */
+  }
 .background-banner {
     width: 100%;
     padding: 0 1em;
@@ -18,6 +24,13 @@
     margin: ;
 
 }
+
+.text-metallic-gradient {
+    background-image: linear-gradient(to right, #5193be, #0e2047be);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
 
 
 .details {
@@ -66,19 +79,16 @@
     left: 100%;
 }
 
-
 .reccomended {
     display: flex;
     flex-direction: column;
 }
 
 
-
 .header h2 i:first-child {
     transform: scaleX(-1);
 
 }
-
 
 .scrolling-container {
     width: 100%;              
@@ -94,7 +104,6 @@
     gap: 1em;
     justify-content: flex-start;
     animation: scroll-left 60s linear infinite;
-
 }
 
 .scrolling-container::-webkit-scrollbar {
@@ -108,13 +117,10 @@
     transition: background-color 0.3s ease;
 }
 
-
 .scrolling-container::-webkit-scrollbar-track {
     background: #666565;
     border-radius: 10px;
 }
-
-
 
 .reccomended div img {
     width: 300px;
@@ -130,11 +136,6 @@
 .reccomended .details {
     scale: 0.6;
 }
-
-
-
-
-
 
 
 @media (max-width: 750px) {
@@ -163,6 +164,18 @@
         position: absolute;
         left: -3em;
     }
-
-
 }
+
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Keep particles behind the header */
+    pointer-events: none; /* Make sure they don't block any interactions */
+  }
+  
+
+  
+  

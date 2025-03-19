@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserById } from "../api/user-requests";
+import { getAllUsers, getUserById } from "../api/user-requests";
 import { getUserQuestions } from "../api/question-requests";
 
 
@@ -13,8 +13,6 @@ export function useGetUser(userId) {
       if (userId) {
 
         const userData = await getUserById(userId);
-        console.log(userData);
-        
         setUser(userData);
 
       }
@@ -46,4 +44,25 @@ export function useGetMail(userId) {
   }, [userId]);
   
   return [questions]
+}
+
+export function useGetUsers() {
+  const [users, setUsers] = useState([])
+
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      
+        const userData = await getAllUsers()
+
+        if(userData) {
+          setUsers(userData);
+        }
+       
+    };
+
+    fetchUsers();
+  }, []);
+  
+  return [users, setUsers]
 }

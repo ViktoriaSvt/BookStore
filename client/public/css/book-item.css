@@ -18,8 +18,6 @@ body {
 
 
 
-
-
 .book-item {
     display: flex;
     flex: 1 1 49%;
@@ -27,8 +25,34 @@ body {
     background-size: cover;
     background-position: center;
     overflow: hidden;
+     border: 1px solid #6ca9e2;
+     border-radius: 5px;
+     position: relative;
 
 }
+
+.bow-line {
+    position: absolute;
+    top: 0px;
+    left: -70px;
+    width: 170px;
+    height: 40px;
+    background: linear-gradient(45deg, #5f0606, #ee0f07, #4e0202); /* Satin-like gradient effect */
+    transform: skew(20deg);
+    transform-origin: top right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 14px;
+     z-index: 10;
+}
+
+.discount-text {
+    color: white;
+    font-weight: bold;
+   padding: 2em;
+}
+
 
 .add-section {
     margin: 0.5em;
@@ -73,7 +97,7 @@ body {
     background-image: url('https://i0.wp.com/insights.bookbub.com/wp-content/uploads/2022/07/Brilliant_BookBub_Ad_Designs_Promoting_Books_in_a_Series.png?fit=750%2C394&ssl=1');
     flex: 1 1 50%;
     height: 300px;
-    border: 5px solid rgb(192, 149, 6);
+    border: 1px solid rgb(192, 149, 6);
     background-position: center;
 }
 
@@ -114,7 +138,7 @@ body {
 
 .book-cover {
     margin: 1em;
-    width: 150px;
+    min-width: 150px;
     height: 200px;
     background-size: cover;
     position: relative;
@@ -146,9 +170,12 @@ body {
     }
 }
 
+
 .book-info {
-    padding: 20px;
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures the button is at the bottom */
+    flex-grow: 1; /* Makes sure the content expands to take available space */
 }
 
 
@@ -174,9 +201,12 @@ body {
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
+    max-width: 10rem;
+    margin: 1em;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s ease-in-out;
     position: relative;
+    margin-top: auto; /* Ensures the button stays at the bottom of the container */
 }
 
 
@@ -263,3 +293,6 @@ body {
     border: 4px solid rgba(255, 196, 0, 0.527);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
+
+
+

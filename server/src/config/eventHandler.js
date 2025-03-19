@@ -14,7 +14,6 @@ redisEmitter.on('redisConnected', async () => {
 redisEmitter.on('redisDisconnected', async () => {
   console.log('Redis disconnection event triggered.');
 
-
   await syncCartsBatch();
   clearInterval(intervalId)
 });

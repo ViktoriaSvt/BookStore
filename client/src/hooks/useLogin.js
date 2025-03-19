@@ -15,9 +15,6 @@ export const useLogin = (language) => {
     const loginCallback = async (email, password) => {
         const authData = await login(email, password)
 
-        console.log(authData);
-        
-
         if (authData) {
             changeAuthState({
                 _id: authData.id,

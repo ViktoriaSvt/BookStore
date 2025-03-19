@@ -69,7 +69,7 @@
 .search::after {
     content: "\f004";
     position:absolute;
-    top:7rem;
+    top:9.5rem;
     right: calc(29.9vw + 1px);
     transform: translateY(10%);
     font-weight: 900;

@@ -2,16 +2,14 @@ import { ToastContainer } from "react-toastify";
 import { useForm } from "../../hooks/useForm";
 import { usePostQuestions } from "../../hooks/useGetQuestions";
 import { useAuthContext } from "../../contexts/AuthContext";
-
 import { useGetLang } from "../../hooks/useTranslator";
-
+import { Link } from "react-router-dom";
 
 export default function FAQ() {
-
   const initialValues = { text: '' };
 
   const { language } = useAuthContext();
-  const  translations = useGetLang(language);
+  const translations = useGetLang(language);
   const { submitCallback } = usePostQuestions();
 
   const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
@@ -19,12 +17,29 @@ export default function FAQ() {
   const questions = translations?.questions || [];
   const staticContents = translations?.staticContent || [];
 
-
   return (
     <section className="py-24">
 
+<div className="absolute top-10 right-3 mt-4 mr-4 flex space-x-6">
+  <Link
+    to="/about-us"
+    className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg px-6 py-3 text-lg transition transform hover:scale-105 shadow-lg hover:shadow-2xl border border-lime-300"
+  >
+    About Us
+  </Link>
+  <Link
+    to="/terms-and-conditions"
+    className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg px-6 py-3 text-lg transition transform hover:scale-105 shadow-lg hover:shadow-2xl border border-lime-300"
+  >
+    Terms and Conditions
+  </Link>
+</div>
+
+
       <ToastContainer />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+
+
         <div className="mb-16">
           <h6 className="text-lg text-indigo-600 font-medium text-center mb-2">
             FAQs
@@ -37,7 +52,10 @@ export default function FAQ() {
         {questions.length > 0 ? (
           <div className="accordion-group">
             {questions.map((item, index) => (
-              <details key={index} className="accordion py-8 px-6 border-b border-solid border-gray-200 rounded-2xl hover:bg-indigo-50">
+              <details
+                key={index}
+                className="accordion py-8 px-6 border-b border-solid border-gray-200 rounded-2xl hover:bg-indigo-50"
+              >
                 <summary className="accordion-toggle flex items-center justify-between text-gray-900 text-left cursor-pointer">
                   <h5 className="text-lg font-semibold">{item.question}</h5>
                   <svg
@@ -72,7 +90,10 @@ export default function FAQ() {
             {staticContents.header}
           </h3>
           <form className="max-w-lg mx-auto space-y-4" onSubmit={submitHandler}>
-            <label htmlFor="question" className="block text-lg font-medium text-gray-900 dark:text-white">
+            <label
+              htmlFor="question"
+              className="block text-lg font-medium text-gray-900 dark:text-white"
+            >
               {staticContents.label}
             </label>
             <textarea

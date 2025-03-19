@@ -13,6 +13,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.1",
     "@stripe/react-stripe-js": "^3.1.1",
+    "@tsparticles/react": "^3.0.0",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "chart.js": "^4.4.7",
@@ -24,6 +25,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2",
     "react-toastify": "^11.0.2",
+    "react-tsparticles": "^2.12.2",
     "yup": "^1.6.1"
   },
   "devDependencies": {

@@ -11,10 +11,6 @@ const languageRouter = require('./routes/translationRoutes')
 const cookieParser = require('cookie-parser');
 const { trackFailedRequest } = require('./services/trackingService');
 const { validateAuth }  = require('./middleware/authValidator');
-const { generateToken } = require('./util/JwtGenerator');
-
-
-
 
 
 const PORT = process.env.PORT || 3000;
@@ -29,17 +25,6 @@ async function start() {
     app.use(cookieParser())
     app.use(validateAuth)
 
-    // const ownerIds = [
-    //   "75736572-4964-3130-0000-000000000000",
-    //   "75736572-4964-3130-3000-000000000000",
-    //   "75736572-4964-3131-0000-000000000000",
-    // ];
-    
-    // ownerIds.forEach(ownerId => {
-    //   const token = generateTokenNOW(ownerId);
-    //   console.log(`${token}`);
-    // });
-     
     app.use("/user", userRouter)
     app.use("/translations", languageRouter)
     app.use("/faq", faqRouter)

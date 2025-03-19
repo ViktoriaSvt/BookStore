@@ -11,7 +11,8 @@ export function useGetAllBooks() {
   useEffect(() => {
     (async () => {
       const response = await bookApi.getAll();
-      console.log("reponse",response);
+      console.log(response);
+      
       setBooks(response);
     })();
   }, []);
@@ -26,19 +27,29 @@ export function useGetBookById() {
 
   useEffect(() => {
     (async () => {
-      try {
 
         const response = await bookApi.getById(bookId);
         setBook(response);
 
-      } catch (error) {
-
-        console.error('There was an error:', error);
-      }
     })();
   }, [bookId]);
 
   return [book]
+}
+
+export function useGetNewestBooks(year) {
+  const [books, setBooks] = useState([])
+  
+  useEffect(() => {
+    (async () => {
+ 
+        const response = await bookApi.getNewest(year);
+        setBooks(response);
+
+    })();
+  }, [year]);
+
+  return [books]
 }
 
 

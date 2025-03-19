@@ -3,7 +3,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { Elements, useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { createPurchase } from "../../../api/cart-requests";
+import { createPurchase } from "../../../api/payments";
+
 
 const stripePromise = loadStripe("pk_test_51QcrYKJdrx2Bl88hL32ynmqxBMVt2BEs8Y0iP4VAKgl99cXbjoKElZJwneSQUIULOqGDkJWvhaSQkKTmKec48gBG00k5bGosVD");
 
@@ -82,9 +83,6 @@ const PaymentForm = ({ totalAmount, books }) => {
 };
 
 const StripePayment = ({ totalAmount, books }) => {
-
-    console.log('in stipePayment', books);
-
 
     return (
         <Elements stripe={stripePromise}>

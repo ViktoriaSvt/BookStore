@@ -1,7 +1,7 @@
 import * as request from "./requester";
 
 const BASE_URL = "http://localhost:3000/user";
-const BASE_URL_SPRING = "http://localhost:8080/auth";
+const BASE_URL_SPRING = "http://localhost:8087/api/auth";
 
 export const register = async (email, password, rePass) => {
   const authData = await request.post(`${BASE_URL_SPRING}/register`, { email, password, rePass });

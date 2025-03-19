@@ -12,8 +12,8 @@ app.use(cookieParser(secret))
 app.use(bodyParser.json())
 app.use(urlencoded( {extended: true}));
 const corsOptions = {
-    origin: 'http://localhost:5173',
-    credentials: true,               
+    origin: ['http://localhost:5173', 'http://localhost:9033'],
+    credentials: true,
 };
 
 app.use(cors(corsOptions));

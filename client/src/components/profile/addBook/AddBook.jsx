@@ -1,6 +1,8 @@
 
 import { useForm } from "../../../hooks/useForm";
 import { createBook } from "../../../api/book-requests";
+import axios from "axios";
+import { useState } from "react";
 
 const AddBookModal = ({ isOpen, closeModal }) => {
 
@@ -8,8 +10,6 @@ const AddBookModal = ({ isOpen, closeModal }) => {
     title: "",
     genre: "",
     author: "",
-    bannerImageUrl: "",
-    coverImageUrl: "",
     year: "",
     price: "",
     description: "",
@@ -17,18 +17,48 @@ const AddBookModal = ({ isOpen, closeModal }) => {
   };
 
   const submitCallback = async () => {
-    await createBook(values)
-    closeModal();
+
+    const token = localStorage.getItem('jwtToken');
+
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("author", values.author);
+    formData.append("genre", values.genre);
+    formData.append("description", values.description);
+    formData.append("year", values.year);
+    formData.append("price", values.price);
+    formData.append("quantity", values.quantity);
+    formData.append("bannerImage", bannerImage);
+    formData.append("coverImage", coverImage);
+
+    try {
+      await axios.post("http://localhost:8085/api/books/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        }
+      });
+      closeModal();
+    } catch (error) {
+      console.error("Error creating book:", error);
+    }
   };
 
   let { values, changeHandler, submitHandler } = useForm(defaultValues, submitCallback)
+  const [bannerImage, setBannerImage] = useState(null);
+  const [coverImage, setCoverImage] = useState(null);
 
+  const handleFileChange = (e, setFile) => {
+    setFile(e.target.files[0]);
+  };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-8 rounded-lg w-1/3">
+   <div className="z-10 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-auto">
+
+<div className="bg-white p-8 rounded-lg w-full max-w-2xl xl:max-w-2xl mb-16">
+
         <h2 className="text-xl font-semibold mb-4">Add a New Book</h2>
         <form onSubmit={submitHandler}>
           <div className="mb-4">
@@ -92,32 +122,43 @@ const AddBookModal = ({ isOpen, closeModal }) => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="bannerImageUrl" className="block text-sm font-bold mb-2">
-              Background Image URL
+            <label htmlFor="bannerImage" className="block text-sm font-bold mb-2">
+              Banner Image
             </label>
-            <input
-              type="text"
-              id="bannerImageUrl"
-              name="bannerImageUrl"
-              value={values.bannerImageUrl}
-              onChange={changeHandler}
-              className="w-full px-4 py-2 border rounded"
-            />
+            <div className="relative">
+              <input
+                type="file"
+                id="bannerImage"
+                name="bannerImage"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, setBannerImage)}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+              <button className="w-full px-4 py-2 border rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600 focus:outline-none">
+                Select Banner Image
+              </button>
+            </div>
           </div>
 
           <div className="mb-4">
-            <label htmlFor="coverImageUrl" className="block text-sm font-bold mb-2">
-              Cover Image URL
+            <label htmlFor="coverImage" className="block text-sm font-bold mb-2">
+              Cover Image
             </label>
-            <input
-              type="text"
-              id="coverImageUrl"
-              name="coverImageUrl"
-              value={values.coverImageUrl}
-              onChange={changeHandler}
-              className="w-full px-4 py-2 border rounded"
-            />
+            <div className="relative">
+              <input
+                type="file"
+                id="coverImage"
+                name="coverImage"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, setCoverImage)}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+              <button className="w-full px-4 py-2 border rounded-md bg-green-500 text-white font-semibold hover:bg-green-600 focus:outline-none">
+                Select Cover Image
+              </button>
+            </div>
           </div>
+
 
           <div className="mb-4">
             <label htmlFor="year" className="block text-sm font-bold mb-2">
