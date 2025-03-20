@@ -15,9 +15,9 @@ export default function Search() {
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const { isAdmin } = useAuthContext();
 
-  const submitToCartHandler = async (bookId) => {
+  const submitToCartHandler = async (bookId, data) => {
     try {
-      await addToCart(bookId);
+      await addToCart(bookId, data);
       toast.success("Added to cart", {
         position: "top-right",
       });
@@ -83,7 +83,7 @@ export default function Search() {
           <BookItem
             key={currentBook.id}
             book={currentBook}
-            submitHandler={() => submitToCartHandler(currentBook.id)}
+            submitHandler={() => submitToCartHandler(currentBook.id, currentBook)}
             toggleSelect={() => isAdmin && toggleSelectBook(currentBook)}
             isSelected={selectedBooks.includes(currentBook.id)}
             isAdmin={isAdmin}

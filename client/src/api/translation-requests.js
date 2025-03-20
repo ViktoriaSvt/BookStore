@@ -8,7 +8,7 @@ export const getLoginTranslations = async (language) => {
 };
 
 export const getFaqTranslations = async (language) => {
-  return await request.get(`${BASE_URL_SPRING}/questions/translate/faq?lang=${language}`);
+  return await request.get(`http://localhost:8082/api/questions/translate/faq?lang=${language}`);
 };
 
 export const getRegisterTranslations = async (language) => {

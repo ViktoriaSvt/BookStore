@@ -12,9 +12,10 @@ export default function Cart() {
   const books = useGetCart(refresh);
   const totalAmount = useGetTotalPrice(books);
 
-  const removeButtonHandler = async (bookId) => {
-    
-    await removeItem(bookId);
+  const removeButtonHandler = async (id) => {
+  
+  
+    await removeItem(id);
     setRefresh(prev => !prev);
   };
 
@@ -45,9 +46,9 @@ export default function Cart() {
         <tbody>
           {books.length > 0 ? books.map(book => (
             <Item
-              key={book.bookId}
+              key={book.id}
               book={book}
-              removeButtonHandler={() => removeButtonHandler(book.bookId)}
+              removeButtonHandler={() => removeButtonHandler(book.id)}
             />
           )) : (
             <tr>
