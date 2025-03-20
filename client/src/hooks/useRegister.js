@@ -14,9 +14,11 @@ export const useRegister = (language) => {
 
             const authData = await register(email, password, rePass)
 
+            console.log(authData);
+
             if (authData) {
                 changeAuthState({
-                    _id: authData.id,
+                    _id: authData.userId,
                     email: authData.email,
                     isAdmin: authData.role == 'admin'
                 })

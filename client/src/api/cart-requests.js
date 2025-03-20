@@ -5,7 +5,7 @@ const BASE_URL_SPRING = 'http://localhost:8086/api/cart';
 const BASE_URL_PROXY = 'http://localhost:8081/api/cart';
 
 
-export const addToCart = async (id, data) => {
+export const addToCart = async (id) => {
     const res = await request.put(`${BASE_URL_SPRING}/add/${id}`);
     return res;
 };

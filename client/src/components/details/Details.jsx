@@ -6,6 +6,8 @@ import { useGetBookById } from "../../hooks/useBooks"
 export default function Details() {
 
   const [book] = useGetBookById();
+  console.log(book);
+  
 
   const submitToCartHandler = async (bookId) => {
 

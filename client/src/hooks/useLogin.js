@@ -15,15 +15,19 @@ export const useLogin = (language) => {
     const loginCallback = async (email, password) => {
         const authData = await login(email, password)
 
+        console.log(authData);
+        
+
         if (authData) {
             changeAuthState({
-                _id: authData.id,
+                _id: authData.userId,
                 email: authData.email,
-                isAdmin: authData.role.trim().toUpperCase() === 'ADMIN'
+                isAdmin: authData.role == 'admin'
             })
 
             navigate('/')
         }
+        
 
     }
 

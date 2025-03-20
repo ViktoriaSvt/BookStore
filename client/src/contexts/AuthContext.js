@@ -1,10 +1,7 @@
 import { createContext, useContext } from "react";
 
-
-
-
-
 export const AuthContext = createContext ({
+    _id: '',
     email: '',
     isAdmin: false,
     isAuthenticated: false,
