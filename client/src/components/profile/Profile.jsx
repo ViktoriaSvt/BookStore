@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { updateProfile } from "../../api/user-requests";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
 import { useAuthContext } from "../../contexts/AuthContext";
 import AddBookModal from "./addBook/AddBook";
@@ -14,12 +14,16 @@ export default function ProfileInfo() {
   const { language, changeLanguage, isAdmin } = useAuthContext();
   const { userId } = useParams();
 
+  const navigate = useNavigate();
   const [user] = useGetUser(userId);
+
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showQuestions, setShowQuestions] = useState(false)
+
   let [questions] = useGetMail(userId)
   let orders = useGetOrders(userId)
-  const [showQuestions, setShowQuestions] = useState(false)
+
 
   const initialValues = { username: '', description: '' };
 
@@ -52,9 +56,6 @@ export default function ProfileInfo() {
 
   const { values, changeHandler, submitHandler } = useForm(initialValues, handleSaveClick)
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -203,7 +204,7 @@ export default function ProfileInfo() {
                   <div className="flex justify-center mt-6 gap-6">
                     <div
                       className="w-40 h-40 bg-gray-200 rounded-lg flex justify-center items-center cursor-pointer hover:bg-gray-300 transition-all ease-in-out"
-                      onClick={openModal}
+                      onClick={() => navigate("/create")}
                     >
                       <i className="fas fa-plus text-3xl text-gray-500" />
                     </div>
@@ -211,7 +212,6 @@ export default function ProfileInfo() {
                 </div>
               )}
 
-              <AddBookModal isOpen={isModalOpen} closeModal={closeModal} />
 
               <div className="text-center mt-3 mb-10">
                 <button

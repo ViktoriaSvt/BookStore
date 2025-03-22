@@ -16,6 +16,7 @@ import Search from "./components/search/BookList"
 import FAQ from "./components/questions/faq-container"
 import TermsAndConditions from "./components/static/TermsAndConditions"
 import AboutUs from "./components/static/AboutUs"
+import AddBookModal from "./components/profile/addBook/AddBook"
 
 
 
@@ -76,6 +77,7 @@ function App() {
           <Route path="/cart" element={ <Cart /> } />
           <Route path="/terms-and-conditions" element={ <TermsAndConditions /> } />
           <Route path="/about-us" element={ <AboutUs /> } />
+          <Route path="/create" element={ <AddBookModal /> } />
           <Route path="/tracker" element={ <AdminDashboard /> } />
         </Routes>
 

@@ -3,9 +3,11 @@ import { useForm } from "../../../hooks/useForm";
 import { createBook } from "../../../api/book-requests";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const AddBookModal = ({ isOpen, closeModal }) => {
+export default function AddBookModal () {
 
+  const navigate = useNavigate();
   const defaultValues = {
     title: "",
     genre: "",
@@ -38,7 +40,6 @@ const AddBookModal = ({ isOpen, closeModal }) => {
           Authorization: `Bearer ${token}`
         }
       });
-      closeModal();
     } catch (error) {
       console.error("Error creating book:", error);
     }
@@ -52,16 +53,14 @@ const AddBookModal = ({ isOpen, closeModal }) => {
     setFile(e.target.files[0]);
   };
 
-  if (!isOpen) return null;
+
 
   return (
-   <div className="z-10 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center overflow-auto">
-
-<div className="bg-white p-8 rounded-lg w-full max-w-2xl xl:max-w-2xl mb-16">
-
-        <h2 className="text-xl font-semibold mb-4">Add a New Book</h2>
+<div className="bg-gray-100 min-h-screen flex flex-wrap justify-center items-center overflow-auto pb-16 mb-16">
+      <div className="bg-white p-8 rounded-lg w-full max-w-2xl xl:max-w-2xl mb-0 shadow-lg m-6 scale-90">
+        <h2 className="text-2xl font-semibold mb-4 text-center">Add a New Book</h2>
         <form onSubmit={submitHandler}>
-          <div className="mb-4">
+          <div className="mb-4 scale-y-125">
             <label htmlFor="title" className="block text-sm font-bold mb-2">
               Title
             </label>
@@ -159,7 +158,6 @@ const AddBookModal = ({ isOpen, closeModal }) => {
             </div>
           </div>
 
-
           <div className="mb-4">
             <label htmlFor="year" className="block text-sm font-bold mb-2">
               Year of Publication
@@ -212,7 +210,7 @@ const AddBookModal = ({ isOpen, closeModal }) => {
           <div className="flex justify-end gap-4">
             <button
               type="button"
-              onClick={closeModal}
+              onClick={() => navigate("/search")}
               className="bg-gray-500 text-white py-2 px-4 rounded"
             >
               Cancel
@@ -226,8 +224,44 @@ const AddBookModal = ({ isOpen, closeModal }) => {
           </div>
         </form>
       </div>
+
+      <div className="w-[250px] bg-[#f3f4f6] p-6 rounded-xl shadow-lg">
+        <h4 className="text-xl font-semibold text-center mb-4">Preview</h4>
+        <div className="bg-white shadow-lg rounded-xl w-[200px] m-2 group hover:scale-105 transition-all duration-300 ease-in-out">
+          <div className="relative">
+            <img
+              className="rounded-[0px] p-6 object-contain w-[200px] max-h-[280px] transition-all duration-300 transform group-hover:scale-110"
+              src={coverImage ? URL.createObjectURL(coverImage) : "https://www.theseasonedhome.com/content/images/thumbs/default-image_450.png"}
+              alt="product image"
+            />
+            <div className="w-[150px] absolute inset-0 bg-black opacity-0 group-hover:opacity-75 transition-all duration-300 rounded-[0px] flex items-center justify-center text-white m-7">
+              <div className="text-center px-4 p-10">
+                <p className="text-lg font-semibold">{values.author}</p>
+                <p className="text-sm">{values.year}</p>
+                <p className="text-sm pb-[10px]">Genre: {values.genre}</p>
+                <p className="text-sm">
+                  {values.description.length > 200 ? values.description.substring(0, 200) + "..." : values.description}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="px-5 pb-5 relative z-10">
+            <h3 className="text-gray-900 font-semibold text-lg tracking-tight mb-2 group-hover:text-[#4C6EF5] transition-all duration-300">
+              {values.title}
+            </h3>
+            <div className="flex items-center justify-between">
+              <span className="text-2xl font-bold text-gray-900">${values.price}</span>
+              <button
+                className="text-white bg-[#4C6EF5] hover:bg-[#3A5CE0] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-200"
+                disabled
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default AddBookModal;

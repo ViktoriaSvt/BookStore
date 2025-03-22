@@ -20,7 +20,11 @@ export function useGetAllQuestions(refresh) {
   useEffect(() => {
     (async () => {
       const data = await getQuestions();
-      setQuestions(data)
+
+      if(data) {
+        setQuestions(data)
+      }
+  
     })()
   }, [refresh])
 

@@ -50,35 +50,44 @@ export default function AdminFAQ() {
               </tr>
             </thead>
             <tbody>
-              {questions.map((question) => (
-                <tr key={question._id} className="border-b border-gray-200">
-                  <td className="py-3 px-6 text-sm text-gray-900">{question.creatorId}</td>
-                  <td className="py-3 px-6 text-sm text-gray-900">{question.text}</td>
-                  <td className="py-3 px-6 text-sm text-gray-900">
-                    <span className={`px-3 py-1 text-sm font-medium rounded-full ${question.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
-                      {question.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-6 text-sm">
-                    {question.status === "PENDING"? (
-                      <button
-                        onClick={() => handleAnswerClick(question)}
-                        className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-md"
-                      >
-                        Answer
-                      </button>
-                    ) : (
-                      <button
-                        disabled
-                        className="text-white bg-gray-400 hover:bg-gray-500 px-4 py-2 rounded-md"
-                      >
-                        Answered
-                      </button>
-                    )}
+              {questions.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="py-6 px-6 text-center text-gray-600 text-lg">
+                    No questions to be answered yet.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                questions.map((question) => (
+                  <tr key={question._id} className="border-b border-gray-200">
+                    <td className="py-3 px-6 text-sm text-gray-900">{question.creatorId}</td>
+                    <td className="py-3 px-6 text-sm text-gray-900">{question.text}</td>
+                    <td className="py-3 px-6 text-sm text-gray-900">
+                      <span className={`px-3 py-1 text-sm font-medium rounded-full ${question.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}`}>
+                        {question.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-6 text-sm">
+                      {question.status === "PENDING" ? (
+                        <button
+                          onClick={() => handleAnswerClick(question)}
+                          className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-md"
+                        >
+                          Answer
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="text-white bg-gray-400 hover:bg-gray-500 px-4 py-2 rounded-md"
+                        >
+                          Answered
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
+
           </table>
         </div>
 
