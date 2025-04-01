@@ -1,27 +1,6 @@
 # Server Overview
 
-This server is designed to handle user requests for a bookstore platform efficiently, using Redis caching to optimize database interactions. Below is a detailed description of how the server operates and its features, including its efficiency during high traffic periods like Black Friday or seasonal variations, such as for a winter clothing store.
-
-## How the Server Works
-
-### Caching Strategy
-The server integrates Redis caching to reduce the load on the database. Batch updates to the database are performed every 60 seconds to ensure consistency without overloading the database. The server can operate independently of Redis if necessary, using the database as a fallback mechanism when Redis is unavailable. If Redis becomes unavailable, the system logs this event and continues functioning by interacting directly with the database.
-
-### Data Lifecycle
-1. **Redis Connection**: When the server connects to Redis, it marks the start of the operation.
-2. **User Request**: A user makes a request, and the server checks Redis for the data. If data is missing, it fetches it from the database. During this the user can try to earn a spot in the cache based on the load of requests sent.
-3. **Cache as Source of Truth**: After the initial request, the cache becomes the temporary source of truth for the user’s data.
-4. **Batch Updates**: Every 60 seconds, the server performs a batch update to sync data from Redis to the database, reducing bottlenecks and ensuring consistency. 
-5. **Traffic Management**: The batch update timer can be manually adjusted based on traffic. During high traffic periods, the update frequency decreases to prevent bottlenecks, and during lower traffic periods, it increases to ensure avoiding frequent data updates.
-
-### Concurrency Management
-To handle concurrency and ensure data consistency, the server uses a message broker to manage operations sequentially, preventing race conditions and lost data.
-
-### Redis Memory Management
-When Redis memory starts running low, it uses the Least Recently Used (LRU) eviction policy to make room for more frequent users while offloading less frequent users’ data to the database. The eviction process ensures that heavy users who make more frequent requests stay in the cache, and others are moved to the database. Every time a user sends a request that bounces to the database a chance for them to earn a spot in the cache will be presented.
-
-### Write-Ahead and Write-Behind Strategy
-The server uses a hybrid write-ahead and write-behind strategy to prioritize availability and eventual consistency. This approach is suitable for high-traffic scenarios, such as Black Friday sales, where slight inconsistencies (e.g., a missing cart item) are acceptable in exchange for preventing payment bottlenecks.
+This is an old instance of the project. For the newer version visit the Server refered in the ReadMe.
 
 ## Monitoring and Error Handling
 Two middleware functions monitor the server’s health:
