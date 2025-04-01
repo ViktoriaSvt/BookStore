@@ -26,7 +26,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex flex-col items-center p-4 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
-      {/* Buttons for toggling views */}
       <div className="flex gap-4 mb-6">
         <button
           onClick={() => setView('users')}

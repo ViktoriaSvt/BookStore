@@ -6,7 +6,6 @@ export function useGetOrders(userId) {
 
     useEffect(() => {
         (async () => {
- 
             const data = await getHistory(userId);
 
             if (data != null) {

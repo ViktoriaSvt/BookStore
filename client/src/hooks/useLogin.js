@@ -22,13 +22,12 @@ export const useLogin = (language) => {
             changeAuthState({
                 _id: authData.userId,
                 email: authData.email,
-                isAdmin: authData.role == 'admin'
+                isAdmin: authData.role == 'ADMIN'
             })
 
             navigate('/')
         }
         
-
     }
 
     return { loginCallback, translations};

@@ -14,14 +14,12 @@ export function useGetCart(refresh) {
             } else {
                 setBooks(data);
             }
-
         
         })()
     }, [refresh])
 
     return books
 }
-
 
 export function useGetTotalPrice(books) {
     const [totalAmount, setTotalAmount] = useState(0);

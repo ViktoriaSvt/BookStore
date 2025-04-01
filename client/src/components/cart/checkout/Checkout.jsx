@@ -13,6 +13,9 @@ const PaymentForm = ({ totalAmount, books }) => {
     const stripe = useStripe();
     const elements = useElements();
 
+    console.log(books);
+    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 

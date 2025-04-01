@@ -17,6 +17,7 @@ import FAQ from "./components/questions/faq-container"
 import TermsAndConditions from "./components/static/TermsAndConditions"
 import AboutUs from "./components/static/AboutUs"
 import AddBookModal from "./components/profile/addBook/AddBook"
+import Restricted from "./components/restricted/Restricted"
 
 
 
@@ -71,19 +72,18 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={contextData.isAuthenticated ? <ProfileInfo /> : <Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/faq" element={contextData.isAdmin ? <AdminFAQ/> : <FAQ/>} />
+          <Route path="/faq" element={contextData.isAdmin ? <AdminFAQ /> : <FAQ />} />
           <Route path="/search" element={<Search />} />
           <Route path="/details/:bookId" element={<Details />} />
-          <Route path="/cart" element={ <Cart /> } />
-          <Route path="/terms-and-conditions" element={ <TermsAndConditions /> } />
-          <Route path="/about-us" element={ <AboutUs /> } />
-          <Route path="/create" element={ <AddBookModal /> } />
-          <Route path="/tracker" element={ <AdminDashboard /> } />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/create" element={contextData.isAdmin ? <AddBookModal /> : <Restricted />} />
+          <Route path="/tracker" element={contextData.isAdmin ? <AdminDashboard /> : <Restricted />} />
         </Routes>
-
       </BrowserRouter>
     </AuthContext.Provider>
-  )
+  );
 }
 
 export default App

@@ -5,8 +5,6 @@ import { useParams } from "react-router-dom";
 
 export function useGetAllBooks() {
   const [books, setBooks] = useState([])
-
-
   
   useEffect(() => {
     (async () => {

@@ -14,7 +14,6 @@ export default function Cart() {
 
   const removeButtonHandler = async (id) => {
   
-  
     await removeItem(id);
     setRefresh(prev => !prev);
   };

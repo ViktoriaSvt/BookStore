@@ -11,15 +11,15 @@ export const register = async (email, password, rePass) => {
 }
 
 export const login = async (email, password) => {
-  const authData = await request.post(`${BASE_URL_SPRING}/login`, { email, password });
 
+  const authData = await request.post(`${BASE_URL_SPRING}/login`, { email, password });
+  
   localStorage.setItem("jwtToken", authData.jwtToken);
   return authData;
 };
 
 export const logout = async () => {
   localStorage.removeItem("jwtToken")
-  // window.location.href = "http://localhost:5173/login";
 };
 
 export async function getSession() {
