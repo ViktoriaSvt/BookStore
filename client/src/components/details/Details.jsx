@@ -7,10 +7,10 @@ export default function Details() {
 
   const [book] = useGetBookById();
   
-  const submitToCartHandler = async (bookId) => {
+  const submitToCartHandler = async (bookId, data) => {
 
     try {
-      await addToCart(bookId);
+      await addToCart(bookId, data);
 
       toast.success("Added to cart", {
         position: "top-right",
@@ -100,7 +100,7 @@ export default function Details() {
               </span>
               <button
                 className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded-lg"
-                onClick={() => submitToCartHandler(book.id)}
+                onClick={() => submitToCartHandler(book.id, book)}
               >
                 Add to Cart
               </button>

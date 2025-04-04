@@ -88,13 +88,11 @@ export default function ProfileInfo() {
                 </div>
                 <div className="w-full lg:w-4/12 px-4 lg:order-1">
                   <div className="flex justify-center py-4 lg:pt-4 pt-8">
-                    {/* Mailbox button with a notification dot */}
                     <button
                       onClick={handleMailboxClick}
                       className="relative bg-transparent border-none cursor-pointer"
                     >
                       <i className="fa-solid fa-envelope-open-text text-3xl text-blueGray-600" />
-                      {/* Notification Dot */}
                       {questions.length > 0 && (<span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full" />)}
                     </button>
                   </div>
@@ -129,7 +127,7 @@ export default function ProfileInfo() {
                     </div>
                   </div>
                 )}
-                
+
               </div>
 
               <div className="text-center mt-12">

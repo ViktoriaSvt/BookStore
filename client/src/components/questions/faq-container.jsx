@@ -20,20 +20,20 @@ export default function FAQ() {
   return (
     <section className="py-24">
 
-<div className="absolute top-10 right-3 mt-4 mr-4 flex space-x-6">
-  <Link
-    to="/about-us"
-    className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg px-6 py-3 text-lg transition transform hover:scale-105 shadow-lg hover:shadow-2xl border border-lime-300"
-  >
-    About Us
-  </Link>
-  <Link
-    to="/terms-and-conditions"
-    className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg px-6 py-3 text-lg transition transform hover:scale-105 shadow-lg hover:shadow-2xl border border-lime-300"
-  >
-    Terms and Conditions
-  </Link>
-</div>
+      <div className="absolute top-10 right-3 mt-4 mr-4 flex space-x-6">
+        <Link
+          to="/about-us"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg px-6 py-3 text-lg transition transform hover:scale-105 shadow-lg hover:shadow-2xl border border-lime-300"
+        >
+          About Us
+        </Link>
+        <Link
+          to="/terms-and-conditions"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg px-6 py-3 text-lg transition transform hover:scale-105 shadow-lg hover:shadow-2xl border border-lime-300"
+        >
+          Terms and Conditions
+        </Link>
+      </div>
 
 
       <ToastContainer />

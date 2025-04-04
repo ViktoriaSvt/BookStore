@@ -7,7 +7,6 @@ const BASE_URL_PROXY = 'http://localhost:8081/api/cart';
 
 export const addToCart = async (id, data) => {
     return await request.put(`${BASE_URL_PROXY}/add/${id}`, data);
-
 };
 
 export const getCartItems = async () => {

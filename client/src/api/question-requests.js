@@ -9,7 +9,6 @@ export const postQuestion = async (text) => {
 
 export const getQuestions = async () => {
  return await request.get(`${BASE_URL_SPRING}/all`);
-
 };
 
 export const answerQuestion = async (text, id) => {
