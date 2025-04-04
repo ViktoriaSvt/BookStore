@@ -8,8 +8,8 @@ export function useGetCart(refresh) {
     useEffect(() => {
         (async () => {
             const data = await getCartItems();
-
-            if(data === 'denied') {
+   
+            if(!data) {
                 setBooks([])
             } else {
                 setBooks(data);
