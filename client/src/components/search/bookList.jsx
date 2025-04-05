@@ -16,16 +16,21 @@ export default function Search() {
   const { isAdmin } = useAuthContext();
 
   const submitToCartHandler = async (bookId, data) => {
-    try {
-      await addToCart(bookId, data);
-      toast.success("Added to cart", {
-        position: "top-right",
-      });
-    } catch {
+
+    const response = await addToCart(bookId, data);
+
+
+    if (!response) {
       toast.error("Please Login first.", {
         position: "top-right",
       });
+    } else {
+      toast.success("Added to cart", {
+        position: "top-right",
+      });
+
     }
+
   };
 
   const searchCallback = async (searchQuery) => {

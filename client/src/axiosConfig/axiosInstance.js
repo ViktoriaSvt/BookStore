@@ -21,7 +21,6 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   response => {
     if (response.status === 304 && !response.data) {
-  
       response.data = {};
     }
     return response;

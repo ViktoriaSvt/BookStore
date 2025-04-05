@@ -34,8 +34,8 @@ const PaymentForm = ({ totalAmount, books }) => {
         try {
 
             const response = await createPurchase(paymentMethod, totalAmount, books)
-
-            if (response === 'denied') {
+            
+            if (!response) {
                 throw new Error("Payment denied");
             }
 

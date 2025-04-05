@@ -22,7 +22,7 @@ async function requester(method, url, data) {
       return response?.data
 
   } catch (error) {
-      console.error(`❌ Request failed: ${method} ${url}`, error);
+      console.error(`Request failed: ${method} ${url}`, error);
       return []; 
   }
 }
