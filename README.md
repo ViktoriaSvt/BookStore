@@ -2,6 +2,8 @@
 
 Welcome to **SkyTales** – your go-to bookstore! Whether you're a regular user or an admin, we’ve designed this website to be user-friendly and efficient. If you're looking for more technical details on how the server optimizes heavy traffic, please refer to the **[Java Server README](https://github.com/Viktoria12345123/MS-server/blob/main/README.md)**.
 
+If you're interested in checking out the initial Node.js server, feel free to refer to the following **[README](server/README.md)**.
+
 ---
 
 ### Frontend Tech Stack (Front-End)
