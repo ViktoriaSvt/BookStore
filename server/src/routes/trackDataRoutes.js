@@ -14,18 +14,18 @@ const paymentQueryWithDelay = async () => {
 
 const router = express.Router();
 
-router.get('/state', async (req, res) => {
+router.get('/state', async ( res ) => {
     const data = await getTrackingData();
     res.json(data);
 });
 
-router.get("/test-error",  (req, res, next ) => {
+router.get("/test-error",  ( next ) => {
     const error = new Error("Simulated error!");
     error.status = 500; 
     next(error);
   });
 
-  router.get("/test-slow-request",trackPerformance('fetchCart'), async (req, res, next ) => {
+  router.get("/test-slow-request",trackPerformance('fetchCart'), async ( next ) => {
     await  paymentQueryWithDelay()
     const error = new Error("Simulated error!");
     error.status = 500; 

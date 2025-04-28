@@ -1,4 +1,3 @@
-// trackingConfig.js
 module.exports = {
     searchEngine: {
         threshold: 200 

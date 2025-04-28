@@ -4,15 +4,18 @@ const { getUserById, getUser } = require("../services/userService");
 const bcrypt = require('bcrypt');
 const { User } = require("../models/User");
 
-
-
-
-
 const router = express.Router();
+
+const setAccessTokenCookie = (res, token) => {
+    res.cookie('accessToken', token, {
+        maxAge: 259200000,
+        httpOnly: true,
+        path: '/'
+    });
+};
 
 
 router.post("/register", async (req, res) => {
-
     const data = req.body;
 
     const existingUser = await User.findOne({ email: data.email });
@@ -30,25 +33,17 @@ router.post("/register", async (req, res) => {
 
     const token = generateToken(user);
 
-
-    res.cookie('accessToken', token, {
-        maxAge: 259200000,
-        httpOnly: true,
-        path: '/'
-    });
+    setAccessTokenCookie(res, token);
 
     res.status(200).json({
         _id: user._id.toString(),
         email: user.email,
         role: user.role
     });
-
-
-
 });
 
-router.post("/login", async (req, res) => {
 
+router.post("/login", async (req, res) => {
     const userData = req.body;
 
     const user = await logUser(userData);
@@ -59,28 +54,21 @@ router.post("/login", async (req, res) => {
 
     const token = generateToken(user);
 
-
-    res.cookie('accessToken', token, {
-        maxAge: 259200000,
-        httpOnly: true,
-        path: '/'
-    });
-
+    setAccessTokenCookie(res, token);
 
     res.status(200).json({
         _id: user._id,
         email: user.email,
         role: user.role
     });
+});
 
-
-})
 
 router.post("/logout", async (req, res) => {
-
     res.clearCookie('accessToken', { path: '/' });
     res.status(200).send('Logged out successfully');
-})
+});
+
 
 router.get('/session', async (req, res) => {
     const token = req.cookies.accessToken;
@@ -96,21 +84,21 @@ router.get('/session', async (req, res) => {
     }
 
     res.status(200).json(user);
-})
+});
+
 
 router.get('/:userId', async (req, res) => {
     const userId = req.params.userId;
 
     if (userId) {
         const user = await getUserById(userId);
-
         res.status(200).json(user);
     }
+});
 
-})
 
 router.post('/updateProfile', async (req, res) => {
-    const { values } = req.body
+    const { values } = req.body;
     const token = req.cookies.accessToken;
 
     const user = await getUser(token);
@@ -123,15 +111,7 @@ router.post('/updateProfile', async (req, res) => {
         user.description = values.description;
     }
 
-    user.save()
-
-})
-
-
-
-
-
-
-
+    user.save();
+});
 
 module.exports = router;
