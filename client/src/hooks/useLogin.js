@@ -7,16 +7,29 @@ import { getLoginTranslations } from "../api/translation-requests";
 export const useLogin = (language) => {
 
     const { changeAuthState } = useAuthContext();
+    let translations = {
+        header: "Login",
+        emailPlaceholder: "Enter your email",
+        emailLabel: "Email",
+        passwordPlaceholder: "Enter your password",
+        passwordLabel: "Password",
+        noAccount: "Don't have an account?",
+        signUpLink: "Sign up here"
+    };
+
 
     const navigate = useNavigate();
-    const translations = useLoginTranslator(language)
+    translations = {
+        ...translations,
+        ...useLoginTranslator(language) ?? {}
+    }
 
 
     const loginCallback = async (email, password) => {
         const authData = await login(email, password)
 
         console.log(authData);
-        
+
 
         if (authData) {
             changeAuthState({
@@ -27,10 +40,10 @@ export const useLogin = (language) => {
 
             navigate('/')
         }
-        
+
     }
 
-    return { loginCallback, translations};
+    return { loginCallback, translations };
 }
 
 export const useLoginTranslator = (language) => {

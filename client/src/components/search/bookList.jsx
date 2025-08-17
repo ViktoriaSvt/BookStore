@@ -84,16 +84,12 @@ export default function Search() {
       </div>
 
       <div className="flex flex-wrap justify-center mb-40">
-        {books.map((currentBook) => (
-          <BookItem
-            key={currentBook.id}
-            book={currentBook}
-            submitHandler={() => submitToCartHandler(currentBook.id, currentBook)}
-            toggleSelect={() => isAdmin && toggleSelectBook(currentBook)}
-            isSelected={selectedBooks.includes(currentBook.id)}
-            isAdmin={isAdmin}
-          />
-        ))}
+       {books.length > 0 ? (
+  books.map((book) => <BookItem key={book.id} book={book} />)
+) : (
+  <p>No books found</p>
+)}
+
       </div>
 
       {isAdmin && showDeleteButton && (

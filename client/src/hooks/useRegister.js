@@ -8,7 +8,20 @@ export const useRegister = (language) => {
     const { changeAuthState } = useAuthContext();
 
     const navigate = useNavigate();
-    const translations = useRegisterTranslator(language)
+     let translations = {
+        header: "Login",
+        emailPlaceholder: "Enter your email",
+        emailLabel: "Email",
+        passwordPlaceholder: "Enter your password",
+        passwordLabel: "Password",
+        noAccount: "Don't have an account?",
+        signUpLink: "Sign up here"
+    };
+
+    translations = {
+        ...translations,
+        ...useRegisterTranslator(language) ?? {}
+    }
 
     const registerCallback = async (email, password, rePass) => {
 

@@ -11,7 +11,7 @@ export function useGetAllBooks() {
       const response = await bookApi.getAll();
       console.log(response);
       
-      setBooks(response);
+     setBooks(response ?? []);
     })();
   }, []);
 
@@ -25,10 +25,8 @@ export function useGetBookById() {
 
   useEffect(() => {
     (async () => {
-
         const response = await bookApi.getById(bookId);
         setBook(response);
-
     })();
   }, [bookId]);
 
@@ -42,7 +40,7 @@ export function useGetNewestBooks(year) {
     (async () => {
  
         const response = await bookApi.getNewest(year);
-        setBooks(response);
+        setBooks(response ?? []);
 
     })();
   }, [year]);
