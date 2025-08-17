@@ -49,7 +49,6 @@ export default function Search() {
     } else {
       setSelectedBooks([...selectedBooks, book.id]);
     }
-
     setShowDeleteButton(selectedBooks.length >= 0);
   };
 
@@ -84,11 +83,15 @@ export default function Search() {
       </div>
 
       <div className="flex flex-wrap justify-center mb-40">
-       {books.length > 0 ? (
-  books.map((book) => <BookItem key={book.id} book={book} />)
-) : (
-  <p>No books found</p>
-)}
+        {books.length > 0 ? (
+          books.map((book) => <BookItem key={book.id} book={book} />)
+        ) : (
+          
+          <div className="error-response">
+            <img src="\images\error.png" alt="Error avatar"/>
+              <p>Nothing to see yet</p>
+          </div>
+        )}
 
       </div>
 
