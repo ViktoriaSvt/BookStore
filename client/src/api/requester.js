@@ -5,7 +5,6 @@ import axiosInstance from '../axiosConfig/axiosInstance';
 async function requester(method, url, data) {
     let eTag = localStorage.getItem('bookETag');
 
-    try {
       const response = await axiosInstance({
           method,
           url,
@@ -20,11 +19,6 @@ async function requester(method, url, data) {
       }
 
       return response?.data
-
-  } catch (error) {
-      console.error(`Request failed: ${method} ${url}`, error);
-      return []; 
-  }
 }
 
 export const get = (url, data) => requester('GET', url, data);
