@@ -17,8 +17,10 @@ export default function Search() {
 
   const submitToCartHandler = async (bookId, data) => {
 
+    console.log("Submitting to cart:", bookId, data);
+    
     const response = await addToCart(bookId, data);
-
+   console.log("Response from addToCart:", response);
 
     if (!response) {
       toast.error("Please Login first.", {
@@ -84,12 +86,21 @@ export default function Search() {
 
       <div className="flex flex-wrap justify-center mb-40">
         {books.length > 0 ? (
-          books.map((book) => <BookItem key={book.id} book={book} />)
+         books.map((currentBook) => (
+          <BookItem
+            key={currentBook.id}
+            book={currentBook}
+            submitHandler={() => submitToCartHandler(currentBook.id, currentBook)}
+            toggleSelect={() => isAdmin && toggleSelectBook(currentBook)}
+            isSelected={selectedBooks.includes(currentBook.id)}
+            isAdmin={isAdmin}
+          />
+          ))
         ) : (
-          
+
           <div className="error-response">
-            <img src="\images\error.png" alt="Error avatar"/>
-              <p>Nothing to see yet</p>
+            <img src="\images\error.png" alt="Error avatar" />
+            <p>Nothing to see yet</p>
           </div>
         )}
 

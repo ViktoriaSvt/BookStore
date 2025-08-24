@@ -20,9 +20,7 @@ export default function Login() {
     defaultValues, loginHandler
   )
 
-
   return (
-
     <div className="form-divider">
       <ToastContainer />
       <form autoComplete="off" className="form" onSubmit={submitHandler}>

@@ -9,6 +9,7 @@ export function usePostQuestions() {
   const submitCallback = async ({ text }) => {
   try {
     await postQuestion(text);
+        toast.success("Submitted question successfully");
   } catch {
     toast.error("Currently unable to submit question");
   }

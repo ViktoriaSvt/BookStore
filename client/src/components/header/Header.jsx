@@ -8,8 +8,6 @@ export default function Header() {
     const [activeIndex, setActiveIndex] = useState(0);
     const { userId, isAdmin } = useAuthContext();
 
-
-
     const route = userId ? { path: `/profile/${userId}`, icon: "fa-user" } : { path: `/login`, icon: "fa-user" }
     const route2 = isAdmin ? { path: `/tracker`, icon: "fa-chart-bar" } : { path: "/cart", icon: "fa-cart-shopping" }
 

@@ -25,8 +25,6 @@ export const useLogin = (language) => {
     ...useLoginTranslator(language)
   };
 
-
-
   const loginCallback = async (email, password) => {
     try {
       const authData = await login(email, password);

@@ -4,7 +4,6 @@ export default function AboutUs() {
   return (
     <section className="bg-gray-50 mb-32">
 
-      {/* Updated Header Section */}
       <div className="relative mb-16 bg-gradient-to-r from-indigo-600 to-blue-500">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="relative text-center text-white px-4 sm:px-6 lg:px-8 py-32">
@@ -17,7 +16,6 @@ export default function AboutUs() {
         </div>
       </div>
 
-      {/* Mission Section */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
           <h3 className="text-3xl font-semibold text-gray-900 mb-6">
@@ -28,7 +26,6 @@ export default function AboutUs() {
           </p>
         </div>
 
-        {/* Company Goals Section with Grid Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="text-center p-6 bg-white shadow-lg rounded-lg">
             <i className="fas fa-lightbulb text-4xl text-indigo-600 mb-4"></i>
@@ -71,7 +68,6 @@ export default function AboutUs() {
           </div>
         </div>
 
-        {/* Team Section with Grid Layout */}
         <div className="mt-16 text-center p-6">
           <h3 className="text-3xl font-semibold text-gray-900 mb-6">
             Meet Our Team

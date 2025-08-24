@@ -27,7 +27,6 @@ export function useGetUser(userId) {
 export function useGetMail(userId) {
   const [questions, setQuestions] = useState([])
 
-
   useEffect(() => {
     const fetchQuestions = async () => {
       if (userId) {
@@ -48,7 +47,6 @@ export function useGetMail(userId) {
 
 export function useGetUsers() {
   const [users, setUsers] = useState([])
-
 
   useEffect(() => {
     const fetchUsers = async () => {

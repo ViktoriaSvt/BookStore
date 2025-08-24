@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { useGetUsers } from '../../hooks/useUserHooks';
 import { demote, getAllUsers, promote } from '../../api/user-requests';
@@ -20,9 +19,7 @@ const AdminDashboard = () => {
     setUsers(await getAllUsers());
   }
 
-
   users = users || [];
-
 
   return (
     <div className="flex flex-col items-center p-4 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
