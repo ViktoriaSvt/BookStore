@@ -18,6 +18,7 @@ import TermsAndConditions from "./components/static/TermsAndConditions"
 import AboutUs from "./components/static/AboutUs"
 import AddBookModal from "./components/profile/addBook/AddBook"
 import Restricted from "./components/restricted/Restricted"
+import ErrorBoundary from "./components/ErrorBoundry"
 
 
 
@@ -64,6 +65,7 @@ function App() {
   }, []);
 
   return (
+    <ErrorBoundary>
     <AuthContext.Provider value={contextData}>
       <BrowserRouter>
         <Header />
@@ -83,6 +85,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>
+     </ErrorBoundary>
   );
 }
 

@@ -14,12 +14,11 @@ export default function FAQ() {
 
   const { values, submitHandler, changeHandler } = useForm(initialValues, submitCallback);
 
-  const questions = translations?.questions || [];
-  const staticContents = translations?.staticContent || [];
+  const questions = translations.questions || [];
+  const staticContents = translations.staticContent || [];
 
   return (
     <section className="py-24">
-
       <div className="absolute top-10 right-3 mt-4 mr-4 flex space-x-6">
         <Link
           to="/about-us"
@@ -35,28 +34,28 @@ export default function FAQ() {
         </Link>
       </div>
 
-
       <ToastContainer />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
 
 
-        <div className="mb-16">
-          <h6 className="text-lg text-indigo-600 font-medium text-center mb-2">
+        <div className="mb-16 text-center">
+          <h6 className="text-lg text-indigo-600 font-medium mb-2">
             FAQs
           </h6>
-          <h2 className="text-4xl font-manrope text-center font-bold text-gray-900 leading-[3.25rem]">
+          <h2 className="text-4xl font-manrope font-bold text-gray-900 leading-snug">
             Frequently asked questions
           </h2>
         </div>
 
+ 
         {questions.length > 0 ? (
-          <div className="accordion-group">
+          <div className="accordion-group space-y-4">
             {questions.map((item, index) => (
               <details
                 key={index}
-                className="accordion py-8 px-6 border-b border-solid border-gray-200 rounded-2xl hover:bg-indigo-50"
+                className="accordion py-6 px-6 border-b border-gray-200 rounded-2xl hover:bg-indigo-50"
               >
-                <summary className="accordion-toggle flex items-center justify-between text-gray-900 text-left cursor-pointer">
+                <summary className="accordion-toggle flex items-center justify-between text-gray-900 cursor-pointer">
                   <h5 className="text-lg font-semibold">{item.question}</h5>
                   <svg
                     className="text-gray-500 transition duration-500 group-hover:text-indigo-600 accordion-active:text-indigo-600"
@@ -75,24 +74,26 @@ export default function FAQ() {
                     />
                   </svg>
                 </summary>
-                <div className="accordion-content px-0 overflow-hidden">
+                <div className="accordion-content px-0 overflow-hidden mt-2">
                   <p className="text-base text-gray-900 leading-6">{item.answer}</p>
                 </div>
               </details>
             ))}
           </div>
         ) : (
-          <div className="text-center text-lg text-gray-600">No questions available.</div>
+          <div className="text-center text-lg text-gray-600 py-16 px-6 border border-gray-300 rounded-2xl shadow-md mt-20">
+            No questions available.
+          </div>
+
         )}
 
-        <div className="mt-16">
-          <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4 text-center">
-            {staticContents.header}
+        <div className="mt-16 max-w-lg mx-auto text-center">
+          <h3 className="text-2xl font-semibold text-gray-900 mb-6">
           </h3>
-          <form className="max-w-lg mx-auto space-y-4" onSubmit={submitHandler}>
+          <form className="space-y-4" onSubmit={submitHandler}>
             <label
               htmlFor="question"
-              className="block text-lg font-medium text-gray-900 dark:text-white"
+              className="block text-lg font-medium text-gray-900"
             >
               {staticContents.label}
             </label>
@@ -100,7 +101,7 @@ export default function FAQ() {
               id="question"
               name="text"
               rows="4"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
               placeholder={staticContents.placeholder}
               value={values.text}
               onChange={changeHandler}
@@ -108,7 +109,7 @@ export default function FAQ() {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                className="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5"
               >
                 {staticContents.submitButton}
               </button>
@@ -117,5 +118,6 @@ export default function FAQ() {
         </div>
       </div>
     </section>
+
   );
 }

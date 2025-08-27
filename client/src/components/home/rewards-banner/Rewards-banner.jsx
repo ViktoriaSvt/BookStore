@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useGetNewestBooks } from "../../../hooks/useBooks";
 
-
 export default function RewardsBanner() {
 
   const navigate = useNavigate();
@@ -10,8 +9,6 @@ export default function RewardsBanner() {
   const handleDetailsClick = (bookId) => {
     navigate(`/details/${bookId}`);
   };
-
-
 
   return (
     <section className="banner relative">

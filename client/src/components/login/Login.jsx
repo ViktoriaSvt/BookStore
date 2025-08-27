@@ -13,24 +13,14 @@ export default function Login() {
   const defaultValues = { email: '', password: '', rePass: '' };
 
   const loginHandler = async ({ email, password }) => {
-    
-    try {
       await loginCallback(email, password)
-    } catch {
-      toast.error("Invalid email or password. Please try again", {
-        position: "top-right",
-      });
-
-    }
   }
 
   const { values, changeHandler, submitHandler, isSubmitting, errors } = useAuthForm(
     defaultValues, loginHandler
   )
 
-
   return (
-
     <div className="form-divider">
       <ToastContainer />
       <form autoComplete="off" className="form" onSubmit={submitHandler}>

@@ -17,8 +17,10 @@ export default function Search() {
 
   const submitToCartHandler = async (bookId, data) => {
 
+    console.log("Submitting to cart:", bookId, data);
+    
     const response = await addToCart(bookId, data);
-
+   console.log("Response from addToCart:", response);
 
     if (!response) {
       toast.error("Please Login first.", {
@@ -49,7 +51,6 @@ export default function Search() {
     } else {
       setSelectedBooks([...selectedBooks, book.id]);
     }
-
     setShowDeleteButton(selectedBooks.length >= 0);
   };
 
@@ -84,7 +85,8 @@ export default function Search() {
       </div>
 
       <div className="flex flex-wrap justify-center mb-40">
-        {books.map((currentBook) => (
+        {books.length > 0 ? (
+         books.map((currentBook) => (
           <BookItem
             key={currentBook.id}
             book={currentBook}
@@ -93,7 +95,15 @@ export default function Search() {
             isSelected={selectedBooks.includes(currentBook.id)}
             isAdmin={isAdmin}
           />
-        ))}
+          ))
+        ) : (
+
+          <div className="error-response">
+            <img src="\images\error.png" alt="Error avatar" />
+            <p>Nothing to see yet</p>
+          </div>
+        )}
+
       </div>
 
       {isAdmin && showDeleteButton && (

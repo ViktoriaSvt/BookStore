@@ -1,4 +1,5 @@
 
+import { ToastContainer } from "react-toastify";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useAuthForm } from "../../hooks/useAuthForm";
 import { useRegister } from "../../hooks/useRegister";
@@ -11,11 +12,9 @@ export default function Register() {
   const defaultValues = { email: '', password: '', rePass: '' };
 
   const submitCallback = async ({ email, password, rePass }) => {
-
     if (password == rePass) {
       await registerCallback(email, password, rePass)
     }
-
   }
 
   const { values, changeHandler, submitHandler, isSubmitting, errors } = useAuthForm(
@@ -23,8 +22,8 @@ export default function Register() {
   )
 
   return (
-
     <div className="form-divider">
+      <ToastContainer />
       <form role="registerForm" className="form" onSubmit={submitHandler}>
         <header>
           <h1>{translations.header}</h1>

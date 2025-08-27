@@ -113,7 +113,6 @@ export default function Details() {
               </button>
             </div>
 
-
             <div className="mt-8 bg-gray-200 bg-opacity-80 p-4 rounded-lg flex items-center space-x-3">
               <i className="fa-solid fa-truck-fast text-gray-700 text-2xl"></i>
               <span className="text-gray-700 font-medium text-lg">

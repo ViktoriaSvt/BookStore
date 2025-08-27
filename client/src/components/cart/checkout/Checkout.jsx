@@ -13,9 +13,6 @@ const PaymentForm = ({ totalAmount, books }) => {
     const stripe = useStripe();
     const elements = useElements();
 
-    console.log(books);
-    
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -29,7 +26,6 @@ const PaymentForm = ({ totalAmount, books }) => {
             type: "card",
             card: elements.getElement(CardElement),
         });
-
 
         try {
 
@@ -62,7 +58,6 @@ const PaymentForm = ({ totalAmount, books }) => {
                         <CardElement />
                     </div>
                 </div>
-
 
                 <div className="flex justify-between items-center px-4 py-2">
                     <span className="text-xl font-semibold text-gray-800">

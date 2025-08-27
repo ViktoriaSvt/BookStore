@@ -26,7 +26,6 @@ export default function Cart() {
     
   }
 
-
   return (
     <div className="relative overflow-x-auto shadow-lg rounded-lg bg-white dark:bg-gray-800 m-10 p-8">
 
@@ -63,7 +62,6 @@ export default function Cart() {
         </tbody>
       </table>
 
-
       {books.length > 0 && (
         <div className="mt-6 flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg shadow-sm">
           <span className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -77,7 +75,6 @@ export default function Cart() {
           </button>
         </div>
       )}
-
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">

@@ -22,12 +22,10 @@ export function useAuthForm(defaultValues, submitCallback) {
         .required("Confirm password is required")
     }),
 
-    onSubmit: async (values, { setSubmitting }) => {
-      try {
-        await submitCallback(values);
-      } finally {
+    onSubmit: (values, { setSubmitting }) => {
+      submitCallback(values).finally(() => {
         setSubmitting(false);
-      }
+      });
     },
   });
 

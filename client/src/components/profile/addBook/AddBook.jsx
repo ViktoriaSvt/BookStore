@@ -1,12 +1,11 @@
-
 import { useForm } from "../../../hooks/useForm";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AddBookModal () {
-
+export default function AddBookModal() {
   const navigate = useNavigate();
+
   const defaultValues = {
     title: "",
     genre: "",
@@ -17,9 +16,17 @@ export default function AddBookModal () {
     quantity: "",
   };
 
-  const submitCallback = async () => {
+  const [error, setError] = useState({
+    hasError: false,
+    msg: "",
+    time: null,
+  });
 
-    const token = localStorage.getItem('jwtToken');
+  const [bannerImage, setBannerImage] = useState(null);
+  const [coverImage, setCoverImage] = useState(null);
+
+  const submitCallback = async () => {
+    const token = localStorage.getItem("jwtToken");
 
     const formData = new FormData();
     formData.append("title", values.title);
@@ -36,30 +43,62 @@ export default function AddBookModal () {
       await axios.post("http://localhost:8085/api/books/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-    } catch (error) {
-      console.error("Error creating book:", error);
+
+      setError({
+        hasError: false,
+        msg: "",
+        time: new Date(),
+      });
+
+      navigate("/search");
+
+    } catch (err) {
+      const msg =
+        err?.response?.data?.message ||
+        err?.response?.data ||
+        err?.message ||
+        "Unknown error";
+
+      setError({
+        hasError: true,
+        msg,
+        time: new Date(),
+      });
     }
   };
 
-  let { values, changeHandler, submitHandler } = useForm(defaultValues, submitCallback)
-  const [bannerImage, setBannerImage] = useState(null);
-  const [coverImage, setCoverImage] = useState(null);
+  let { values, changeHandler, submitHandler } = useForm(
+    defaultValues,
+    submitCallback
+  );
 
   const handleFileChange = (e, setFile) => {
     setFile(e.target.files[0]);
   };
 
-
-
   return (
-<div className="bg-gray-100 min-h-screen flex flex-wrap justify-center items-center overflow-auto pb-16 mb-16">
-      <div className="bg-white p-8 rounded-lg w-full max-w-2xl xl:max-w-2xl mb-0 shadow-lg m-6 scale-90">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Add a New Book</h2>
+    <div className="bg-gray-100 min-h-screen flex flex-wrap justify-center items-center overflow-auto pb-16 mb-16">
+      <div className="bg-white p-8 rounded-lg w-full max-w-2xl shadow-lg m-6 scale-90">
+        <h2 className="text-2xl font-semibold mb-4 text-center">
+          Add a New Book
+        </h2>
+
+        {error.hasError && (
+          <div
+            className="flex items-center gap-3 p-3 mb-4 rounded-lg bg-red-100 text-red-700 border border-red-400"
+            role="alert"
+          >
+            <span className="text-xl">⚠️</span>
+            <span className="font-semibold">Failed to upload item:</span>
+            <span>{error.msg}</span>
+          </div>
+        )}
+
         <form onSubmit={submitHandler}>
-          <div className="mb-4 scale-y-125">
+          <div className="mb-4">
             <label htmlFor="title" className="block text-sm font-bold mb-2">
               Title
             </label>
@@ -105,7 +144,10 @@ export default function AddBookModal () {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="description" className="block text-sm font-bold mb-2">
+            <label
+              htmlFor="description"
+              className="block text-sm font-bold mb-2"
+            >
               Description
             </label>
             <textarea
@@ -132,7 +174,10 @@ export default function AddBookModal () {
                 onChange={(e) => handleFileChange(e, setBannerImage)}
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
-              <button className="w-full px-4 py-2 border rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600 focus:outline-none">
+              <button
+                type="button"
+                className="w-full px-4 py-2 border rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600 focus:outline-none"
+              >
                 Select Banner Image
               </button>
             </div>
@@ -151,7 +196,10 @@ export default function AddBookModal () {
                 onChange={(e) => handleFileChange(e, setCoverImage)}
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
-              <button className="w-full px-4 py-2 border rounded-md bg-green-500 text-white font-semibold hover:bg-green-600 focus:outline-none">
+              <button
+                type="button"
+                className="w-full px-4 py-2 border rounded-md bg-green-500 text-white font-semibold hover:bg-green-600 focus:outline-none"
+              >
                 Select Cover Image
               </button>
             </div>
@@ -191,12 +239,12 @@ export default function AddBookModal () {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="inStock" className="block text-sm font-bold mb-2">
+            <label htmlFor="quantity" className="block text-sm font-bold mb-2">
               In Stock
             </label>
             <input
               type="number"
-              id="inStock"
+              id="quantity"
               name="quantity"
               value={values.quantity}
               onChange={changeHandler}
@@ -224,34 +272,34 @@ export default function AddBookModal () {
         </form>
       </div>
 
-      <div className="w-[250px] bg-[#f3f4f6] p-6 rounded-xl shadow-lg">
+      <div
+        id="preview-card"
+        className={`w-[250px] bg-[#f3f4f6] p-6 rounded-xl shadow-lg ${error.hasError ? "ring-2 ring-red-500" : ""
+          }`}
+      >
         <h4 className="text-xl font-semibold text-center mb-4">Preview</h4>
-        <div className="bg-white shadow-lg rounded-xl w-[200px] m-2 group hover:scale-105 transition-all duration-300 ease-in-out">
+        <div className="bg-white shadow-lg rounded-xl w-[200px] m-2 group transition-all duration-300 ease-in-out">
           <div className="relative">
             <img
-              className="rounded-[0px] p-6 object-contain w-[200px] max-h-[280px] transition-all duration-300 transform group-hover:scale-110"
-              src={coverImage ? URL.createObjectURL(coverImage) : "https://www.theseasonedhome.com/content/images/thumbs/default-image_450.png"}
+              className="rounded-[0px] p-6 object-contain w-[200px] max-h-[280px]"
+              src={
+                coverImage
+                  ? URL.createObjectURL(coverImage)
+                  : "https://www.theseasonedhome.com/content/images/thumbs/default-image_450.png"
+              }
               alt="product image"
             />
-            <div className="w-[150px] absolute inset-0 bg-black opacity-0 group-hover:opacity-75 transition-all duration-300 rounded-[0px] flex items-center justify-center text-white m-7">
-              <div className="text-center px-4 p-10">
-                <p className="text-lg font-semibold">{values.author}</p>
-                <p className="text-sm">{values.year}</p>
-                <p className="text-sm pb-[10px]">Genre: {values.genre}</p>
-                <p className="text-sm">
-                  {values.description.length > 200 ? values.description.substring(0, 200) + "..." : values.description}
-                </p>
-              </div>
-            </div>
           </div>
           <div className="px-5 pb-5 relative z-10">
-            <h3 className="text-gray-900 font-semibold text-lg tracking-tight mb-2 group-hover:text-[#4C6EF5] transition-all duration-300">
+            <h3 className="text-gray-900 font-semibold text-lg tracking-tight mb-2">
               {values.title}
             </h3>
             <div className="flex items-center justify-between">
-              <span className="text-2xl font-bold text-gray-900">${values.price}</span>
+              <span className="text-2xl font-bold text-gray-900">
+                ${values.price}
+              </span>
               <button
-                className="text-white bg-[#4C6EF5] hover:bg-[#3A5CE0] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-200"
+                className="text-white bg-[#4C6EF5] font-medium rounded-lg text-sm px-5 py-2.5"
                 disabled
               >
                 Add to Cart
@@ -262,5 +310,4 @@ export default function AddBookModal () {
       </div>
     </div>
   );
-};
-
+}

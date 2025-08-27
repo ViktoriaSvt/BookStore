@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:3000',
   headers: {
@@ -10,8 +9,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  let token = localStorage.getItem("jwtToken");
-
+  const token = localStorage.getItem("jwtToken");
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;
   }
@@ -19,26 +17,30 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 axiosInstance.interceptors.response.use(
-  response => {
+  (response) => {
     if (response.status === 304 && !response.data) {
       response.data = {};
     }
     return response;
   },
-  error => {
+  (error) => {
     if (error.response) {
-      if (error.response.status === 403 || error.response.status === 401) {
-        console.error("Unauthorized action!");
-      } else if (error.response.status === 402) {
-        console.error("Payment failed");
-      } else {
-        console.error("Error:", error.response || error.message || "Unknown error");
+      switch (error.response.status) {
+        case 401:
+        case 403:
+          console.warn("Unauthorized or forbidden request");
+          break;
+        case 402:
+          console.warn("Payment required");
+          break;
+        default:
+          console.warn("Request error:", error.response.status, error.response.data);
       }
     } else {
-      console.error("Network error:", error.message);
+      console.warn("Network or unknown error:", error.message);
     }
+    return Promise.reject(error);
   }
 );
-
 
 export default axiosInstance;

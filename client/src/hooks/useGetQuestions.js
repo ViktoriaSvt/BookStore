@@ -7,9 +7,14 @@ import { toast } from "react-toastify";
 export function usePostQuestions() {
 
   const submitCallback = async ({ text }) => {
+  try {
     await postQuestion(text);
-    toast.success("Check inbox in 1-2 buisness days");
+        toast.success("Submitted question successfully");
+  } catch {
+    toast.error("Currently unable to submit question");
   }
+};
+
 
   return { submitCallback }
 }
